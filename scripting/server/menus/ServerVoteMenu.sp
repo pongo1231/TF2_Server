@@ -10,7 +10,7 @@ public void OnPluginStart() {
 
 public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_ServerVoteMenu);
-    menu.SetTitle("Server Settings");
+    menu.SetTitle("Server settings");
 
     char text[128];
 

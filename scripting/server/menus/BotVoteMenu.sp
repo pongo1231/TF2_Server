@@ -10,11 +10,11 @@ public void OnPluginStart() {
 
 public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_BotVoteMenu);
-    menu.SetTitle("Bot Settings");
+    menu.SetTitle("Bot settings");
 
     char text[128];
 
-    Format(text, sizeof(text), "Bot settings");
+    Format(text, sizeof(text), "RCBot settings");
     menu.AddItem("bots_enable", text);
 
     bool bots_taunt_on_kill = GetConVarBool(FindConVar("sm_bottaunt_enabled"));
