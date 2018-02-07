@@ -11,7 +11,7 @@ public void OnPluginStart() {
 }
 
 public OnClientPostAdminCheck(int client) {
-	Server_PrintToChat(client, "Server", "Welcome To The Server! You Can Open The Player Menu Via /menu.");
+	Server_PrintToChat(client, "Server", "Welcome to the server! You can open the player menu via /menu.");
 }
 
 public Action Timer_DisplayAd(Handle timer) {
