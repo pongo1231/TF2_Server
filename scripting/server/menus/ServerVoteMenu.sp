@@ -18,8 +18,7 @@ public Action MenuOpen(int client, int args) {
 
     menu.AddItem("server_scramble_teams", "Scramble teams");
 
-    bool instant_respawn = GetConVarBool(FindConVar("mp_disable_respawn_times"));
-    Format(text, sizeof(text), "Instant respawn (Currently: %b)", instant_respawn);
+    Format(text, sizeof(text), "Instant respawn (Currently: %b)", GetConVarBool(FindConVar("mp_disable_respawn_times")));
     menu.AddItem("server_instant_respawn", text);
 
     int halloween_mode = GetConVarInt(FindConVar("tf_forced_holiday"));
@@ -29,16 +28,13 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Halloween mode (Currently: %i)", halloween_mode);
     menu.AddItem("server_halloween", text);
 
-    bool random_crits = GetConVarBool(FindConVar("tf_weapon_criticals"));
-    Format(text, sizeof(text), "Random crits (Currently: %b)", random_crits);
+    Format(text, sizeof(text), "Random crits (Currently: %b)", GetConVarBool(FindConVar("tf_weapon_criticals")));
     menu.AddItem("server_random_crits", text);
 
-    int crits_on_cap = GetConVarInt(FindConVar("tf_ctf_bonus_time"));
-    Format(text, sizeof(text), "Crits on capture time (CTF) (Currently: %i)", crits_on_cap);
+    Format(text, sizeof(text), "Crits on capture time (CTF) (Currently: %i)", GetConVarInt(FindConVar("tf_ctf_bonus_time")));
     menu.AddItem("server_crits_on_cap", text);
 
-    int flag_caps_to_win = GetConVarInt(FindConVar("tf_flag_caps_per_round"));
-    Format(text, sizeof(text), "Flag captures to win (CTF) (Currently: %i)", flag_caps_to_win);
+    Format(text, sizeof(text), "Flag captures to win (CTF) (Currently: %i)", GetConVarInt(FindConVar("tf_flag_caps_per_round")));
     menu.AddItem("server_flag_caps_to_win", text);
 
     menu.AddItem("server_rock_the_vote", "Change Map (Rock The Vote)");

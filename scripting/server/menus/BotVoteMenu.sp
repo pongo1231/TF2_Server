@@ -17,20 +17,13 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "RCBot settings");
     menu.AddItem("bots_enable", text);
 
-    bool bots_taunt_on_kill = GetConVarBool(FindConVar("sm_bottaunt_enabled"));
-    Format(text, sizeof(text), "Bots taunt on kill (Currently: %b)", bots_taunt_on_kill);
+    Format(text, sizeof(text), "All bots taunt on kill (Currently: %b)", GetConVarBool(FindConVar("sm_bottaunt_enabled")));
     menu.AddItem("bots_taunt", text);
 
-    bool bots_hurt_voice = GetConVarBool(FindConVar("sm_bothurtvoice_enabled"));
-    Format(text, sizeof(text), "Bots do a voice command on damage (Currently: %b)", bots_hurt_voice);
+    Format(text, sizeof(text), "All bots do a voice command on damage (Currently: %b)", GetConVarBool(FindConVar("sm_bothurtvoice_enabled")));
     menu.AddItem("bots_hurt", text);
 
-    bool bots_melee_only = GetConVarBool(FindConVar("tf_bot_melee_only"));
-    Format(text, sizeof(text), "(Normal) Bots only use melee (Currently: %b)", bots_melee_only);
-    menu.AddItem("bots_melee", text);
-
-    bool bots_are_robots = GetConVarBool(FindConVar("sm_bbr_enabled"));
-    Format(text, sizeof(text), "Bots are robots (Currently: %b)", bots_are_robots);
+    Format(text, sizeof(text), "All bots are robots (Currently: %b)", GetConVarBool(FindConVar("sm_bothurtvoice_enabled")));
     menu.AddItem("bots_robots", text);
 
     menu.Display(client, 20);
@@ -42,18 +35,13 @@ public int Handle_BotVoteMenu(Menu menu, MenuAction action, int param1, int para
     if (action == MenuAction_Select)
         switch (param2) {
         	case 0:
-        		if (GameRules_GetProp("m_bPlayingMannVsMachine"))
-                    Server_PrintToChat(param1, "Menu", "RCBots can't be added to mvm automatically yet.");
-        		else
-                	FakeClientCommand(param1, "menu_bots_rcbot");
+                FakeClientCommand(param1, "menu_bots_rcbot");
             case 1:
                 Voting_CreateBoolConVarVote("sm_bottaunt_enabled", "Make bots taunt on kill?");
             case 2:
                 Voting_CreateBoolConVarVote("sm_bothurtvoice_enabled", "Make bots do a voice command on damage?");
             case 3:
-                Voting_CreateBoolConVarVote("tf_bot_melee_only", "Make (normal) bots only use melee?");
-            case 4:
-                Voting_CreateBoolConVarVote("sm_bbr_enabled", "Make bots robots?");
+                Voting_CreateBoolConVarVote("sm_bbr_enabled", "Make all bots robots?");
         }
     else if (action == MenuAction_End)
         delete menu;

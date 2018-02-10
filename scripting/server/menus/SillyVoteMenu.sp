@@ -14,13 +14,14 @@ public Action MenuOpen(int client, int args) {
 
     char text[128];
 
-    bool always_crits = GetConVarBool(FindConVar("sm_alwayscrits_enabled"));
-    Format(text, sizeof(text), "Always crits (Currently: %b)", always_crits);
+    Format(text, sizeof(text), "Always crits (Currently: %b)", GetConVarBool(FindConVar("sm_alwayscrits_enabled")));
     menu.AddItem("silly_always_crits", text);
 
-    bool friendly_fire = GetConVarBool(FindConVar("mp_friendlyfire"));
-    Format(text, sizeof(text), "Friendly fire (Currently: %b)", friendly_fire);
+    Format(text, sizeof(text), "Friendly fire (Currently: %b)", GetConVarBool(FindConVar("mp_friendlyfire")));
     menu.AddItem("silly_friendly_fire", text);
+
+    Format(text, sizeof(text), "Deadly water (Currently: %b)", GetConVarBool(FindConVar("sm_deadlywater_enabled")));
+    menu.AddItem("silly_deadly_water", text);
 
     menu.Display(client, 20);
  
@@ -37,6 +38,8 @@ public int Handle_ServerVoteMenu(Menu menu, MenuAction action, int param1, int p
                     Server_PrintToChat(param1, "Menu", "Can't set friendly fire in MvM.");
                 else
                     Voting_CreateBoolConVarVote("mp_friendlyfire", "Enable friendly fire? (Silly)");
+            case 2:
+                Voting_CreateBoolConVarVote("sm_deadlywater_enabled", "Enable deadly water? (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;

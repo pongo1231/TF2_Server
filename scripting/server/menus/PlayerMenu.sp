@@ -1,10 +1,16 @@
 #include <sourcemod>
+#include <server/serverchat>
 
 public void OnPluginStart() {
     RegConsoleCmd("menu_player", MenuOpen);
 }
 
 public Action MenuOpen(int client, int args) {
+    if (GetClientTeam(client) == 1) {
+        Server_PrintToChat(client, "Menu", "You can't open the player settings as a spectator.");
+        return Plugin_Stop;
+    }
+
     Menu menu = new Menu(Handle_PlayerMenu);
     menu.SetTitle("Player settings");
 
