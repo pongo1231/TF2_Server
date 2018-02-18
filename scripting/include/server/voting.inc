@@ -27,4 +27,4 @@ native void Voting_CreateConVarVote(char[] convar, char[] question, char[] ...);
  * @param command 	The Command to execute
  * @param question 	The question to show
  */
-native void Voting_CreateBoolCommandVote(char[] command, char[] question);
+native void Voting_CreateBoolCommandVote(char[] commandYes, char[] commandNo = "", char[] question);

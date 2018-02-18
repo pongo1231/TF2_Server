@@ -12,6 +12,7 @@ public void OnPluginStart() {
 
 public OnClientPostAdminCheck(int client) {
 	Server_PrintToChat(client, "Server", "Welcome to the server! You can open the player menu via /menu.");
+	Server_PrintToChat(client, "Server", "Also make sure to check out our steam group: steamcommunity.com/groups/scammersservers");
 }
 
 public Action Timer_DisplayAd(Handle timer) {
@@ -25,7 +26,7 @@ public Action Timer_DisplayAd(Handle timer) {
 void UpdateAds() {
 	char path[PLATFORM_MAX_PATH];
 	char line[128];
-	BuildPath(Path_SM, path, PLATFORM_MAX_PATH, "plugins/server/ads/advertisements.txt");
+	BuildPath(Path_SM, path, PLATFORM_MAX_PATH, "configs/advertisements.txt");
 
 	Handle fileHandle = OpenFile(path, "r");
 	int i = 0;

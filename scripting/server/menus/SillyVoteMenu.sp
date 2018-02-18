@@ -14,6 +14,9 @@ public Action MenuOpen(int client, int args) {
 
     char text[128];
 
+    Format(text, sizeof(text), "Enable x10 (Currently: %b)", GetConVarBool(FindConVar("tf2x10_enabled")));
+    menu.AddItem("silly_x10", text);
+
     Format(text, sizeof(text), "Always crits (Currently: %b)", GetConVarBool(FindConVar("sm_alwayscrits_enabled")));
     menu.AddItem("silly_always_crits", text);
 
@@ -32,13 +35,15 @@ public int Handle_ServerVoteMenu(Menu menu, MenuAction action, int param1, int p
     if (action == MenuAction_Select)
         switch (param2) {
             case 0:
-                Voting_CreateBoolConVarVote("sm_alwayscrits_enabled", "Enable always crits? (Silly)");
+                Voting_CreateBoolConVarVote("tf2x10_enabled", "Enable x10? (Silly)");
             case 1:
+                Voting_CreateBoolConVarVote("sm_alwayscrits_enabled", "Enable always crits? (Silly)");
+            case 2:
                 if (GameRules_GetProp("m_bPlayingMannVsMachine"))
                     Server_PrintToChat(param1, "Menu", "Can't set friendly fire in MvM.");
                 else
                     Voting_CreateBoolConVarVote("mp_friendlyfire", "Enable friendly fire? (Silly)");
-            case 2:
+            case 3:
                 Voting_CreateBoolConVarVote("sm_deadlywater_enabled", "Enable deadly water? (Silly)");
         }
     else if (action == MenuAction_End)

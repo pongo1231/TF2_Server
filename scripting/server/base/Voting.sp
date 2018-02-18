@@ -2,6 +2,7 @@
 #include <server/serverchat>
 
 char convar_name[256];
+char convar_name2[256];
 int true_value;
 int false_value;
 
@@ -13,6 +14,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 }
 
 public int Voting_CreateBoolConVarVote(Handle plugin, int numParams) {
+    if (IsVoteRunning())
+     return;
+
     GetNativeString(1, convar_name, sizeof(convar_name));
     char question[128];
     GetNativeString(2, question, sizeof(question));
@@ -30,22 +34,22 @@ public int Voting_CreateBoolConVarVote(Handle plugin, int numParams) {
 
 public int Handle_BoolVoting(Menu menu, MenuAction action, int param1, int param2) {
     if (action == MenuAction_VoteEnd) {
-    	int value = false_value;
-    	if (param1 == 0) // yes = 0
+        int value = false_value;
+        if (param1 == 0) // yes = 0
     		value = true_value;
 
-    	SetConVarInt(FindConVar(convar_name), value);
+        SetConVarInt(FindConVar(convar_name), value);
         char text[128];
         Format(text, sizeof(text), "%s has been set to %i.", convar_name, value);
-    	Server_PrintToChatAll("Vote", text);
-	}
-    else if (action == MenuAction_VoteCancel)
-    	return;
-    else if (action == MenuAction_End)
+        Server_PrintToChatAll("Vote", text);
+        ClearVote();
+    } else if (action == MenuAction_End)
         delete menu;
 }
 
 public int Voting_CreateConVarVote(Handle plugin, int numParams) {
+    if (IsVoteRunning())
+        return;
     GetNativeString(1, convar_name, sizeof(convar_name));
 
     char question[128];
@@ -73,18 +77,20 @@ public int Handle_Voting(Menu menu, MenuAction action, int param1, int param2) {
         char text[128];
         Format(text, sizeof(text), "%s has been set to %s.", convar_name, value);
         Server_PrintToChatAll("Vote", text);
-    }
-    else if (action == MenuAction_VoteCancel)
-        return;
-    else if (action == MenuAction_End)
+        ClearVote();
+    } else if (action == MenuAction_End)
         delete menu;
 }
 
 public int Voting_CreateBoolCommandVote(Handle plugin, int numParams) {
+    if (IsVoteRunning())
+        return;
     GetNativeString(1, convar_name, sizeof(convar_name));
 
+    GetNativeString(2, convar_name2, sizeof(convar_name2));
+
     char question[128];
-    GetNativeString(2, question, sizeof(question));
+    GetNativeString(3, question, sizeof(question));
 
     Menu menu = new Menu(Handle_BoolCommandVoting);
     menu.SetTitle(question);
@@ -97,18 +103,29 @@ public int Voting_CreateBoolCommandVote(Handle plugin, int numParams) {
 
 public int Handle_BoolCommandVoting(Menu menu, MenuAction action, int param1, int param2) {
     if (action == MenuAction_VoteEnd) {
-        char result_text[] = "Vote For %s Has Failed.";
+        char text[128];
         if (param1 == 0) {
             ServerCommand(convar_name);
-            result_text = "%s has been executed.";
+            Format(text, sizeof(text), "%s has been executed.", convar_name);
+        } else if (param1 == 1) {
+            if (convar_name2[0]) {
+                ServerCommand(convar_name);
+                Format(text, sizeof(text), "%s has been executed.", convar_name2);
+            } else {
+                Format(text, sizeof(text), "Vote for %s has failed.", convar_name);
+            }
         }
-
-        char text[128];
-        Format(text, sizeof(text), result_text, convar_name);
         Server_PrintToChatAll("Vote", text);
-    }
-    else if (action == MenuAction_VoteCancel)
-        return;
-    else if (action == MenuAction_End)
+        ClearVote();
+    } else if (action == MenuAction_End)
         delete menu;
+}
+
+bool IsVoteRunning() {
+    return convar_name[0] || convar_name[1];
+}
+
+void ClearVote() {
+    convar_name = ""
+    convar_name2 = ""
 }

@@ -17,7 +17,7 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "RCBot settings");
     menu.AddItem("bots_enable", text);
 
-    Format(text, sizeof(text), "All bots taunt on kill (Currently: %b)", GetConVarBool(FindConVar("sm_bottaunt_enabled")));
+    Format(text, sizeof(text), "All bots do a custom taunt on kill (Currently: %b)", GetConVarBool(FindConVar("sm_bottaunt_enabled")));
     menu.AddItem("bots_taunt", text);
 
     Format(text, sizeof(text), "All bots do a voice command on damage (Currently: %b)", GetConVarBool(FindConVar("sm_bothurtvoice_enabled")));
@@ -37,7 +37,7 @@ public int Handle_BotVoteMenu(Menu menu, MenuAction action, int param1, int para
         	case 0:
                 FakeClientCommand(param1, "menu_bots_rcbot");
             case 1:
-                Voting_CreateBoolConVarVote("sm_bottaunt_enabled", "Make bots taunt on kill?");
+                Voting_CreateBoolConVarVote("sm_bottaunt_enabled", "Make bots do a custom taunt on killl?");
             case 2:
                 Voting_CreateBoolConVarVote("sm_bothurtvoice_enabled", "Make bots do a voice command on damage?");
             case 3:
