@@ -109,7 +109,7 @@ public int Handle_BoolCommandVoting(Menu menu, MenuAction action, int param1, in
             Format(text, sizeof(text), "%s has been executed.", convar_name);
         } else if (param1 == 1) {
             if (convar_name2[0]) {
-                ServerCommand(convar_name);
+                ServerCommand(convar_name2);
                 Format(text, sizeof(text), "%s has been executed.", convar_name2);
             } else {
                 Format(text, sizeof(text), "Vote for %s has failed.", convar_name);

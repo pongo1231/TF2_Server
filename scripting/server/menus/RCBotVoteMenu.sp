@@ -43,10 +43,7 @@ public int Handle_BotVoteMenu(Menu menu, MenuAction action, int param1, int para
     if (action == MenuAction_Select)
         switch (param2) {
         	case 0:
-        	    if (GetConVarBool(FindConVar("rcbot_bot_quota_interval")) || GameRules_GetProp("m_bPlayingMannVsMachine"))
-        	    	Server_PrintToChat(param1, "Menu", "RCBots Are Already Enabled.");
-        	    else
-                	Voting_CreateBoolCommandVote("rcbot_bot_quota_interval 1", "rcbot_bot_quota_interval 0; sm_kick @bots", "Enable rcbots?");
+                Voting_CreateBoolCommandVote("rcbot_bot_quota_interval 1", "rcbot_bot_quota_interval 0; sm_kick @bots", "Enable rcbots?");
         	case 1:
                 Voting_CreateConVarVote("rcbot_anglespeed", "Set rcbot skill", "0.01", "0.21", "0.41", "0.61", "0.81", "1.0");
            case 2:
