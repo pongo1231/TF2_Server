@@ -11,7 +11,7 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("2", "Server and some of the plugins by pongo1231");
     menu.AddItem("3", "RCBots by Cheeseh");
     menu.AddItem("4", "Radio by Fragradio");
-    menu.AddItem("5", "");
+    menu.AddItem("5", "x10 by Wllu");
     menu.AddItem("6", "");
     menu.AddItem("7", "");
     menu.AddItem("7", "Contact:");

@@ -46,11 +46,11 @@ public int Handle_BotVoteMenu(Menu menu, MenuAction action, int param1, int para
                 Voting_CreateBoolCommandVote("rcbot_bot_quota_interval 1", "rcbot_bot_quota_interval 0; sm_kick @bots", "Enable rcbots?");
         	case 1:
                 Voting_CreateConVarVote("rcbot_anglespeed", "Set rcbot skill", "0.01", "0.21", "0.41", "0.61", "0.81", "1.0");
-           case 2:
+         case 2:
                 Voting_CreateBoolConVarVote("sm_gbw_enabled", "Should rcbots use custom weapons?");
-           case 3:
+         case 3:
                 Voting_CreateBoolConVarVote("sm_gbc_enabled", "Should rcbots use custom cosmetics?");
-           case 4:
+         case 4:
                 Voting_CreateBoolConVarVote("rcbot_melee_only", "Should rcbots use melee only?");
         }
     else if (action == MenuAction_End)

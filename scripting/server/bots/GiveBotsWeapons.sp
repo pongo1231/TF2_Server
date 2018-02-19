@@ -10,6 +10,7 @@ bool g_bTouched[MAXPLAYERS+1];
 bool g_bSuddenDeathMode;
 bool g_bMVM;
 bool g_bLateLoad;
+ConVar g_hCVTimer;
 ConVar g_hCVEnabled;
 ConVar g_hCVTeam;
 Handle g_hWeaponEquip;
@@ -41,12 +42,12 @@ public void OnPluginStart()
 {
 	ConVar hCVversioncvar = CreateConVar("sm_gbw_version", PLUGIN_VERSION, "Give Bots Weapons version cvar", FCVAR_NOTIFY|FCVAR_DONTRECORD); 
 	g_hCVEnabled = CreateConVar("sm_gbw_enabled", "1", "Enables/disables this plugin", FCVAR_NONE, true, 0.0, true, 1.0);
+	g_hCVTimer = CreateConVar("sm_gbw_delay", "0.1", "Delay for giving weapons to bots", FCVAR_NONE, true, 0.1, true, 30.0);
 	g_hCVTeam = CreateConVar("sm_gbw_team", "1", "Team to give weapons to: 1-both, 2-red, 3-blu", FCVAR_NONE, true, 1.0, true, 3.0);
 	
 	HookEvent("post_inventory_application", player_inv);
 	HookEvent("teamplay_round_stalemate", EventSuddenDeath, EventHookMode_PostNoCopy);
 	HookEvent("teamplay_round_start", EventRoundReset, EventHookMode_PostNoCopy);
-	HookEvent("player_spawn", Event_OnPlayerSpawn, EventHookMode_Post);
 	HookConVarChange(g_hCVEnabled, OnEnabledChanged);
 	
 	SetConVarString(hCVversioncvar, PLUGIN_VERSION);
@@ -124,15 +125,40 @@ public void player_inv(Handle event, const char[] name, bool dontBroadcast)
 	int userd = GetEventInt(event, "userid");
 	int client = GetClientOfUserId(userd);
 	
-	if (!g_bSuddenDeathMode && !g_bTouched[client] && !g_bMVM && IsPlayerHere(client))
+	if (!g_bSuddenDeathMode && !g_bTouched[client] && (!g_bMVM || (g_bMVM && GetClientTeam(client) == 2) /* Red Team in MvM */) && IsPlayerHere(client))
 	{
 		g_bTouched[client] = true;
+		int team = GetClientTeam(client);
+		int team2 = GetConVarInt(g_hCVTeam);
+		float timer = GetConVarFloat(g_hCVTimer);
+		
+		switch (team2)
+		{
+			case 1:
+			{
+				CreateTimer(timer, Timer_GiveWeapons, userd, TIMER_FLAG_NO_MAPCHANGE);
+			}
+			case 2:
+			{
+				if (team == 2)
+				{
+					CreateTimer(timer, Timer_GiveWeapons, userd, TIMER_FLAG_NO_MAPCHANGE);
+				}
+			}
+			case 3:
+			{
+				if (team == 3)
+				{
+					CreateTimer(timer, Timer_GiveWeapons, userd, TIMER_FLAG_NO_MAPCHANGE);
+				}
+			}
+		}
 	}
 }
 
-public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
+public Action Timer_GiveWeapons(Handle timer, any data)
 {
-	int client = GetClientOfUserId(GetEventInt(event, "userid"));
+	int client = GetClientOfUserId(data);
 	g_bTouched[client] = false;
 	
 	if (!GetConVarBool(g_hCVEnabled) || !IsPlayerHere(client))
@@ -161,7 +187,7 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 		}
 	}
 
-	if (!g_bSuddenDeathMode && team == 2)
+	if (!g_bSuddenDeathMode && (!g_bMVM || (g_bMVM && GetClientTeam(client) == 2) /* Red Team in MvM */))
 	{
 		TFClassType class = TF2_GetPlayerClass(client);
 

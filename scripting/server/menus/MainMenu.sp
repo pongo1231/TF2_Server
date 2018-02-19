@@ -4,6 +4,7 @@
 public void OnPluginStart() {
     RegConsoleCmd("menu", MenuOpen);
     AddCommandListener(Listener_JoinTeam, "jointeam");
+    AddCommandListener(Listener_JoinTeam, "join_class");
 }
 
 public Action MenuOpen(int client, int args) {
