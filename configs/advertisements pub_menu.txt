@@ -7,4 +7,4 @@ Want to play with bots? Add them via the player menu (/menu).
 The game server is not being hosted on a dedicated server yet, so you will have to expect some downtime every day.
 Want to listen to the radio? Tune in via /menu.
 Any feedback on the server is welcome! Feel free to contact me (details are in the credits section of the player menu).
-Make sure to check out or steam group: steamcommunity.com/groups/scammersservers
+Make sure to check out our steam group: steamcommunity.com/groups/scammersservers

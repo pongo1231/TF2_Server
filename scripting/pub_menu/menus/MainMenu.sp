@@ -16,7 +16,6 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("main_player", "Player settings");
     menu.AddItem("main_server", "Server settings");
     menu.AddItem("main_bots", "Bot settings");
-    menu.AddItem("main_mvm", "MvM settings");
     menu.AddItem("main_credits", "Credits");
     menu.Display(client, 20);
 

@@ -6,7 +6,7 @@
 ConVar g_enabled;
 
 public void OnPluginStart() {
-	g_enabled = CreateConVar("sm_alwayscrits_enabled", "0", "Enable plugin");
+	g_enabled = CreateConVar("sm_alwayscrits_enabled", "0", "Enable plugin", _, true, 0.0, true, 1.0);
 }
 
 public Action TF2_CalcIsAttackCritical(int client, int weapon, char[] weaponname, bool& result) {

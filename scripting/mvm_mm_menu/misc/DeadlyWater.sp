@@ -5,7 +5,7 @@
 ConVar g_enabled;
 
 public void OnPluginStart() {
-	g_enabled = CreateConVar("sm_deadlywater_enabled", "0", "Enable plugin");
+	g_enabled = CreateConVar("sm_deadlywater_enabled", "0", "Enable plugin", _, true, 0.0, true, 1.0);
 	CreateTimer(0.1, Timer_WaterCheck, _, TIMER_REPEAT);
 }
 
