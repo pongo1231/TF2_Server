@@ -14,7 +14,7 @@ public Action MenuOpen(int client, int args) {
         return Plugin_Stop;
     }
 
-    Menu menu = new Menu(Handle_BotVoteMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("MvM settings");
 
     char text[128];
@@ -27,11 +27,11 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_BotVoteMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
-        switch (param2) {
+        switch (item) {
             case 0:
-                Voting_CreateBoolConVarVote("sm_mvm_infinitemoney", "Toggle infinite money? (WARNING: Resets mission on change)");
+                Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Toggle infinite money? (WARNING: Resets mission on change)");
         }
     else if (action == MenuAction_End)
         delete menu;

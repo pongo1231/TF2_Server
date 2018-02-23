@@ -1,3 +1,7 @@
+/**
+*   NOTE: Unused!
+*/
+
 #include <sourcemod>
 #include <server/voting>
 #include <server/serverchat>

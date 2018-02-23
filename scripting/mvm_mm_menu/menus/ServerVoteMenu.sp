@@ -9,7 +9,7 @@ public void OnPluginStart() {
 }
 
 public Action MenuOpen(int client, int args) {
-    Menu menu = new Menu(Handle_ServerVoteMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Server settings");
 
     char text[128];
@@ -28,13 +28,13 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_ServerVoteMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
-        switch (param2) {
+        switch (item) {
             case 0:
-                FakeClientCommand(param1, "menu_server_silly");
+                FakeClientCommand(client, "menu_server_silly");
             case 1:
-                Voting_CreateBoolConVarVote("tf_forced_holiday", "Enable halloween mode?", 2, 0);
+                Voting_CreateYesNoConVarVote(client, "tf_forced_holiday", "Enable halloween mode?", 2, 0);
         }
     else if (action == MenuAction_End)
         delete menu;

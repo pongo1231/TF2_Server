@@ -11,7 +11,7 @@ public Action MenuOpen(int client, int args) {
         return Plugin_Stop;
     }
 
-    Menu menu = new Menu(Handle_PlayerMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Player settings");
 
     menu.AddItem("player_taunts", "Taunt menu");
@@ -26,21 +26,21 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_PlayerMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
-        switch (param2) {
+        switch (item) {
             case 0:
-                FakeClientCommand(param1, "sm_taunt");
+                FakeClientCommand(client, "sm_taunt");
             case 1:
-                FakeClientCommand(param1, "fp");
+                FakeClientCommand(client, "fp");
             case 2:
-                FakeClientCommand(param1, "tp");
+                FakeClientCommand(client, "tp");
             case 3:
-                FakeClientCommand(param1, "kill");
+                FakeClientCommand(client, "kill");
             case 4:
-                FakeClientCommand(param1, "sm_robot");
+                FakeClientCommand(client, "sm_robot");
             case 5:
-                FakeClientCommand(param1, "sm_radio");
+                FakeClientCommand(client, "sm_radio");
         }
     else if (action == MenuAction_End)
         delete menu;

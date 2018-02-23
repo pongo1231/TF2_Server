@@ -3,15 +3,15 @@
 
 public void OnPluginStart() {
     RegConsoleCmd("menu", MenuOpen);
-    AddCommandListener(Listener_JoinTeam, "jointeam");
-    AddCommandListener(Listener_JoinTeam, "joinclass");
+    AddCommandListener(Listener_ShowMenu, "jointeam");
+    AddCommandListener(Listener_ShowMenu, "joinclass");
 }
 
 public Action MenuOpen(int client, int args) {
     char client_name[64];
     GetClientName(client, client_name, sizeof(client_name));
 
-    Menu menu = new Menu(Handle_MainMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Welcome, %s!\nYou can open this menu anytime via /menu.", client_name);
     menu.AddItem("main_player", "Player settings");
     menu.AddItem("main_server", "Server settings");
@@ -23,25 +23,25 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_MainMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select) {
-        switch (param2) {
+        switch (item) {
             case 0:
-                FakeClientCommand(param1, "menu_player");
+                FakeClientCommand(client, "menu_player");
             case 1:
-                FakeClientCommand(param1, "menu_server");
+                FakeClientCommand(client, "menu_server");
             case 2:
-                FakeClientCommand(param1, "menu_bots");
+                FakeClientCommand(client, "menu_bots");
             case 3:
-                FakeClientCommand(param1, "menu_mvm");
+                FakeClientCommand(client, "menu_mvm");
             case 4:
-                FakeClientCommand(param1, "menu_credits");
+                FakeClientCommand(client, "menu_credits");
         }
     } else if (action == MenuAction_End)
         delete menu;
 }
 
-public Action Listener_JoinTeam(int client, const char[] command, int args) {
+public Action Listener_ShowMenu(int client, const char[] command, int args) {
     char string_args[16];
     GetCmdArgString(string_args, sizeof(string_args));
 

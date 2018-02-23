@@ -9,7 +9,7 @@ public void OnPluginStart() {
 }
 
 public Action MenuOpen(int client, int args) {
-    Menu menu = new Menu(Handle_ServerVoteMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Silly settings");
 
     char text[128];
@@ -31,20 +31,17 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_ServerVoteMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
-        switch (param2) {
+        switch (item) {
             case 0:
-                Voting_CreateBoolConVarVote("tf2x10_enabled", "Enable x10? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "tf2x10_enabled", "Enable x10? (Silly)");
             case 1:
-                Voting_CreateBoolConVarVote("sm_alwayscrits_enabled", "Enable always crits? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "sm_alwayscrits_enabled", "Enable always crits? (Silly)");
             case 2:
-                if (GameRules_GetProp("m_bPlayingMannVsMachine"))
-                    Server_PrintToChat(param1, "Menu", "Can't set friendly fire in MvM.");
-                else
-                    Voting_CreateBoolConVarVote("mp_friendlyfire", "Enable friendly fire? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "mp_friendlyfire", "Enable friendly fire? (Silly)");
             case 3:
-                Voting_CreateBoolConVarVote("sm_deadlywater_enabled", "Enable deadly water? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "sm_deadlywater_enabled", "Enable deadly water? (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;

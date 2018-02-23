@@ -1,3 +1,7 @@
+/**
+*   NOTE: Unused!
+*/
+
 #include <sourcemod>
 #include <tf2items>
 #include <tf2attributes>

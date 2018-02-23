@@ -5,7 +5,7 @@ public void OnPluginStart() {
 }
 
 public Action MenuOpen(int client, int args) {
-    Menu menu = new Menu(Handle_Credits);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Credits");
     menu.AddItem("1", "Credits to:");
     menu.AddItem("2", "Server and some of the plugins by pongo1231");
@@ -24,7 +24,7 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_Credits(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_End)
         delete menu;
 }

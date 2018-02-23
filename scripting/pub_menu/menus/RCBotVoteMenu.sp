@@ -14,7 +14,7 @@ public Action MenuOpen(int client, int args) {
         return Plugin_Stop;
     }
 
-    Menu menu = new Menu(Handle_BotVoteMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("RCBot settings");
 
     char text[128];
@@ -39,19 +39,19 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_BotVoteMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
-        switch (param2) {
-        	case 0:
-                Voting_CreateBoolCommandVote("rcbot_bot_quota_interval 1", "rcbot_bot_quota_interval 0; sm_kick @bots", "Enable rcbots?");
-        	case 1:
-                Voting_CreateConVarVote("rcbot_anglespeed", "Set rcbot skill", "0.01", "0.21", "0.41", "0.61", "0.81", "1.0");
-         case 2:
-                Voting_CreateBoolConVarVote("sm_gbw_enabled", "Should rcbots use custom weapons?");
-         case 3:
-                Voting_CreateBoolConVarVote("sm_gbc_enabled", "Should rcbots use custom cosmetics?");
-         case 4:
-                Voting_CreateBoolConVarVote("rcbot_melee_only", "Should rcbots use melee only?");
+        switch (item) {
+            case 0:
+                Voting_CreateYesNoCommandVote(client, "rcbot_bot_quota_interval 1", "Enable rcbots?", "rcbot_bot_quota_interval 0; sm_kick @bots");
+            case 1:
+                Voting_CreateStringConVarVote(client, "rcbot_anglespeed", "Set rcbot skill", "0.01", "0.21", "0.41", "0.61", "0.81", "1.0");
+            case 2:
+                Voting_CreateYesNoConVarVote(client, "sm_gbw_enabled", "Should rcbots use custom weapons?");
+            case 3:
+                Voting_CreateYesNoConVarVote(client, "sm_gbc_enabled", "Should rcbots use custom cosmetics?");
+            case 4:
+                Voting_CreateYesNoConVarVote(client, "rcbot_melee_only", "Should rcbots use melee only?");
         }
     else if (action == MenuAction_End)
         delete menu;

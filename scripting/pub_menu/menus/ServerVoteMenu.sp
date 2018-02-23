@@ -9,7 +9,7 @@ public void OnPluginStart() {
 }
 
 public Action MenuOpen(int client, int args) {
-    Menu menu = new Menu(Handle_ServerVoteMenu);
+    Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Server settings");
 
     char text[128];
@@ -44,28 +44,25 @@ public Action MenuOpen(int client, int args) {
     return Plugin_Handled;
 }
 
-public int Handle_ServerVoteMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
-        switch (param2) {
+        switch (item) {
             case 0:
-                FakeClientCommand(param1, "menu_server_silly");
+                FakeClientCommand(client, "menu_server_silly");
             case 1:
-                if (GameRules_GetProp("m_bPlayingMannVsMachine"))
-                    Server_PrintToChat(param1, "Menu", "Can't scramble teams in MvM.");
-                else
-                    Voting_CreateBoolCommandVote("mp_scrambleteams", "Scramble teams?");
+                Voting_CreateYesNoCommandVote(client, "mp_scrambleteams", "Scramble teams?");
             case 2:
-                Voting_CreateBoolConVarVote("mp_disable_respawn_times", "Enable instant respawn?");
+                Voting_CreateYesNoConVarVote(client, "mp_disable_respawn_times", "Enable instant respawn?");
             case 3:
-                Voting_CreateBoolConVarVote("tf_forced_holiday", "Enable halloween mode?", 2, 0);
+                Voting_CreateYesNoConVarVote(client, "tf_forced_holiday", "Enable halloween mode?", 2, 0);
             case 4:
-                Voting_CreateBoolConVarVote("tf_weapon_criticals", "Enable random crits?");
+                Voting_CreateYesNoConVarVote(client, "tf_weapon_criticals", "Enable random crits?");
             case 5:
-                Voting_CreateConVarVote("tf_ctf_bonus_time", "Set crits on capture time (CTF)", "0", "5", "10", "20", "30", "60");
+                Voting_CreateStringConVarVote(client, "tf_ctf_bonus_time", "Set crits on capture time (CTF)", "0", "5", "10", "20", "30", "60");
             case 6:
-                Voting_CreateConVarVote("tf_flag_caps_per_round", "Set flag captures to win (CTF)", "1", "2", "3", "4", "5", "10");
+                Voting_CreateStringConVarVote(client, "tf_flag_caps_per_round", "Set flag captures to win (CTF)", "1", "2", "3", "4", "5", "10");
             case 7:
-                FakeClientCommand(param1, "sm_rtv");
+                FakeClientCommand(client, "sm_rtv");
         }
     else if (action == MenuAction_End)
         delete menu;
