@@ -4,7 +4,8 @@
 const int countdown = 15;
 
 ConVar g_convar;
-ConVar g_convar2;
+char command_name[64];
+char command2_name[64];
 int true_value;
 int false_value;
 bool vote_success = false;
@@ -95,7 +96,7 @@ public int Voting_CreateStringConVarVote(Handle plugin, int numParams) {
     Server_PrintToChatAll("Vote", text);
 }
 
-public int Handle_StringVoting(Menu menu, MenuAction action, int param1, int choice) {
+public int Handle_StringVoting(Menu menu, MenuAction action, int choice, int param2) {
     if (action == MenuAction_VoteEnd) {
         char value[32];
         menu.GetItem(choice, value, sizeof(value));
@@ -116,17 +117,12 @@ public int Voting_CreateYesNoCommandVote(Handle plugin, int numParams) {
     char client_name[64];
     GetClientName(client, client_name, sizeof(client_name));
 
-    char convar_name[128];
-    GetNativeString(2, convar_name, sizeof(convar_name));
-    g_convar = FindConVar(convar_name);
+    GetNativeString(2, command_name, sizeof(command_name));
 
     char question[128];
     GetNativeString(3, question, sizeof(question));
 
-    char convar_name2[128];
-    GetNativeString(4, convar_name2, sizeof(convar_name2));
-    if (convar_name2[0])
-        g_convar2 = FindConVar(convar_name2);
+    GetNativeString(4, command2_name, sizeof(command2_name));
 
     char text[128];
     Format(text, sizeof(text), "A vote has been started by %s.", client_name);
@@ -140,24 +136,20 @@ public int Voting_CreateYesNoCommandVote(Handle plugin, int numParams) {
     Server_PrintToChatAll("Vote", text);
 }
 
-public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int param1, int choice) {
+public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int choice, int param2) {
     if (action == MenuAction_VoteEnd) {
         char text[128];
-        char convar_name[64];
-        GetConVarName(g_convar, convar_name, sizeof(convar_name));
         if (choice == 0) {
-            ServerCommand(convar_name);
-            Format(text, sizeof(text), "%s has been executed.", convar_name);
-        } else if (choice == 1) {
-            if (g_convar2) {
-                char convar_name2[64];
-                GetConVarName(g_convar2, convar_name2, sizeof(convar_name2));
-                ServerCommand(convar_name2);
-                Format(text, sizeof(text), "%s has been executed.", convar_name2);
+            ServerCommand(command_name);
+            Format(text, sizeof(text), "%s has been executed.", command_name);
+        } else if (choice == 1)
+            if (command2_name[0]) {
+                ServerCommand(command2_name);
+                Format(text, sizeof(text), "%s has been executed.", command2_name);
             } else
-                Format(text, sizeof(text), "Vote for %s has failed.", convar_name);
-        }
+                Format(text, sizeof(text), "Vote for %s has failed.", command_name);
         Server_PrintToChatAll("Vote", text);
+        vote_success = true;
     } else if (action == MenuAction_End) {
         ClearVote();
         delete menu;
@@ -165,12 +157,13 @@ public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int param1, i
 }
 
 bool IsVoteRunning() {
-    return g_convar || g_convar2;
+    return g_convar || command_name[0] || command2_name[0];
 }
 
 void ClearVote() {
     g_convar = null;
-    g_convar2 = null;
+    command_name = "";
+    command2_name = "";
 
     if (!vote_success)
         Server_PrintToChatAll("Vote", "No votes received; Vote failed.");
