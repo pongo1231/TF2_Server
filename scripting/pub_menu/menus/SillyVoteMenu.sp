@@ -14,7 +14,10 @@ public Action MenuOpen(int client, int args) {
 
     char text[128];
 
-    Format(text, sizeof(text), "Enable x10 (Currently: %b)", GetConVarBool(FindConVar("tf2x10_enabled")));
+    Format(text, sizeof(text), "Gravity (Currently: %i)", GetConVarInt(FindConVar("sv_gravity")));
+    menu.AddItem("silly_gravity", text);
+
+    Format(text, sizeof(text), "Enable x10 (Respawn to apply) (Currently: %b)", GetConVarBool(FindConVar("tf2x10_enabled")));
     menu.AddItem("silly_x10", text);
 
     Format(text, sizeof(text), "Always crits (Currently: %b)", GetConVarBool(FindConVar("sm_alwayscrits_enabled")));
@@ -34,13 +37,15 @@ public Action MenuOpen(int client, int args) {
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
-            case 0:
-                Voting_CreateYesNoConVarVote(client, "tf2x10_enabled", "Enable x10? (Silly)");
+        	  case 0:
+                Voting_CreateStringConVarVote(client, "sv_gravity", "Set Gravity (800 is default) (Silly)", "10", "400", "800", "1600");
             case 1:
-                Voting_CreateYesNoConVarVote(client, "sm_alwayscrits_enabled", "Enable always crits? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "tf2x10_enabled", "Enable x10? (Silly) (Respawn to apply)");
             case 2:
-                Voting_CreateYesNoConVarVote(client, "mp_friendlyfire", "Enable friendly fire? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "sm_alwayscrits_enabled", "Enable always crits? (Silly)");
             case 3:
+                Voting_CreateYesNoConVarVote(client, "mp_friendlyfire", "Enable friendly fire? (Silly)");
+            case 4:
                 Voting_CreateYesNoConVarVote(client, "sm_deadlywater_enabled", "Enable deadly water? (Silly)");
         }
     else if (action == MenuAction_End)

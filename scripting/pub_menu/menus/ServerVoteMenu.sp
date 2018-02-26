@@ -37,8 +37,6 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Flag captures to win (CTF) (Currently: %i)", GetConVarInt(FindConVar("tf_flag_caps_per_round")));
     menu.AddItem("server_flag_caps_to_win", text);
 
-    menu.AddItem("server_rock_the_vote", "Change Map (Rock The Vote)");
-
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -61,8 +59,6 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateStringConVarVote(client, "tf_ctf_bonus_time", "Set crits on capture time (CTF)", "0", "5", "10", "20", "30", "60");
             case 6:
                 Voting_CreateStringConVarVote(client, "tf_flag_caps_per_round", "Set flag captures to win (CTF)", "1", "2", "3", "4", "5", "10");
-            case 7:
-                FakeClientCommand(client, "sm_rtv");
         }
     else if (action == MenuAction_End)
         delete menu;
