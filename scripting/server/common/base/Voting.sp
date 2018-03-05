@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <server/serverchat>
 
 const int countdown = 15;
@@ -15,6 +16,12 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
    CreateNative("Voting_CreateStringConVarVote", Voting_CreateStringConVarVote);
    CreateNative("Voting_CreateYesNoCommandVote", Voting_CreateYesNoCommandVote);
    return APLRes_Success;
+}
+
+public void OnPluginStart() {
+	PrecacheSound("ui/vote_started.wav");
+	PrecacheSound("ui/vote_success.wav");
+	PrecacheSound("ui/vote_failure.wav");
 }
 
 public int Voting_CreateYesNoConVarVote(Handle plugin, int numParams) {
@@ -46,13 +53,20 @@ public int Voting_CreateYesNoConVarVote(Handle plugin, int numParams) {
     menu.ExitButton = false;
     menu.DisplayVoteToAll(countdown);
     Server_PrintToChatAll("Vote", text);
+
+    EmitSoundToAll("ui/vote_started.wav");
 }
 
 public int Handle_YesNoVoting(Menu menu, MenuAction action, int choice, int param2) {
     if (action == MenuAction_VoteEnd) {
-        int value = false_value;
-        if (choice == 0) // yes = 0
+        int value;
+        if (choice == 1) { // no = 1
+        	value = false_value;
+        	EmitSoundToAll("ui/vote_failure.wav");
+        } else if (choice == 0) { // yes = 0
             value = true_value;
+            EmitSoundToAll("ui/vote_success.wav");
+        }
 
         char value_string[8];
         IntToString(value, value_string, sizeof(value_string));
@@ -94,6 +108,8 @@ public int Voting_CreateStringConVarVote(Handle plugin, int numParams) {
     menu.ExitButton = false;
     menu.DisplayVoteToAll(countdown);
     Server_PrintToChatAll("Vote", text);
+
+    EmitSoundToAll("ui/vote_started.wav");
 }
 
 public int Handle_StringVoting(Menu menu, MenuAction action, int choice, int param2) {
@@ -101,6 +117,7 @@ public int Handle_StringVoting(Menu menu, MenuAction action, int choice, int par
         char value[32];
         menu.GetItem(choice, value, sizeof(value));
         SetConVar(g_convar, value);
+        EmitSoundToAll("ui/vote_success.wav");
     } else if (action == MenuAction_End) {
         ClearVote();
         delete menu;
@@ -134,6 +151,8 @@ public int Voting_CreateYesNoCommandVote(Handle plugin, int numParams) {
     menu.ExitButton = false;
     menu.DisplayVoteToAll(countdown);
     Server_PrintToChatAll("Vote", text);
+
+    EmitSoundToAll("ui/vote_started.wav");
 }
 
 public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int choice, int param2) {
@@ -142,12 +161,16 @@ public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int choice, i
         if (choice == 0) {
             ServerCommand(command_name);
             Format(text, sizeof(text), "%s has been executed.", command_name);
+            EmitSoundToAll("ui/vote_success.wav");
         } else if (choice == 1)
             if (command2_name[0]) {
                 ServerCommand(command2_name);
                 Format(text, sizeof(text), "%s has been executed.", command2_name);
-            } else
+                EmitSoundToAll("ui/vote_success.wav");
+            } else {
                 Format(text, sizeof(text), "Vote for %s has failed.", command_name);
+                EmitSoundToAll("ui/vote_failure.wav");
+            }
         Server_PrintToChatAll("Vote", text);
         vote_success = true;
     } else if (action == MenuAction_End) {
