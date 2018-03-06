@@ -42,6 +42,8 @@ public void T_GetData(Database m_db, DBResultSet results, const char[] error, an
         Server_PrintToChat(client, "Ranking", "You have no data in the database yet!");
     else {
         Menu menu = GetArrayCell(data, 1);
+        menu.SetTitle("Your stats");
+
         SQL_FetchRow(results);
         
         int deaths = SQL_FetchInt(results, 1);
@@ -52,14 +54,18 @@ public void T_GetData(Database m_db, DBResultSet results, const char[] error, an
         int kills = SQL_FetchInt(results, 2);
         char kills_text[32];
         Format(kills_text, sizeof(kills_text), "Your kills: %i", kills);
-        menu.AddItem("stats_deaths", kills_text);
+        menu.AddItem("stats_kills", kills_text);
 
         int assists = SQL_FetchInt(results, 3);
         char assists_text[32];
         Format(assists_text, sizeof(assists_text), "Your assists: %i", assists);
-        menu.AddItem("stats_deaths", assists_text);
+        menu.AddItem("stats_assists", assists_text);
 
-        menu.SetTitle("Your stats");
+        float kd_ratio = float(kills) / float(deaths);
+        char kd_ratio_text[32];
+        Format(kd_ratio_text, sizeof(kd_ratio_text), "Your k/d ratio: %f", kd_ratio);
+        menu.AddItem("stats_kd_ratio", kd_ratio_text);
+
         menu.Display(client, 20);
     }
 }
