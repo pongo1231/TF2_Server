@@ -23,6 +23,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Always crits (Currently: %b)", GetConVarBool(FindConVar("sm_alwayscrits_enabled")));
     menu.AddItem("silly_always_crits", text);
 
+    Format(text, sizeof(text), "Goomba Stomping (Currently: %b)", GetConVarBool(FindConVar("goomba_enabled")));
+    menu.AddItem("silly_goomba_enabled", text);
+
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -37,6 +40,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "tf2x10_enabled", "Enable x10? (Silly) (Respawn to apply)");
             case 2:
                 Voting_CreateYesNoConVarVote(client, "sm_alwayscrits_enabled", "Enable always crits? (Silly)");
+            case 3:
+            	Voting_CreateYesNoConVarVote(client, "goomba_enabled", "Enable goomba stomping? (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;

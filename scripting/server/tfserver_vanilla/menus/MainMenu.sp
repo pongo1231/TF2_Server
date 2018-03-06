@@ -13,6 +13,7 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Welcome, %s!\nYou can open this menu anytime via /menu.", client_name);
+    menu.AddItem("main_ranking", "Ranking menu");
     menu.AddItem("main_player", "Player settings");
     menu.AddItem("main_server", "Server settings");
     menu.AddItem("main_credits", "Credits");
@@ -25,10 +26,12 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select) {
         switch (item) {
             case 0:
-                FakeClientCommand(client, "menu_player");
+                FakeClientCommand(client, "menu_ranking");
             case 1:
-                FakeClientCommand(client, "menu_server");
+                FakeClientCommand(client, "menu_player");
             case 2:
+                FakeClientCommand(client, "menu_server");
+            case 3:
                 FakeClientCommand(client, "menu_credits");
         }
     } else if (action == MenuAction_End)

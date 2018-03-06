@@ -29,6 +29,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Deadly water (Currently: %b)", GetConVarBool(FindConVar("sm_deadlywater_enabled")));
     menu.AddItem("silly_deadly_water", text);
 
+    Format(text, sizeof(text), "Goomba Stomping (Currently: %b)", GetConVarBool(FindConVar("goomba_enabled")));
+    menu.AddItem("silly_goomba_enabled", text);
+
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -47,6 +50,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "mp_friendlyfire", "Enable friendly fire? (Silly)");
             case 4:
                 Voting_CreateYesNoConVarVote(client, "sm_deadlywater_enabled", "Enable deadly water? (Silly)");
+            case 5:
+                Voting_CreateYesNoConVarVote(client, "goomba_enabled", "Enable goomba stomping? (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;

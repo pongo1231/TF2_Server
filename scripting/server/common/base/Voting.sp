@@ -18,7 +18,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
    return APLRes_Success;
 }
 
-public void OnPluginStart() {
+public void OnMapStart() {
 	PrecacheSound("ui/vote_started.wav");
 	PrecacheSound("ui/vote_success.wav");
 	PrecacheSound("ui/vote_failure.wav");

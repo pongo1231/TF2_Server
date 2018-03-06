@@ -1,7 +1,7 @@
  #include <sourcemod>
  #include <sdktools>
 
-public void OnPluginStart() {
+public void OnMapStart() {
 	PrecacheSound("ui/duel_event.wav");
 }
 
