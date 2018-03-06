@@ -62,7 +62,7 @@ public void T_GetData(Database m_db, DBResultSet results, const char[] error, an
         menu.AddItem("stats_assists", assists_text);
 
         float kd_ratio = float(kills) / float(deaths);
-        char kd_ratio_text[21];
+        char kd_ratio_text[32];
         Format(kd_ratio_text, sizeof(kd_ratio_text), "Your k/d ratio: %f", kd_ratio);
         menu.AddItem("stats_kd_ratio", kd_ratio_text);
 
