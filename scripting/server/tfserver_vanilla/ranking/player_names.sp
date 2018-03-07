@@ -20,7 +20,7 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 	if (error[0])
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else
-		CreateTimer(300.0, Timer_UpdateNames, _, TIMER_REPEAT);
+		CreateTimer(30.0, Timer_UpdateNames, _, TIMER_REPEAT);
 }
 
 public Action Timer_UpdateNames(Handle timer) {
