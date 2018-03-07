@@ -13,7 +13,7 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Welcome, %s!\nYou can open this menu anytime via /menu.", client_name);
-    menu.AddItem("main_ranking", "Ranking menu");
+    menu.AddItem("main_ranking", "Stats menu");
     menu.AddItem("main_player", "Player settings");
     menu.AddItem("main_server", "Server settings");
     menu.AddItem("main_credits", "Credits");
