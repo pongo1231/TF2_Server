@@ -36,7 +36,6 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             char item_text[64];
             menu.GetItem(item, item_text, sizeof(item_text));
             FakeClientCommand(client, "rank %s", item_text);
-            PrintToServer(item_text);
         }
     } else if (action == MenuAction_End)
         delete menu;
