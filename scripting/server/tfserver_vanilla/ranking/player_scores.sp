@@ -66,7 +66,7 @@ public void T_Scores_CheckFirstTimeInsert(Database m_db, DBResultSet results, co
 		char query[256];
 		char steam_id[64];
 		GetArrayString(data, 0, steam_id, sizeof(steam_id));
-		Format(query, sizeof(query), "INSERT INTO stats_scores values('%s', 0, 0)", steam_id);
+		Format(query, sizeof(query), "INSERT INTO stats_scores values('%s', 0, 999999999)", steam_id);
 		db.Query(T_Scores_UpdateData, query, data);
 	} else
 		T_Scores_UpdateData(null, null, "", data);

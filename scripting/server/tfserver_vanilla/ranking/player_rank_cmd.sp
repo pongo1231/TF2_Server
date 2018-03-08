@@ -114,7 +114,7 @@ public void T_ShowData(Database m_db, DBResultSet results, const char[] error, a
 
 		int ranking = GetArrayCell(data, 3);
 		char ranking_text[32];
-		if (ranking == 0)
+		if (ranking == 999999999)
 			Format(ranking_text, sizeof(ranking_text), "Ranking: Not available yet");
 		else
 			Format(ranking_text, sizeof(ranking_text), "Ranking: #%i", ranking);
