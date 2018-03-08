@@ -20,7 +20,7 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 	if (error[0])
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else
-		CreateTimer(60.0, Timer_UpdateNames, _, TIMER_REPEAT);
+		CreateTimer(120.0, Timer_UpdateNames, _, TIMER_REPEAT);
 }
 
 public Action Timer_UpdateNames(Handle timer) {
@@ -70,7 +70,7 @@ public void T_ProceedUpdate(Database m_db, DBResultSet results, const char[] err
 	char query[256];
 	char name[64];
 	GetArrayString(data, 1, name, sizeof(name));
-	Format(query, sizeof(query), "UPDATE stats_names SET player_name = '%s' WHERE steam_id='%i'", name, GetArrayCell(data, 0));
+	Format(query, sizeof(query), "UPDATE stats_names SET player_name='%s' WHERE steam_id='%i'", name, GetArrayCell(data, 0));
 	db.Query(T_Dummy, query, true);
 }
 

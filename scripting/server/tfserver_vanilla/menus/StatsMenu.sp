@@ -10,9 +10,10 @@ public Action MenuOpen(int client, int args) {
     GetClientName(client, client_name, sizeof(client_name));
 
     Menu menu = new Menu(Handle_Menu);
-    menu.SetTitle("Stats menu\nNOTE: Currently in beta, includes bots, ranking can be reset anytime until full release.");
+    menu.SetTitle("Stats menu");
+    menu.AddItem("ranking_rank_top7", "Top 7 players");
     menu.AddItem("ranking_rank_self", "Your ranking");
-
+    
     for (int i = 1; i < GetMaxClients(); i++) {
         if (IsClientInGame(i) && !IsFakeClient(i)) {
             char player_name[64];
@@ -23,6 +24,7 @@ public Action MenuOpen(int client, int args) {
             }
         }
     }
+
     menu.Display(client, 20);
 
     return Plugin_Handled;
@@ -31,12 +33,9 @@ public Action MenuOpen(int client, int args) {
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select) {
         if (item == 0)
+            FakeClientCommand(client, "top7");
+        else if (item == 1)
             FakeClientCommand(client, "rank");
-        else {
-            char item_text[64];
-            menu.GetItem(item, item_text, sizeof(item_text));
-            FakeClientCommand(client, "rank %s", item_text);
-        }
     } else if (action == MenuAction_End)
         delete menu;
 }

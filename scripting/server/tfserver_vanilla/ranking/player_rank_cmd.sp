@@ -38,15 +38,15 @@ void ShowRankMenu(int client, const char[] target_player) {
 	ArrayList data = CreateArray(8); // Don't truncate the player's name
 	PushArrayCell(data, client);
 	PushArrayString(data, target_player);
-	db.Query(T_GetData, query, data);
+	db.Query(T_GetRankingData, query, data);
 }
 
-public void T_GetData(Database m_db, DBResultSet results, const char[] error, any data) {
+public void T_GetRankingData(Database m_db, DBResultSet results, const char[] error, any data) {
 	int client = GetArrayCell(data, 0);
 
 	if (error[0]) {
         LogError("PLAYERDB ERROR: %s", error);
-        Server_PrintToChat(client, "Ranking", "Error while fatching player.");
+        Server_PrintToChat(client, "Ranking", "Error while fetching player.");
         return;
     }
 	
@@ -56,7 +56,34 @@ public void T_GetData(Database m_db, DBResultSet results, const char[] error, an
 		SQL_FetchRow(results);
 
 		char query[256];
-		Format(query, sizeof(query), "SELECT * FROM stats_killing WHERE steam_id='%i'", SQL_FetchInt(results, 0));
+		char steam_id[64];
+		SQL_FetchString(results, 0, steam_id, sizeof(steam_id));
+		Format(query, sizeof(query), "SELECT * FROM stats_scores WHERE steam_id='%s'", steam_id);
+		db.Query(T_GetKillingData, query, data);
+    }
+}
+
+public void T_GetKillingData(Database m_db, DBResultSet results, const char[] error, any data) {
+	int client = GetArrayCell(data, 0);
+
+	if (error[0]) {
+        LogError("PLAYERDB ERROR: %s", error);
+        Server_PrintToChat(client, "Ranking", "Error while fetching player.");
+        return;
+    }
+	
+	if (SQL_GetRowCount(results) == 0)
+        Server_PrintToChat(client, "Ranking", "Player is not in the database yet!");
+	else {
+		SQL_FetchRow(results);
+
+		PushArrayCell(data, SQL_FetchInt(results, 1));
+		PushArrayCell(data, SQL_FetchInt(results, 2));
+
+		char query[256];
+		char steam_id[64];
+		SQL_FetchString(results, 0, steam_id, sizeof(steam_id));
+		Format(query, sizeof(query), "SELECT deaths,kills,assists FROM stats_killing WHERE steam_id='%s'", steam_id);
 		db.Query(T_ShowData, query, data);
     }
 }
@@ -81,28 +108,41 @@ public void T_ShowData(Database m_db, DBResultSet results, const char[] error, a
 		menu.SetTitle(title);
 
 		SQL_FetchRow(results);
+		int kills = SQL_FetchInt(results, 1);
+		int assists = SQL_FetchInt(results, 2);
+		int deaths = SQL_FetchInt(results, 0);
 
-		int kills = SQL_FetchInt(results, 2);
+		int ranking = GetArrayCell(data, 3);
+		char ranking_text[32];
+		Format(ranking_text, sizeof(ranking_text), "Ranking: #%i", ranking);
+		menu.AddItem("stats_ranking", ranking_text);
+
+		int score = GetArrayCell(data, 2);
+		char score_text[32];
+		Format(score_text, sizeof(score_text), "Score: %i", score);
+		menu.AddItem("stats_score", score_text);
+
+		float kd_ratio = float(kills) / float(deaths);
+		char kd_ratio_text[32];
+		if (kd_ratio == 0)
+			Format(kd_ratio_text, sizeof(kd_ratio_text), "K/D ratio: Not available yet");
+		else
+			Format(kd_ratio_text, sizeof(kd_ratio_text), "K/D ratio: %f", kd_ratio);
+		menu.AddItem("stats_kd_ratio", kd_ratio_text);
+
+		menu.AddItem("nothing", "");
+
 		char kills_text[32];
 		Format(kills_text, sizeof(kills_text), "Kills: %i", kills);
 		menu.AddItem("stats_kills", kills_text);
 
-		int deaths = SQL_FetchInt(results, 1);
-		char deaths_text[32];
-		Format(deaths_text, sizeof(deaths_text), "Deaths: %i", deaths);
-		menu.AddItem("stats_deaths", deaths_text);
-
-		int assists = SQL_FetchInt(results, 3);
 		char assists_text[32];
 		Format(assists_text, sizeof(assists_text), "Assists: %i", assists);
 		menu.AddItem("stats_assists", assists_text);
 
-		menu.AddItem("nothing", "");
-
-		float kd_ratio = float(kills) / float(deaths);
-		char kd_ratio_text[32];
-		Format(kd_ratio_text, sizeof(kd_ratio_text), "K/D ratio: %f", kd_ratio);
-		menu.AddItem("stats_kd_ratio", kd_ratio_text);
+		char deaths_text[32];
+		Format(deaths_text, sizeof(deaths_text), "Deaths: %i", deaths);
+		menu.AddItem("stats_deaths", deaths_text);
 
 		menu.Display(client, 20);
     }
