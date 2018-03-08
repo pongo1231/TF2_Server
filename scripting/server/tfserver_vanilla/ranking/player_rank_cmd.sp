@@ -114,7 +114,10 @@ public void T_ShowData(Database m_db, DBResultSet results, const char[] error, a
 
 		int ranking = GetArrayCell(data, 3);
 		char ranking_text[32];
-		Format(ranking_text, sizeof(ranking_text), "Ranking: #%i", ranking);
+		if (ranking == 0)
+			Format(ranking_text, sizeof(ranking_text), "Ranking: Not available yet");
+		else
+			Format(ranking_text, sizeof(ranking_text), "Ranking: #%i", ranking);
 		menu.AddItem("stats_ranking", ranking_text);
 
 		int score = GetArrayCell(data, 2);
