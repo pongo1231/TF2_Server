@@ -20,7 +20,7 @@ public Action Timer_DisplayRanking(Handle timer) {
 	char query[256];
 	for (int i = 1; i < GetMaxClients(); i++) {
 		if (IsClientInGame(i) && !IsFakeClient(i)) {
-			Format(query, sizeof(query), "SELECT rank,score FROM stats_scores");
+			Format(query, sizeof(query), "SELECT rank,score FROM stats_scores WHERE steam_id='%i'", GetSteamAccountID(i));
 			db.Query(T_DisplayRankInfo, query, i);
 		}
 	}
@@ -36,7 +36,7 @@ public void T_DisplayRankInfo(Database m_db, DBResultSet results, const char[] e
 		SQL_FetchRow(results);
 
 		char text[128];
-		Format(text, sizeof(text), "You are currently rank #%i with a score of %i.", SQL_FetchInt(data, 0), SQL_FetchInt(data, 1));
+		Format(text, sizeof(text), "You are currently rank #%i with a score of %i.", SQL_FetchInt(results, 0), SQL_FetchInt(results, 1));
 		Server_PrintToChat(data, "Ranking", text);
 		Server_PrintToChat(data, "Ranking", "Type /rank for more info.");
 		Server_PrintToChat(data, "Ranking", "Also type /top7 to see the current Top 7.");
