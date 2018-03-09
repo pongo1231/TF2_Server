@@ -13,6 +13,7 @@ public void OnPluginStart() {
 public OnClientPostAdminCheck(int client) {
 	Server_PrintToChat(client, "Server", "Welcome to the server! You can open the player menu via /menu.");
 	Server_PrintToChat(client, "Server", "Also make sure to check out our steam group: steamcommunity.com/groups/duckyservers");
+	Server_PrintToChat(client, "Server", "Type /rank to see your stats.");
 }
 
 public Action Timer_DisplayAd(Handle timer) {

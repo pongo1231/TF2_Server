@@ -36,6 +36,11 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             FakeClientCommand(client, "top7");
         else if (item == 1)
             FakeClientCommand(client, "rank");
+        else {
+            char player_name[64];
+            GetMenuItem(menu, item, player_name, sizeof(player_name));
+            FakeClientCommand(client, "rank %s", player_name);
+        }
     } else if (action == MenuAction_End)
         delete menu;
 }
