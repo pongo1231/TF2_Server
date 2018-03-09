@@ -15,7 +15,7 @@ public void T_DataBaseConnect(Database m_db, const char[] error, any data) {
     else {
         db = m_db;
 
-        CreateTimer(300.0, Timer_UpdateTopSevenCache, _, TIMER_REPEAT);
+        CreateTimer(60.0, Timer_UpdateTopSevenCache, _, TIMER_REPEAT);
         Timer_UpdateTopSevenCache(INVALID_HANDLE);
 
         RegConsoleCmd("top7", Command_TopSeven);
