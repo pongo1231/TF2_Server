@@ -20,6 +20,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			TF2Attrib_SetByName(wep, "fire rate bonus", 0.7);
 			TF2Attrib_SetByName(wep, "mod rage on hit bonus", 100.0);
 			TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
+			TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
 
 			switch (TF2_GetPlayerClass(i)) {
 				case TFClass_Engineer: {
