@@ -23,6 +23,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Halloween mode (Currently: %i)", halloween_mode);
     menu.AddItem("server_halloween", text);
 
+    Format(text, sizeof(text), "Instant Respawn (Currently: %i)", GetConVarInt(FindConVar("mp_disable_respawn_times")));
+    menu.AddItem("server_instant_respawn", text);
+
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -35,6 +38,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 FakeClientCommand(client, "menu_server_silly");
             case 1:
                 Voting_CreateYesNoConVarVote(client, "tf_forced_holiday", "Enable halloween mode?", 2, 0);
+            case 2:
+                Voting_CreateYesNoConVarVote(client, "mp_disable_respawn_times", "Enable instant respawning?");
         }
     else if (action == MenuAction_End)
         delete menu;

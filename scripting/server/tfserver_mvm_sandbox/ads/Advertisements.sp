@@ -13,10 +13,6 @@ public void OnPluginStart() {
 public OnClientPostAdminCheck(int client) {
 	Server_PrintToChat(client, "Server", "Welcome to the server! You can open the player menu via /menu.");
 	Server_PrintToChat(client, "Server", "Also make sure to check out our steam group: steamcommunity.com/groups/duckyservers");
-	Server_PrintToChat(client, "Server", "");
-	Server_PrintToChat(client, "Server", "Currently there is a bug on Valve's side that makes you keep on rejoining on community servers when joining through matchmaking.");
-	Server_PrintToChat(client, "Server", "Either join this server through the community server list, leave the server then join by using 'retry' in the console");
-	Server_PrintToChat(client, "Server", "or by just not opening any in-game menu.");
 }
 
 public Action Timer_DisplayAd(Handle timer) {
