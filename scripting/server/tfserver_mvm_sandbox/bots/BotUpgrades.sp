@@ -27,6 +27,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 					TF2Attrib_SetByName(wep, "engy sentry damage bonus", 1.0);
 					TF2Attrib_SetByName(wep, "engy building health bonus", 1.0);
 					TF2Attrib_SetByName(wep, "engineer sentry build rate multiplier", 200.0);
+					TF2Attrib_SetByName(wep, "engy sentry radius increased", 1000.0);
 					TF2Attrib_SetByName(wep, "metal regen", 1000.0);
 				}
 				case TFClass_Medic: {
