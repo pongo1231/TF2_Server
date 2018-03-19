@@ -18,11 +18,16 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			TF2Attrib_SetByName(wep, "ammo regen", 1.0);
 			TF2Attrib_SetByName(wep, "clip size bonus", 3.0);
 			TF2Attrib_SetByName(wep, "fire rate bonus", 0.7);
-			TF2Attrib_SetByName(wep, "mod rage on hit bonus", 100.0);
+			//TF2Attrib_SetByName(wep, "mod rage on hit bonus", 100.0);
+			TF2Attrib_SetByName(wep, "restore health on kill", 25.0);
 			TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
-			TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
+			//TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
 
 			switch (TF2_GetPlayerClass(i)) {
+				case TFClass_Pyro: {
+					TF2Attrib_SetByName(wep, "airblast pushback scale", 300.0);
+					TF2Attrib_SetByName(wep, "mult airblast refire time", 0.5);
+				}
 				case TFClass_Engineer: {
 					TF2Attrib_SetByName(wep, "engy sentry damage bonus", 1.0);
 					TF2Attrib_SetByName(wep, "engy building health bonus", 1.0);
@@ -43,7 +48,7 @@ public Action Event_PlayerBuiltObject(Handle event, const char[] name, bool dont
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	if (IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red) {
 		int sentry = GetEventInt(event, "index");
-		SetEntProp(sentry, Prop_Send, "m_iUpgradeLevel", 3);
-		SetEntProp(sentry, Prop_Send, "m_iAmmoShells", -1); 
+		//SetEntProp(sentry, Prop_Send, "m_iUpgradeLevel", 3);
+		SetEntProp(sentry, Prop_Send, "m_iAmmoShells", 9999999999); 
 	}
 }

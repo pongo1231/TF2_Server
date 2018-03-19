@@ -7,8 +7,8 @@ public void OnPluginStart() {
 }
 
 public Action Timer_JoinPlayersIntoTeam(Handle timer) {
-	for (int i = 1; i < GetMaxClients(); i++) {
-		if (IsClientInGame(i) && !IsFakeClient(i) && TF2_GetClientTeam(i) == TFTeam_Spectator || TF2_GetClientTeam(i) == TFTeam_Unassigned)
+	for (int i = 1; i < GetMaxClients() + 1; i++) {
+		if (IsClientInGame(i) && !IsFakeClient(i) && (TF2_GetClientTeam(i) == TFTeam_Spectator || TF2_GetClientTeam(i) == TFTeam_Unassigned))
 			FakeClientCommand(i, "sm_mvmred");
 	}
 }
