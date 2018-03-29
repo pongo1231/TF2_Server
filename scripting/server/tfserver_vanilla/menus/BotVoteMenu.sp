@@ -1,20 +1,21 @@
 #include <sourcemod>
+#include <server/voting>
 #include <server/serverchat>
+#include <tf2>
+#include <tf2_stocks>
 
 public void OnPluginStart() {
-    RegConsoleCmd("menu_player", MenuOpen);
+    RegConsoleCmd("menu_bots", MenuOpen);
 }
 
 public Action MenuOpen(int client, int args) {
-    if (GetClientTeam(client) == 1) {
-        Server_PrintToChat(client, "Menu", "You can't open the player settings as a spectator.");
-        return Plugin_Stop;
-    }
-
     Menu menu = new Menu(Handle_Menu);
-    menu.SetTitle("Player settings");
+    menu.SetTitle("Bot settings");
 
-    menu.AddItem("player_kill", "Suicide");
+    char text[128];
+
+    Format(text, sizeof(text), "Enable bots");
+    menu.AddItem("bots_enable", text);
 
     menu.Display(client, 20);
  
@@ -25,7 +26,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
             case 0:
-                FakeClientCommand(client, "kill");
+                Voting_CreateYesNoCommandVote(client, "rcbot_bot_quota_interval 1", "Enable bots?", "rcbot_bot_quota_interval 0; sm_kick @bots");
         }
     else if (action == MenuAction_End)
         delete menu;
