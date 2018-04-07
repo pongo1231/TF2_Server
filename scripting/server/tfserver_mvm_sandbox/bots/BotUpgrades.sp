@@ -18,7 +18,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			TF2Attrib_SetByName(wep, "ammo regen", 1.0);
 			TF2Attrib_SetByName(wep, "clip size bonus", 3.0);
 			TF2Attrib_SetByName(wep, "fire rate bonus", 0.7);
-			//TF2Attrib_SetByName(wep, "mod rage on hit bonus", 100.0);
+			TF2Attrib_SetByName(wep, "mod rage on hit bonus", 100.0);
 			TF2Attrib_SetByName(wep, "restore health on kill", 25.0);
 			TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
 			//TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
@@ -34,6 +34,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 					TF2Attrib_SetByName(wep, "engineer sentry build rate multiplier", 200.0);
 					TF2Attrib_SetByName(wep, "engy sentry radius increased", 1000.0);
 					TF2Attrib_SetByName(wep, "metal regen", 1000.0);
+					TF2Attrib_SetByName(wep, "bidirectional teleport", 1.0);
 				}
 				case TFClass_Medic: {
 					TF2Attrib_SetByName(wep, "ubercharge rate bonus", 500.0);

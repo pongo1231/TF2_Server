@@ -5,17 +5,16 @@
 #include <tf2_stocks>
 
 public void OnPluginStart() {
-    RegConsoleCmd("menu_bots", MenuOpen);
+    RegConsoleCmd("menu_server_map", MenuOpen);
 }
 
 public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_Menu);
-    menu.SetTitle("Bot settings");
+    menu.SetTitle("Map settings");
 
-    char text[128];
+    menu.AddItem("server_map_rtv", "Vote for map change");
 
-    Format(text, sizeof(text), "Enable bots");
-    menu.AddItem("bots_enable", text);
+    menu.AddItem("server_map_nominate", "Nominate map for map change choice");
 
     menu.Display(client, 20);
  
@@ -26,7 +25,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
             case 0:
-                Voting_CreateYesNoCommandVote(client, "rcbot_bot_quota_interval 1", "Enable bots?", "rcbot_bot_quota_interval 0; sm_kick @bots");
+                FakeClientCommand(client, "sm_rtv");
+            case 1:
+            	FakeClientCommand(client, "sm_nominate");
         }
     else if (action == MenuAction_End)
         delete menu;
