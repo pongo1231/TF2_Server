@@ -18,13 +18,14 @@ public Action Timer_CheckReady(Handle timer) {
 		return Plugin_Continue;
 
 	bool players_ready = false;
-	for (int i = 1; i < 33; i++)
-		if (IsClientInGame(i) && !IsFakeClient(i))
-			if (!IsPlayerReady(i)) {
-				players_ready = false;
-				break;
-			} else
-				players_ready = true;
+	if (GameRules_GetRoundState() != RoundState_RoundRunning)
+		for (int i = 1; i < 33; i++)
+			if (IsClientInGame(i) && !IsFakeClient(i))
+				if (!IsPlayerReady(i)) {
+					players_ready = false;
+					break;
+				} else
+					players_ready = true;
 
 	if (players_ready) {
 		ServerCommand("mp_restartround 10");
