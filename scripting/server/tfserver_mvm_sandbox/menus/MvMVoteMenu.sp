@@ -19,7 +19,7 @@ public Action MenuOpen(int client, int args) {
 
     char text[128];
 
-    Format(text, sizeof(text), "Infinite Money (WARNING: Resets mission on change) (Currently: %b)", GetConVarBool(FindConVar("sm_mvm_infinitemoney")));
+    Format(text, sizeof(text), "Infinite Money (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_mvm_infinitemoney")));
     menu.AddItem("mvm_infinitemoney", text);
 
     menu.Display(client, 20);
@@ -31,7 +31,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
             case 0:
-                Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Toggle infinite money? (WARNING: Resets mission on change)");
+                Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Enable infinite money? (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;

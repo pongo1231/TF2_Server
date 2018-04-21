@@ -9,7 +9,7 @@ ConVar g_enabled;
 
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_mvm_infinitemoney", "0", "Enable plugin", _, true, 0.0, true, 1.0);
-	g_enabled.AddChangeHook(OnInfiniteMoneyChange);
+	//g_enabled.AddChangeHook(OnInfiniteMoneyChange);
 
 	CreateTimer(1.0, Timer_GiveMoney, _, TIMER_REPEAT);
 }
@@ -18,7 +18,7 @@ public void OnMapStart() {
 	playing_mvm = IsGamemodeMvm();
 }
 
-public void OnInfiniteMoneyChange(ConVar convar, char[] oldValue, char[] newValue)
+/*public void OnInfiniteMoneyChange(ConVar convar, char[] oldValue, char[] newValue)
 {
 	if (playing_mvm) {
 		SetCommandFlags("tf_mvm_jump_to_wave", FCVAR_NONE);
@@ -30,7 +30,7 @@ public void OnInfiniteMoneyChange(ConVar convar, char[] oldValue, char[] newValu
 
 public Action Delay_UnCheatCommand(Handle timer) {
 	SetCommandFlags("tf_mvm_jump_to_wave", FCVAR_CHEAT);
-}
+}*/
 
 public Action Timer_GiveMoney(Handle timer) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))

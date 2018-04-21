@@ -18,37 +18,39 @@ public Action Timer_CheckReady(Handle timer) {
 		return Plugin_Continue;
 
 	bool players_ready = false;
-	if (GameRules_GetRoundState() != RoundState_RoundRunning)
+	if (GameRules_GetRoundState() == RoundState_Preround || GameRules_GetRoundState() == RoundState_BetweenRounds) {
 		for (int i = 1; i < 33; i++)
-			if (IsClientInGame(i) && !IsFakeClient(i))
-				if (!IsPlayerReady(i)) {
+			if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Red)
+				if (!IsPlayerReady(i) && !IsFakeClient(i)) {
 					players_ready = false;
 					break;
-				} else
-					players_ready = true;
-
-	if (players_ready) {
-		ServerCommand("mp_restartround 10");
-		for (int i = 1; i < 33; i++)
-			if (IsClientInGame(i) && !IsFakeClient(i))
-				MakePlayerReady(i, false);
+				} else if (IsPlayerReady(i))
+					if (IsFakeClient(i)) {
+						players_ready = false;
+						break;
+					} else
+						players_ready = true;
 	}
+
+	if (players_ready)
+		for (int i = 1; i < 33; i++)
+			if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Red)
+				MakePlayerReady(i, true);
 
 	return Plugin_Handled;
 }
 
 bool IsGamemodeMvm() {
-	return GameRules_GetProp("m_bPlayingMannVsMachine") ? true : false;
+	if (GameRules_GetProp("m_bPlayingMannVsMachine") == -1)
+		return false;
+	else
+		return true;
 }
 
 bool IsPlayerReady(int client) {
-	if (!IsClientInGame(client))
-		return false;
-	else
-		return view_as<bool>(GameRules_GetProp("m_bPlayerReady", 1, client));
+	return view_as<bool>(GameRules_GetProp("m_bPlayerReady", 1, client));
 }
 
 void MakePlayerReady(int client, bool state) {
-	if (IsClientInGame(client))
-		FakeClientCommand(client, "tournament_player_readystate %i", state);
+	FakeClientCommand(client, "tournament_player_readystate %i", state);
 }
