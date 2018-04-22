@@ -15,6 +15,7 @@ public Action MenuOpen(int client, int args) {
     menu.SetTitle("Player settings");
 
     menu.AddItem("player_taunts", "Taunt menu");
+    menu.AddItem("player_pitch", "Pitch menu");
     menu.AddItem("player_fp", "Perspective to first person");
     menu.AddItem("player_tp", "Perspective to third person");
     menu.AddItem("player_kill", "Suicide");
@@ -31,12 +32,14 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 0:
                 FakeClientCommand(client, "sm_taunt");
             case 1:
-                FakeClientCommand(client, "fp");
+                FakeClientCommand(client, "menu_player_pitch");
             case 2:
-                FakeClientCommand(client, "tp");
+                FakeClientCommand(client, "fp");
             case 3:
-                FakeClientCommand(client, "kill");
+                FakeClientCommand(client, "tp");
             case 4:
+                FakeClientCommand(client, "kill");
+            case 5:
                 FakeClientCommand(client, "sm_robot");
         }
     else if (action == MenuAction_End)
