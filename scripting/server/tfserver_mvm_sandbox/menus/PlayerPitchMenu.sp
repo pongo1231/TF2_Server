@@ -11,6 +11,7 @@ public void OnPluginStart() {
 
 public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
     players_pitch[client - 1] = 100;
+    return true;
 }
 
 public Action MenuOpen(int client, int args) {
