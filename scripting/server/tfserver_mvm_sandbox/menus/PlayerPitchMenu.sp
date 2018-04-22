@@ -44,7 +44,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
 }
 
 public Action NormalSoundHook(int clients[64], int &numClients, char sample[PLATFORM_MAX_PATH], int &entity, int &channel, float &volume, int &level, int &pitch, int &flags) {
-    if (channel == SNDCHAN_VOICE) {
+    if (channel == SNDCHAN_VOICE && entity > 0 && entity < 33) {
         if (IsClientInGame(entity)) {
             if (players_pitch[entity - 1] == 0)
                 pitch = 100;
