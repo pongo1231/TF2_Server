@@ -32,6 +32,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Kartrobots (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
     menu.AddItem("mvm_bots_kartbots", text);
 
+    Format(text, sizeof(text), "Robots are humans (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_robotshuman_enabled")));
+    menu.AddItem("mvm_bots_kartbots", text);
+
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -52,6 +55,8 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "nb_blind", "Make robots blind? (Silly)");
             case 5:
                 Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Enable kartrobots? (Silly)");
+            case 6:
+                Voting_CreateYesNoConVarVote(client, "sm_robotshuman_enabled", "Make spawned robots human? (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;
