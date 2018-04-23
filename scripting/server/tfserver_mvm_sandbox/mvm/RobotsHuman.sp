@@ -27,7 +27,7 @@ public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadc
 }
 
 public Action Delay_MakeHuman(Handle timer, int client) {
-	BeTheRobot_SetRobot(client, false);
+	BeTheRobot_SetRobot(client);
 	if (BeTheRobot_GetRobotStatus(client) != RobotStatus_Human)
 		CreateTimer(0.1, Delay_MakeHuman, client);
 }
