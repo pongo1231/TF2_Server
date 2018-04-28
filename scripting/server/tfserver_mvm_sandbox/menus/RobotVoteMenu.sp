@@ -32,6 +32,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Robots are aggressive (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_chargebots_enabled")));
     menu.AddItem("mvm_bots_chargebots", text);
 
+    Format(text, sizeof(text), "Robots use noclip (Option 'Robots are aggressive' recommended) (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_noclipbots_enabled")));
+    menu.AddItem("mvm_bots_noclipbots", text);
+
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -52,6 +55,8 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "sm_robotshuman_enabled", "Make spawned robots human? (Silly)");
             case 5:
                 Voting_CreateYesNoConVarVote(client, "sm_chargebots_enabled", "Make robots aggressive? (Silly)");
+            case 6:
+                Voting_CreateYesNoConVarVote(client, "sm_noclipbots_enabled", "Make robots use noclip? (Option 'Robots are aggressive' recommended) (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;
