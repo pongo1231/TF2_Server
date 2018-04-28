@@ -16,7 +16,7 @@ public void OnMapStart() {
 
 public Action Timer_ActivateCharge(Handle timer, int client) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
-		return Plugin_Stop;
+		return Plugin_Continue;
 
 	for (int i = 1; i < GetMaxClients() + 1; i++)
 		if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Blue)
