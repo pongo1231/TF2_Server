@@ -23,7 +23,7 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Robots are blind (Silly) (Currently: %b)", GetConVarBool(FindConVar("nb_blind")));
     menu.AddItem("mvm_bots_can_attack", text);
 
-    Format(text, sizeof(text), "Kartrobots (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
+    Format(text, sizeof(text), "Robots use bumper cars (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
     menu.AddItem("mvm_bots_kartbots", text);
 
     Format(text, sizeof(text), "Robots are humans (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_robotshuman_enabled")));
@@ -47,7 +47,7 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
             case 2:
                 Voting_CreateYesNoConVarVote(client, "nb_blind", "Make robots blind? (Silly)");
             case 3:
-                Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Make spawned robots kartbots? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Give spawned robots bumper carts? (Silly)");
             case 4:
                 Voting_CreateYesNoConVarVote(client, "sm_robotshuman_enabled", "Make spawned robots human? (Silly)");
             case 5:
