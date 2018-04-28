@@ -14,6 +14,8 @@ public Action MenuOpen(int client, int args) {
 
     char text[128];
 
+    menu.AddItem("server_map_menu", "Map menu");
+
     menu.AddItem("server_scramble_teams", "Scramble teams");
 
     Format(text, sizeof(text), "Instant respawn (Currently: %b)", GetConVarBool(FindConVar("mp_disable_respawn_times")));
@@ -30,11 +32,13 @@ public Action MenuOpen(int client, int args) {
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
-            case 0:
-                Voting_CreateYesNoCommandVote(client, "mp_scrambleteams", "Scramble teams?");
+        	case 0:
+                FakeClientCommand(client, "callvote");
             case 1:
-                Voting_CreateYesNoConVarVote(client, "mp_disable_respawn_times", "Enable instant respawn?");
+                Voting_CreateYesNoCommandVote(client, "mp_scrambleteams", "Scramble teams?");
             case 2:
+                Voting_CreateYesNoConVarVote(client, "mp_disable_respawn_times", "Enable instant respawn?");
+            case 3:
                 Voting_CreateYesNoConVarVote(client, "tf_weapon_criticals", "Enable random crits?");
         }
     else if (action == MenuAction_End)
