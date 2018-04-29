@@ -22,6 +22,8 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Infinite Money (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_mvm_infinitemoney")));
     menu.AddItem("mvm_infinitemoney", text);
 
+    menu.AddItem("mvm_killrobots", "Kill all spawned robots (use if stuck)");
+
     menu.AddItem("mvm_destroytanks", "Destroy all spawned tanks (use if stuck)");
 
     menu.Display(client, 20);
@@ -35,6 +37,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 0:
                 Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Enable infinite money? (Silly)");
             case 1:
+                Voting_CreateYesNoCommandVote(client, "sm_slay @blue", "Kill all spawned robots? (use if stuck)");
+            case 2:
                 Voting_CreateYesNoCommandVote(client, "tf_mvm_tank_kill", "Destroy all spawned tanks? (use if stuck)");
         }
     else if (action == MenuAction_End)
