@@ -16,7 +16,8 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("main_ranking", "Stats menu");
     menu.AddItem("main_player", "Player settings");
     menu.AddItem("main_server", "Server settings");
-    menu.AddItem("main_server", "Bot settings");
+    menu.AddItem("main_bot", "Bot settings");
+    menu.AddItem("main_redirect", "Other servers");
     menu.AddItem("main_credits", "Credits");
     menu.Display(client, 20);
 
@@ -35,6 +36,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 3:
                 FakeClientCommand(client, "menu_bots");
             case 4:
+                FakeClientCommand(client, "menu_redirect");
+            case 5:
                 FakeClientCommand(client, "menu_credits");
         }
     } else if (action == MenuAction_End)

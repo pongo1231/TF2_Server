@@ -14,8 +14,9 @@ public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Welcome, %s!\nYou can open this menu anytime via /menu.", client_name);
     menu.AddItem("main_player", "Player settings");
-    menu.AddItem("main_player", "FF2 menu");
-    menu.AddItem("main_player", "Vote for map change");
+    menu.AddItem("main_ff2", "FF2 menu");
+    menu.AddItem("main_map_change", "Vote for map change");
+    menu.AddItem("main_redirect", "Other servers");
     menu.AddItem("main_credits", "Credits");
     menu.Display(client, 20);
 
@@ -32,6 +33,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 2:
                 FakeClientCommand(client, "sm_rtv");
             case 3:
+                FakeClientCommand(client, "menu_redirect");
+            case 4:
                 FakeClientCommand(client, "menu_credits");
         }
     } else if (action == MenuAction_End)
