@@ -23,14 +23,8 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Robots are blind (Silly) (Currently: %b)", GetConVarBool(FindConVar("nb_blind")));
     menu.AddItem("mvm_bots_can_attack", text);
 
-    Format(text, sizeof(text), "Robots use bumper cars (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
-    menu.AddItem("mvm_bots_kartbots", text);
-
     Format(text, sizeof(text), "Robots are humans (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_robotshuman_enabled")));
     menu.AddItem("mvm_bots_kartbots", text);
-
-    Format(text, sizeof(text), "Robots are aggressive (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_chargebots_enabled")));
-    menu.AddItem("mvm_bots_chargebots", text);
 
     Format(text, sizeof(text), "Robots use noclip (Option 'Robots are aggressive' recommended) (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_noclipbots_enabled")));
     menu.AddItem("mvm_bots_noclipbots", text);
@@ -50,13 +44,9 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
             case 2:
                 Voting_CreateYesNoConVarVote(client, "nb_blind", "Make robots blind? (Silly)");
             case 3:
-                Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Give spawned robots bumper carts? (Silly)");
-            case 4:
                 Voting_CreateYesNoConVarVote(client, "sm_robotshuman_enabled", "Make spawned robots human? (Silly)");
-            case 5:
-                Voting_CreateYesNoConVarVote(client, "sm_chargebots_enabled", "Make robots aggressive? (Silly)");
-            case 6:
-                Voting_CreateYesNoConVarVote(client, "sm_noclipbots_enabled", "Make robots use noclip? (Option 'Robots are aggressive' recommended) (Silly)");
+            case 4:
+                Voting_CreateYesNoConVarVote(client, "sm_noclipbots_enabled", "Make robots use noclip? (Option 'Bots are aggressive' recommended) (Silly)");
         }
     else if (action == MenuAction_End)
         delete menu;
