@@ -17,7 +17,7 @@ public void TF2_OnConditionRemoved(int client, TFCond condition) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
 		return;
 
-	if (IsFakeClient(client) && condition == view_as<TFCond>(51)) // Robot Spawn Invul effect
+	if (TF2_GetClientTeam(client) == TFTeam_Blue && condition == view_as<TFCond>(51)) // Robot Spawn Invul effect
 		TF2_AddCondition(client, view_as<TFCond>(82));
 }
 
@@ -25,7 +25,7 @@ public void TF2_OnConditionAdded(int client, TFCond condition) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
 		return;
 
-	if (IsFakeClient(client) && condition == view_as<TFCond>(51)) // Robot Spawn Invul effect
+	if (TF2_GetClientTeam(client) == TFTeam_Blue && condition == view_as<TFCond>(51)) // Robot Spawn Invul effect
 		TF2_RemoveCondition(client, view_as<TFCond>(82));
 }
 

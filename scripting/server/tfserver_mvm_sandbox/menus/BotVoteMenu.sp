@@ -23,12 +23,6 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "All bots do a voice command on damage (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_bothurtvoice_enabled")));
     menu.AddItem("bots_hurt", text);
 
-    Format(text, sizeof(text), "Bots are aggressive (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_chargebots_enabled")));
-    menu.AddItem("bots_charge", text);
-
-    Format(text, sizeof(text), "Bots use bumper cars (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
-    menu.AddItem("bots_bumpercart", text);
-
     menu.Display(client, 20);
  
     return Plugin_Handled;
@@ -43,10 +37,7 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
                 FakeClientCommand(client, "menu_bots_robots");
             case 2:
                 Voting_CreateYesNoConVarVote(client, "sm_bothurtvoice_enabled", "Make bots do a voice command on damage? (Silly)");
-            case 3:
-                Voting_CreateYesNoConVarVote(client, "sm_chargebots_enabled", "Make all bots aggressive? (Silly)");
-            case 4:
-                Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Should all newly spawned bots use bumper cars? (Silly)");
+
         }
     else if (action == MenuAction_End)
         delete menu;

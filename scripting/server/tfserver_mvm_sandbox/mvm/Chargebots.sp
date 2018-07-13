@@ -19,7 +19,7 @@ public Action Timer_ActivateCharge(Handle timer, int client) {
 		return Plugin_Continue;
 
 	for (int i = 1; i < GetMaxClients() + 1; i++)
-		if (IsClientInGame(i) && IsFakeClient(i))
+		if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Blue)
 			if (!TF2_IsPlayerInCondition(i, view_as<TFCond>(51))) // 51 = Robot Spawn Effect
 				TF2_AddCondition(i, view_as<TFCond>(17));
 			else
