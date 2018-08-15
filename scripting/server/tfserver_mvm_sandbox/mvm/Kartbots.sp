@@ -1,6 +1,6 @@
- #include <sourcemod>
- #include <tf2>
- #include <tf2_stocks>
+#include <sourcemod>
+#include <tf2>
+#include <tf2_stocks>
 
 ConVar g_enabled;
 bool playing_mvm = false;

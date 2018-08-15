@@ -1,7 +1,7 @@
- #include <sourcemod>
- #include <tf2>
- #include <tf2_stocks>
- #include <betherobot>
+#include <sourcemod>
+#include <tf2>
+#include <tf2_stocks>
+#include <betherobot>
 
 ConVar g_enabled;
 bool playing_mvm = false;
