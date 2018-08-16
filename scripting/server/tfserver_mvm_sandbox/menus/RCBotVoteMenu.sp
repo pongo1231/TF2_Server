@@ -20,11 +20,8 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "RCBot skill (Currently: %f)", GetConVarFloat(FindConVar("rcbot_anglespeed")));
     menu.AddItem("rcbots_skill", text);
 
-    Format(text, sizeof(text), "RCBots use custom weapons (Currently: %f)", GetConVarFloat(FindConVar("sm_gbw_enabled")));
+    Format(text, sizeof(text), "RCBots use custom items (Currently: %b)", GetConVarBool(FindConVar("rcbot_customloadouts")));
     menu.AddItem("rcbots_cweps", text);
-
-    Format(text, sizeof(text), "RCBots use custom cosmetics (Currently: %f)", GetConVarFloat(FindConVar("sm_gbc_enabled")));
-    menu.AddItem("rcbots_cmiscs", text);
 
     Format(text, sizeof(text), "RCBots only use melee (Silly) (Currently: %b)", GetConVarBool(FindConVar("rcbot_melee_only")));
     menu.AddItem("rcbots_melee", text);
@@ -42,10 +39,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 1:
                 Voting_CreateStringConVarVote(client, "rcbot_anglespeed", "Set rcbot skill (0.4 is default)", "0.01", "0.2", "0.4", "0.6", "0.8", "1.0");
             case 2:
-                Voting_CreateYesNoConVarVote(client, "sm_gbw_enabled", "Should rcbots use custom weapons?");
+                Voting_CreateYesNoConVarVote(client, "rcbot_customloadouts", "Should rcbots use custom items?");
             case 3:
-                Voting_CreateYesNoConVarVote(client, "sm_gbc_enabled", "Should rcbots use custom cosmetics?");
-            case 4:
                 Voting_CreateYesNoConVarVote(client, "rcbot_melee_only", "Should rcbots use melee only? (Silly)");
         }
     else if (action == MenuAction_End)
