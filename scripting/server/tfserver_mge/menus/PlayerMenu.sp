@@ -14,19 +14,22 @@ public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Player settings");
 
+    menu.AddItem("player_pitch", "Pitch menu");
     menu.AddItem("player_kill", "Suicide");
 
     menu.Display(client, 20);
- 
+
     return Plugin_Handled;
 }
 
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
-    if (action == MenuAction_Select)
-        switch (item) {
-            case 0:
-                FakeClientCommand(client, "kill");
-        }
-    else if (action == MenuAction_End)
-        delete menu;
+if (action == MenuAction_Select)
+    switch (item) {
+        case 0:
+            FakeClientCommand(client, "menu_player_pitch");
+        case 1:
+            FakeClientCommand(client, "kill");
+    }
+else if (action == MenuAction_End)
+    delete menu;
 }
