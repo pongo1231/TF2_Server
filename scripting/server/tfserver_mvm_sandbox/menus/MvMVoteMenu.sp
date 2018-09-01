@@ -39,7 +39,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 1:
                 Voting_CreateYesNoCommandVote(client, "sm_slay @blue", "Kill all spawned robots? (use if stuck)");
             case 2:
-                Voting_CreateYesNoCommandVote(client, "tf_mvm_tank_kill", "Destroy all spawned tanks? (use if stuck)");
+                Voting_CreateYesNoCommandVote(client, "sm_cheat tf_mvm_tank_kill", "Destroy all spawned tanks? (use if stuck)");
         }
     else if (action == MenuAction_End)
         delete menu;
