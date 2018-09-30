@@ -21,6 +21,8 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else
 		CreateTimer(60.0, Timer_UpdateScores, _, TIMER_REPEAT);
+
+	delete results;
 }
 
 public Action Timer_UpdateScores(Handle timer) {
@@ -54,6 +56,8 @@ public void T_Scores_FetchData(Database m_db, DBResultSet results, const char[] 
 		PushArrayCell(data, kills + assists / 2 - deaths);
 		db.Query(T_Scores_CheckFirstTimeInsert, query, data);
 	}
+
+	delete results;
 }
 
 public void T_Scores_CheckFirstTimeInsert(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -70,6 +74,8 @@ public void T_Scores_CheckFirstTimeInsert(Database m_db, DBResultSet results, co
 		db.Query(T_Scores_UpdateData, query, data);
 	} else
 		T_Scores_UpdateData(null, null, "", data);
+
+	delete results;
 }
 
 public void T_Scores_UpdateData(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -85,6 +91,8 @@ public void T_Scores_UpdateData(Database m_db, DBResultSet results, const char[]
 	char query[256];
 	Format(query, sizeof(query), "UPDATE stats_scores SET score=%i WHERE steam_id='%s'", score, steam_id);
 	db.Query(T_Dummy, query, true);
+
+	delete results;
 }
 
 void UpdateRankings() {
@@ -109,9 +117,13 @@ public void T_Ranking_UpdateData(Database m_db, DBResultSet results, const char[
 		db.Query(T_Dummy, query, true);
 		rank++;
 	}
+
+	delete results;
 }
 
 public void T_Dummy(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0] && data)
 		LogError("PLAYERDB ERROR: %s", error);
+
+	delete results;
 }

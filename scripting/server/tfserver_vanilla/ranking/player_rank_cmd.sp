@@ -61,6 +61,8 @@ public void T_GetRankingData(Database m_db, DBResultSet results, const char[] er
 		Format(query, sizeof(query), "SELECT * FROM stats_scores WHERE steam_id='%s'", steam_id);
 		db.Query(T_GetKillingData, query, data);
     }
+
+	delete results;
 }
 
 public void T_GetKillingData(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -86,6 +88,8 @@ public void T_GetKillingData(Database m_db, DBResultSet results, const char[] er
 		Format(query, sizeof(query), "SELECT deaths,kills,assists FROM stats_killing WHERE steam_id='%s'", steam_id);
 		db.Query(T_ShowData, query, data);
     }
+
+	delete results;
 }
 
 public void T_ShowData(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -149,6 +153,8 @@ public void T_ShowData(Database m_db, DBResultSet results, const char[] error, a
 
 		menu.Display(client, 20);
     }
+
+	delete results;
 }
 
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {

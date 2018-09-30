@@ -27,6 +27,8 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else
 		HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
+
+	delete results;
 }
 
 public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadcast) {
@@ -41,7 +43,6 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 	int assister = GetClientOfUserId(GetEventInt(event, "assister"));
 	if (assister != 0 && !IsFakeClient(assister))
 		UpdateData(GetSteamAccountID(assister), UPDATE_ASSIST);
-
 }
 
 void UpdateData(int steam_id, int type) {
@@ -66,6 +67,8 @@ public void T_CheckFirstTimeInsert(Database m_db, DBResultSet results, const cha
 		db.Query(T_ProceedUpdate, query, data);
 	} else
 		T_ProceedUpdate(null, null, "", data);
+
+	delete results;
 }
 
 public void T_ProceedUpdate(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -90,6 +93,8 @@ public void T_ProceedUpdate(Database m_db, DBResultSet results, const char[] err
 			db.Query(T_UpdateAssists, query, steam_id);
 		}
 	}
+
+	delete results;
 }
 
 public void T_UpdateDeaths(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -104,6 +109,8 @@ public void T_UpdateDeaths(Database m_db, DBResultSet results, const char[] erro
 	char query[256];
 	Format(query, sizeof(query), "UPDATE stats_killing SET deaths = %i WHERE steam_id='%i'", deaths + 1, data);
 	db.Query(T_Dummy, query, true);
+
+	delete results;
 }
 
 public void T_UpdateKills(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -118,6 +125,8 @@ public void T_UpdateKills(Database m_db, DBResultSet results, const char[] error
 	char query[256];
 	Format(query, sizeof(query), "UPDATE stats_killing SET kills = %i WHERE steam_id='%i'", kills + 1, data);
 	db.Query(T_Dummy, query, true);
+
+	delete results;
 }
 
 public void T_UpdateAssists(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -132,9 +141,13 @@ public void T_UpdateAssists(Database m_db, DBResultSet results, const char[] err
 	char query[256];
 	Format(query, sizeof(query), "UPDATE stats_killing SET assists = %i WHERE steam_id='%i'", assists + 1, data);
 	db.Query(T_Dummy, query, true);
+
+	delete results;
 }
 
 public void T_Dummy(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0] && data)
 		LogError("PLAYERDB ERROR: %s", error);
+
+	delete results;
 }

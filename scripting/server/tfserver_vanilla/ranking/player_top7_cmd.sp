@@ -48,6 +48,8 @@ public void T_UpdateSteamIDCache(Database m_db, DBResultSet results, const char[
 			i++;
 		}
     }
+
+	delete results;
 }
 
 public void T_UpdateNameCache(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -66,6 +68,8 @@ public void T_UpdateNameCache(Database m_db, DBResultSet results, const char[] e
 
 		top_seven_names[data] = player_name;
     }
+
+	delete results;
 }
 
 public Action Command_TopSeven(int client, int args) {
