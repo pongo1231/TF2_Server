@@ -11,6 +11,8 @@ public void OnPluginStart() {
 public Action MenuOpen(int client, int args) {
 	Menu menu = new Menu(Handle_VoteMenu);
 	menu.SetTitle("Robot settings");
+	SetMenuExitBackButton(menu, true);
+	SetMenuExitButton(menu, false);
 
 	char text[128];
 
@@ -35,7 +37,7 @@ public Action MenuOpen(int client, int args) {
 	Format(text, sizeof(text), "Robots use bumper cars (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
 	menu.AddItem("bots_bumpercart", text);
 
-	menu.Display(client, 20);
+	menu.Display(client, MENU_TIME_FOREVER);
 
 	return Plugin_Handled;
 }
@@ -58,6 +60,9 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
 			case 5:
 				Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Should all newly spawned robots use bumper cars? (Silly)");
 		}
-	else if (action == MenuAction_End)
-		delete menu;
+	else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu_bots");
+        delete menu;
+    }
 }

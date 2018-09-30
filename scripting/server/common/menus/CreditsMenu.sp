@@ -7,8 +7,10 @@ public void OnPluginStart() {
 public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Credits");
-    menu.AddItem("1", "Credits to:");
-    menu.AddItem("2", "Server and some of the plugins by pongo1231");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
+    menu.AddItem("1", "Credits:");
+    menu.AddItem("2", "Server by pongo1231");
     menu.AddItem("3", "");
     menu.AddItem("4", "");
     menu.AddItem("5", "");
@@ -19,12 +21,17 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("9", "Or personal:");
     menu.AddItem("11", "E-Mail: pongo1999712@gmail.com");
     menu.AddItem("12", "Steam: steamcommunity.com/id/pongo1231");
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
 }
 
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
-    if (action == MenuAction_End)
+    if (action == MenuAction_Cancel)
+        FakeClientCommand(client, "menu");
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu");
         delete menu;
+    }
 }

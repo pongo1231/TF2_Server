@@ -22,6 +22,8 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Sound pitch");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
 
     menu.AddItem("150", "Highest");
     menu.AddItem("125", "Higher");
@@ -29,7 +31,7 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("75", "Lower");
     menu.AddItem("50", "Lowest");
 
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
 }
@@ -40,8 +42,11 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
         GetMenuItem(menu, item, info, sizeof(info));
         players_pitch[client - 1] = StringToInt(info);
     }
-    else if (action == MenuAction_End)
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu_player");
         delete menu;
+    }
 }
 
 public Action NormalSoundHook(int clients[64], int &numClients, char sample[PLATFORM_MAX_PATH], int &entity, int &channel, float &volume, int &level, int &pitch, int &flags) {

@@ -11,6 +11,8 @@ public void OnPluginStart() {
 public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Bot settings");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
 
     char text[128];
 
@@ -32,7 +34,7 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Bots stick together (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_helphelphelphelp_enabled")));
     menu.AddItem("silly_spyspyspyspy", text);
 
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
 }
@@ -53,6 +55,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 5:
                 Voting_CreateYesNoConVarVote(client, "sm_helphelphelphelp_enabled", "Make bots stick together? (Silly)");
         }
-    else if (action == MenuAction_End)
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu");
         delete menu;
+    }
 }

@@ -16,6 +16,8 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("RCBot settings");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
 
     char text[128];
 
@@ -31,7 +33,7 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "RCBots only use melee (Silly) (Currently: %b)", GetConVarBool(FindConVar("rcbot_melee_only")));
     menu.AddItem("rcbots_melee", text);
 
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
 }
@@ -48,6 +50,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 3:
                 Voting_CreateYesNoConVarVote(client, "rcbot_melee_only", "Should rcbots use melee only? (Silly)");
         }
-    else if (action == MenuAction_End)
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu_bots");
         delete menu;
+    }
 }

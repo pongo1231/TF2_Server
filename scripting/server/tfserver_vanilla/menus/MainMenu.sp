@@ -13,13 +13,15 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Welcome, %s!\nYou can open this menu anytime via /menu.", client_name);
+    SetMenuExitBackButton(menu, false);
+    SetMenuExitButton(menu, true);
     menu.AddItem("main_ranking", "Stats menu");
     menu.AddItem("main_player", "Player settings");
     menu.AddItem("main_server", "Server settings");
     menu.AddItem("main_bot", "Bot settings");
     menu.AddItem("main_redirect", "Other servers");
     menu.AddItem("main_credits", "Credits");
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
 
     return Plugin_Handled;
 }
@@ -40,7 +42,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 5:
                 FakeClientCommand(client, "menu_credits");
         }
-    } else if (action == MenuAction_End)
+    } else if (action == MenuAction_Cancel)
         delete menu;
 }
 

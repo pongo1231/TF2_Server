@@ -13,6 +13,8 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Player settings");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
 
     menu.AddItem("player_taunts", "Taunt menu");
     menu.AddItem("player_pitch", "Pitch menu");
@@ -21,7 +23,7 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("player_kill", "Suicide");
     menu.AddItem("player_robot", "Toggle robot");
 
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
 }
@@ -42,6 +44,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 5:
                 FakeClientCommand(client, "sm_robot");
         }
-    else if (action == MenuAction_End)
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu");
         delete menu;
+    }
 }

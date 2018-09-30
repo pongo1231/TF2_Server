@@ -11,6 +11,8 @@ public void OnPluginStart() {
 public Action MenuOpen(int client, int args) {
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Server settings");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
 
     char text[128];
 
@@ -26,7 +28,7 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Instant Respawn (Currently: %i)", GetConVarInt(FindConVar("mp_disable_respawn_times")));
     menu.AddItem("server_instant_respawn", text);
 
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
 }
@@ -41,6 +43,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 2:
                 Voting_CreateYesNoConVarVote(client, "mp_disable_respawn_times", "Enable instant respawning?");
         }
-    else if (action == MenuAction_End)
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu");
         delete menu;
+    }
 }

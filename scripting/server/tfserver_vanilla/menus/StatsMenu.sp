@@ -11,6 +11,8 @@ public Action MenuOpen(int client, int args) {
 
     Menu menu = new Menu(Handle_Menu);
     menu.SetTitle("Stats menu");
+    SetMenuExitBackButton(menu, true);
+    SetMenuExitButton(menu, false);
     menu.AddItem("ranking_rank_top7", "Top 7 players");
     menu.AddItem("ranking_rank_self", "Your ranking");
     
@@ -25,7 +27,7 @@ public Action MenuOpen(int client, int args) {
         }
     }
 
-    menu.Display(client, 20);
+    menu.Display(client, MENU_TIME_FOREVER);
 
     return Plugin_Handled;
 }
@@ -41,6 +43,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             GetMenuItem(menu, item, player_name, sizeof(player_name));
             FakeClientCommand(client, "rank %s", player_name);
         }
-    } else if (action == MenuAction_End)
+    } else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu");
         delete menu;
+    }
 }
