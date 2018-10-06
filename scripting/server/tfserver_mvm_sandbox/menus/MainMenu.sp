@@ -42,7 +42,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 5:
                 FakeClientCommand(client, "menu_credits");
         }
-    } else if (action == MenuAction_Cancel)
+    } else if (action == MenuAction_End)
         delete menu;
 }
 

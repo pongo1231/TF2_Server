@@ -45,8 +45,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
            FakeClientCommand(client, "menu_player");
+    } else if (action == MenuAction_End)
         delete menu;
-    }
 }
 
 public Action NormalSoundHook(int clients[64], int &numClients, char sample[PLATFORM_MAX_PATH], int &entity, int &channel, float &volume, int &level, int &pitch, int &flags) {

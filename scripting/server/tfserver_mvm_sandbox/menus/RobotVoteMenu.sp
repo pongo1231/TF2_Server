@@ -63,6 +63,6 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
 	else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
            FakeClientCommand(client, "menu_bots");
+	} else if (action == MenuAction_End)
         delete menu;
-    }
 }
