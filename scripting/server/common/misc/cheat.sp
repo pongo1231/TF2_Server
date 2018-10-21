@@ -2,6 +2,7 @@
 
 public void OnPluginStart() {
 	RegAdminCmd("sm_cheat", Handle_Cheat, ADMFLAG_ROOT);
+	RegAdminCmd("cheat", Handle_Cheat, ADMFLAG_ROOT);
 }
 
 public Action Handle_Cheat(int client, int args) {
