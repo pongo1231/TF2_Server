@@ -21,8 +21,6 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else
 		CreateTimer(60.0, Timer_UpdateNames, _, TIMER_REPEAT);
-
-	delete results;
 }
 
 public Action Timer_UpdateNames(Handle timer) {
@@ -61,8 +59,6 @@ public void T_CheckFirstTimeInsert(Database m_db, DBResultSet results, const cha
 		db.Query(T_ProceedUpdate, query, data);
 	} else
 		T_ProceedUpdate(null, null, "", data);
-
-	delete results;
 }
 
 public void T_ProceedUpdate(Database m_db, DBResultSet results, const char[] error, any data) {
@@ -76,13 +72,9 @@ public void T_ProceedUpdate(Database m_db, DBResultSet results, const char[] err
 	GetArrayString(data, 1, name, sizeof(name));
 	Format(query, sizeof(query), "UPDATE stats_names SET player_name='%s' WHERE steam_id='%i'", name, GetArrayCell(data, 0));
 	db.Query(T_Dummy, query, true);
-
-	delete results;
 }
 
 public void T_Dummy(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0] && data)
 		LogError("PLAYERDB ERROR: %s", error);
-
-	delete results;
 }

@@ -7,27 +7,20 @@ public void OnPluginStart() {
 	Database.Connect(T_DataBaseConnect, "players-local");
 }
 
-public void T_DataBaseConnect(Database m_db, const char[] error, Handle data) {
+public void T_DataBaseConnect(Database m_db, const char[] error, any data) {
 	if (m_db == null)
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else {
 		db = m_db;
 		db.Query(T_DataBaseCreated, "CREATE TABLE IF NOT EXISTS stats_scores(steam_id VARCHAR(64), score INT, rank INT)");
 	}
-
-	delete m_db;
-	delete data;
 }
 
-public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] error, Handle data) {
+public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0])
 		LogError("PLAYERDB FATAL ERROR: %s", error);
 	else
 		CreateTimer(60.0, Timer_UpdateScores, _, TIMER_REPEAT);
-
-	delete m_db;
-	delete results;
-	delete data;
 }
 
 public Action Timer_UpdateScores(Handle timer) {
@@ -41,7 +34,7 @@ void UpdateScores() {
 	db.Query(T_Scores_FetchData, query);
 }
 
-public void T_Scores_FetchData(Database m_db, DBResultSet results, const char[] error, Handle nothing) {
+public void T_Scores_FetchData(Database m_db, DBResultSet results, const char[] error, any nothing) {
 	if (error[0]) {
 		LogError("PLAYERDB ERROR: %s", error);
 		return;
@@ -61,13 +54,9 @@ public void T_Scores_FetchData(Database m_db, DBResultSet results, const char[] 
 		PushArrayCell(data, kills + assists / 2 - deaths);
 		db.Query(T_Scores_CheckFirstTimeInsert, query, data);
 	}
-
-	delete m_db;
-	delete results;
-	delete nothing;
 }
 
-public void T_Scores_CheckFirstTimeInsert(Database m_db, DBResultSet results, const char[] error, Handle data) {
+public void T_Scores_CheckFirstTimeInsert(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0]) {
 		LogError("PLAYERDB ERROR: %s", error);
 		return;
@@ -81,13 +70,9 @@ public void T_Scores_CheckFirstTimeInsert(Database m_db, DBResultSet results, co
 		db.Query(T_Scores_UpdateData, query, data);
 	} else
 		T_Scores_UpdateData(null, null, "", data);
-
-	delete m_db;
-	delete results;
-	delete data;
 }
 
-public void T_Scores_UpdateData(Database m_db, DBResultSet results, const char[] error, Handle data) {
+public void T_Scores_UpdateData(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0]) {
 		LogError("PLAYERDB ERROR: %s", error);
 		return;
@@ -100,10 +85,6 @@ public void T_Scores_UpdateData(Database m_db, DBResultSet results, const char[]
 	char query[256];
 	Format(query, sizeof(query), "UPDATE stats_scores SET score=%i WHERE steam_id='%s'", score, steam_id);
 	db.Query(T_Dummy, query, true);
-
-	delete m_db;
-	delete results;
-	delete data;
 }
 
 void UpdateRankings() {
@@ -112,7 +93,7 @@ void UpdateRankings() {
 	db.Query(T_Ranking_UpdateData, query);
 }
 
-public void T_Ranking_UpdateData(Database m_db, DBResultSet results, const char[] error, Handle data) {
+public void T_Ranking_UpdateData(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0]) {
 		LogError("PLAYERDB ERROR: %s", error);
 		return;
@@ -128,17 +109,9 @@ public void T_Ranking_UpdateData(Database m_db, DBResultSet results, const char[
 		db.Query(T_Dummy, query, true);
 		rank++;
 	}
-
-	delete m_db;
-	delete results;
-	delete data;
 }
 
-public void T_Dummy(Database m_db, DBResultSet results, const char[] error, Handle data) {
+public void T_Dummy(Database m_db, DBResultSet results, const char[] error, any data) {
 	if (error[0] && data)
 		LogError("PLAYERDB ERROR: %s", error);
-
-	delete m_db;
-	delete results;
-	delete data;
 }
