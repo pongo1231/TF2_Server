@@ -28,6 +28,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Goomba Stomping (Currently: %b)", GetConVarBool(FindConVar("goomba_enabled")));
     menu.AddItem("silly_goomba_enabled", text);
 
+    Format(text, sizeof(text), "Enable RTD (Currently: %b)", GetConVarBool(FindConVar("sm_rtd2_enabled")));
+    menu.AddItem("silly_rtd_enabled", text);
+
     menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
@@ -44,6 +47,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "sm_alwayscrits_enabled", "Enable always crits? (Silly)");
             case 3:
             	Voting_CreateYesNoConVarVote(client, "goomba_enabled", "Enable goomba stomping? (Silly)");
+            case 4:
+                Voting_CreateYesNoConVarVote(client, "sm_rtd2_enabled", "Enable RTD? (Silly)");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)

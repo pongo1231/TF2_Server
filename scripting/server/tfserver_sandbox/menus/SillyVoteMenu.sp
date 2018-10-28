@@ -34,6 +34,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Goomba Stomping (Currently: %b)", GetConVarBool(FindConVar("goomba_enabled")));
     menu.AddItem("silly_goomba_enabled", text);
 
+    Format(text, sizeof(text), "Enable RTD (Currently: %b)", GetConVarBool(FindConVar("sm_rtd2_enabled")));
+    menu.AddItem("silly_rtd_enabled", text);
+
     menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
@@ -42,7 +45,7 @@ public Action MenuOpen(int client, int args) {
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
-        	  case 0:
+        	case 0:
                 Voting_CreateStringConVarVote(client, "sv_gravity", "Set Gravity (800 is default) (Silly)", "10", "400", "800", "1600");
             case 1:
                 Voting_CreateYesNoConVarVote(client, "tf2x10_enabled", "Enable x10? (Silly) (Respawn to apply)");
@@ -54,6 +57,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "sm_deadlywater_enabled", "Enable deadly water? (Silly)");
             case 5:
                 Voting_CreateYesNoConVarVote(client, "goomba_enabled", "Enable goomba stomping? (Silly)");
+            case 6:
+                Voting_CreateYesNoConVarVote(client, "sm_rtd2_enabled", "Enable RTD? (Silly)");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
