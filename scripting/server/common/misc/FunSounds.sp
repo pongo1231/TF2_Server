@@ -167,7 +167,8 @@ char VoiceInputs[][] = {
 	"TLK_PLAYER_CAST_STEALTH",
 	"TLK_PLAYER_CAST_BLAST_JUMP",
 	"TLK_PLAYER_CAST_SELF_HEAL",
-	"TLK_PLAYER_CAST_MERASMUS_ZAP"
+	"TLK_PLAYER_CAST_MERASMUS_ZAP",
+	"HalloweenLongFall"
 }
 
 char Classes[][] = {
