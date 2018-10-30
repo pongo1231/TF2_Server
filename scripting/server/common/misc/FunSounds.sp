@@ -209,5 +209,5 @@ void PlayRandomVoice(int client) {
 	SetVariantString(VoiceInputs[GetRandomInt(0, sizeof(VoiceInputs) - 1)]);
 	AcceptEntityInput(client, "SpeakResponseConcept");
 
-	//AcceptEntityInput(client, "ClearContext");
+	AcceptEntityInput(client, "ClearContext");
 }
