@@ -34,6 +34,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Enable Grappling Hook (Currently: %b)", GetConVarBool(FindConVar("tf_grapplinghook_enable")));
     menu.AddItem("silly_grappling_hook_enabled", text);
 
+    Format(text, sizeof(text), "Enable Spells (Currently: %b)", GetConVarBool(FindConVar("sm_spells_enabled")));
+    menu.AddItem("silly_spells_enabled", text);
+
     menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
@@ -54,6 +57,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "sm_rtd2_enabled", "Enable RTD? (Silly)");
             case 5:
                 Voting_CreateYesNoConVarVote(client, "tf_grapplinghook_enable", "Enable Grappling Hook? (Silly)");
+            case 6:
+                Voting_CreateYesNoCommandVote(client, "tf_spells_enabled 1;sm_spells_enabled 1", "Enable spells?", "tf_spells_enabled 0;sm_spells_enabled 0");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)

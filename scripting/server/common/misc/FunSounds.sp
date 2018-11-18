@@ -17,12 +17,10 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
 	int hurter = GetClientOfUserId(GetEventInt(event, "attacker"));
 
-	if (victim != 0) {
-		if (IsFakeClient(victim))
-			PlayRandomVoice(victim);
-		if (IsFakeClient(hurter))
-			PlayRandomVoice(hurter);
-	}
+	if (IsFakeClient(victim))
+		PlayRandomVoice(victim);
+	if (hurter != 0 && IsFakeClient(hurter))
+		PlayRandomVoice(hurter);
 
 	return Plugin_Handled;
 }
