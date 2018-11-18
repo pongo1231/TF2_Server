@@ -37,6 +37,9 @@ public Action MenuOpen(int client, int args) {
 	Format(text, sizeof(text), "Robots use bumper cars (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_kartbots_enabled")));
 	menu.AddItem("bots_bumpercart", text);
 
+	Format(text, sizeof(text), "Robots use RTD (Currently: %b)", GetConVarBool(FindConVar("sm_botrtd_mvmbots")));
+	menu.AddItem("bots_rtd", text);
+
 	menu.Display(client, MENU_TIME_FOREVER);
 
 	return Plugin_Handled;
@@ -59,6 +62,8 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
 				Voting_CreateYesNoConVarVote(client, "sm_chargebots_enabled", "Make all robots aggressive? (Silly)");
 			case 5:
 				Voting_CreateYesNoConVarVote(client, "sm_kartbots_enabled", "Should all newly spawned robots use bumper cars? (Silly)");
+			case 6:
+                Voting_CreateYesNoConVarVote(client, "sm_botrtd_mvmbots", "Should robots be able to use RTD? (RTD and Bot RTD has to be enabled too)");
 		}
 	else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)

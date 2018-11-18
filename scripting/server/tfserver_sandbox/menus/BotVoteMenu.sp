@@ -29,10 +29,13 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("bots_robots", text);
 
     Format(text, sizeof(text), "Bots are panaroid (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_spyspyspyspy_enabled")));
-    menu.AddItem("silly_spyspyspyspy", text);
+    menu.AddItem("bots_helphelphelphelp", text);
 
     Format(text, sizeof(text), "Bots stick together (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_helphelphelphelp_enabled")));
-    menu.AddItem("silly_spyspyspyspy", text);
+    menu.AddItem("bots_spyspyspyspy", text);
+
+    Format(text, sizeof(text), "Bots use RTD (Currently: %b)", GetConVarBool(FindConVar("sm_botrtd_enabled")));
+    menu.AddItem("bots_rtd", text);
 
     menu.Display(client, MENU_TIME_FOREVER);
  
@@ -54,6 +57,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "sm_spyspyspyspy_enabled", "Make bots paranoid? (Silly)");
             case 5:
                 Voting_CreateYesNoConVarVote(client, "sm_helphelphelphelp_enabled", "Make bots stick together? (Silly)");
+            case 6:
+                Voting_CreateYesNoConVarVote(client, "sm_botrtd_enabled", "Should bots be able to use RTD? (RTD has to be enabled too)");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)

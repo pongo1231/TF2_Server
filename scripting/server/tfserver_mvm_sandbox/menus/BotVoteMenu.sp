@@ -25,6 +25,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "All bots do a voice command on damage (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_bothurtvoice_enabled")));
     menu.AddItem("bots_hurt", text);
 
+    Format(text, sizeof(text), "Bots use RTD (Currently: %b)", GetConVarBool(FindConVar("sm_botrtd_enabled")));
+    menu.AddItem("bots_rtd", text);
+
     menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
@@ -39,6 +42,8 @@ public int Handle_VoteMenu(Menu menu, MenuAction action, int client, int item) {
                 FakeClientCommand(client, "menu_bots_robots");
             case 2:
                 Voting_CreateYesNoConVarVote(client, "sm_bothurtvoice_enabled", "Make bots do a voice command on damage? (Silly)");
+            case 3:
+                Voting_CreateYesNoConVarVote(client, "sm_botrtd_enabled", "Should bots be able to use RTD? (RTD has to be enabled too, does not include robots by default)");
 
         }
     else if (action == MenuAction_Cancel) {
