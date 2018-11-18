@@ -29,8 +29,8 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 		float playerPos[3];
 		GetClientAbsOrigin(victim, playerPos);
 		TeleportEntity(spell, playerPos, NULL_VECTOR, NULL_VECTOR);
-		DispatchKeyValue(spell, "Spell Tier", GetRandomFloat(0.0, 100.0) <= GetConVarFloat(g_spells_rarechance) ? "1" : "0");
-		DispatchKeyValue(spell, "Auto-Materialize", "0");
+		DispatchKeyValue(spell, "Tier", GetRandomFloat(0.0, 100.0) <= GetConVarFloat(g_spells_rarechance) ? "1" : "0");
+		DispatchKeyValue(spell, "AutoMaterialize", "0");
 		DispatchSpawn(spell);
 		int data[2];
 		data[0] = spell;
