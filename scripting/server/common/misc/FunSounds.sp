@@ -14,13 +14,18 @@ public void OnPluginStart() {
 }
 
 public Action PlayerToggleDmgVoice(int client, int args) {
-    dmgVoiceClients[client] = !dmgVoiceClients[client];
-    if (dmgVoiceClients[client])
-    	Server_PrintToChat(client, "Menu", "Enabled Damage Voice.");
-    else
-    	Server_PrintToChat(client, "Menu", "Disabled Damage Voice.");
+	if (!GetConVarBool(g_enabled)) {
+		Server_PrintToChat(client, "Menu", "Damage Voice has to be enabled in the Bot Settings first.");
+		return Plugin_Handled;
+	}
 
-    return Plugin_Handled;
+	dmgVoiceClients[client] = !dmgVoiceClients[client];
+	if (dmgVoiceClients[client])
+		Server_PrintToChat(client, "Menu", "Enabled Damage Voice.");
+	else
+		Server_PrintToChat(client, "Menu", "Disabled Damage Voice.");
+
+	return Plugin_Handled;
 }
 
 public void OnClientDisconnect_Post(int client) {
