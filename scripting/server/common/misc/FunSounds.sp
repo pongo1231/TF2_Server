@@ -2,12 +2,29 @@
 #include <sdktools>
 #include <tf2>
 #include <tf2_stocks>
+#include <server/serverchat>
 
 ConVar g_enabled;
+bool dmgVoiceClients[32];
 
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
+	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
 	HookEvent("player_hurt", Event_PlayerHurt);
+}
+
+public Action PlayerToggleDmgVoice(int client, int args) {
+    dmgVoiceClients[client] = !dmgVoiceClients[client];
+    if (dmgVoiceClients[client])
+    	Server_PrintToChat(client, "Menu", "Enabled Damage Voice.");
+    else
+    	Server_PrintToChat(client, "Menu", "Disabled Damage Voice.");
+
+    return Plugin_Handled;
+}
+
+public void OnClientDisconnect_Post(int client) {
+	dmgVoiceClients[client] = false;
 }
 
 public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadcast) {
@@ -17,9 +34,9 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
 	int hurter = GetClientOfUserId(GetEventInt(event, "attacker"));
 
-	if (IsFakeClient(victim))
+	if (IsFakeClient(victim) || dmgVoiceClients[victim])
 		PlayRandomVoice(victim);
-	if (hurter != 0 && IsFakeClient(hurter))
+	if (hurter != 0 && (IsFakeClient(hurter) || dmgVoiceClients[hurter]))
 		PlayRandomVoice(hurter);
 
 	return Plugin_Handled;

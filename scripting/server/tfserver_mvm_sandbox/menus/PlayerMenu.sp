@@ -22,6 +22,7 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("player_tp", "Perspective to third person");
     menu.AddItem("player_kill", "Suicide");
     menu.AddItem("player_robot", "Toggle robot");
+    menu.AddItem("player_dmgvoice", "Toggle damage voice");
 
     menu.Display(client, MENU_TIME_FOREVER);
  
@@ -43,6 +44,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 FakeClientCommand(client, "kill");
             case 5:
                 FakeClientCommand(client, "sm_robot");
+            case 6:
+                FakeClientCommand(client, "menu_player_dmgvoice");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
