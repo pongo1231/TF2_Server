@@ -167,7 +167,9 @@ char VoiceInputs[][] = {
 	"TLK_PLAYER_CAST_BLAST_JUMP",
 	"TLK_PLAYER_CAST_SELF_HEAL",
 	"TLK_PLAYER_CAST_MERASMUS_ZAP",
-	"HalloweenLongFall"
+	"HalloweenLongFall",
+	"TLK_PLAYER_SHOW_ITEM_TAUNT", // Some weird pyro sound
+	""
 }
 
 char Classes[][] = {
@@ -195,6 +197,101 @@ void PlayRandomVoice(int client) {
 		char contextClass[32];
 		Format(contextClass, sizeof(contextClass), "victimclass:%s", Classes[GetRandomInt(0, sizeof(Classes) - 1)]);
 		SetVariantString(contextClass);
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("beinghealed:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("damagecritical:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsDominating:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("PlayerOnWinningTeam:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("PlayerOnLosingTeam:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsMedicDoubleFace:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsMedicBirdHead:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsHeavyBirdHead:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsSoldierBirdHead:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsSniperBirdHead:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsSoldierMaggotHat:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsSoldierWizardHat:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsUnicornHead:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsMedicZombieBird:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsHauntedHat:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsRobotCostume:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsFairyHeavy:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsDemowolf:1");
+		AcceptEntityInput(client, "AddContext");
+	}
+
+	if (GetRandomInt(0, 100) > 50) {
+		SetVariantString("IsFrankenHeavy:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 

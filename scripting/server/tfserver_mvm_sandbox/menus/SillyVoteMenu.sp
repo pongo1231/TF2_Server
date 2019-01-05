@@ -37,6 +37,9 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Enable Spells (Currently: %b)", GetConVarBool(FindConVar("sm_spells_enabled")));
     menu.AddItem("silly_spells_enabled", text);
 
+    Format(text, sizeof(text), "Unlimited Ammo (Currently: %b)", GetConVarBool(FindConVar("sm_fia_all")));
+    menu.AddItem("silly_unlimitedammo", text);
+
     menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
@@ -58,7 +61,9 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 5:
                 Voting_CreateYesNoConVarVote(client, "tf_grapplinghook_enable", "Enable Grappling Hook? (Silly)");
             case 6:
-                Voting_CreateYesNoCommandVote(client, "tf_spells_enabled 1;sm_spells_enabled 1", "Enable spells?", "tf_spells_enabled 0;sm_spells_enabled 0");
+                Voting_CreateYesNoCommandVote(client, "tf_spells_enabled 1;sm_spells_enabled 1", "Enable spells? (Silly)", "tf_spells_enabled 0;sm_spells_enabled 0");
+            case 7:
+                Voting_CreateYesNoConVarVote(client, "sm_fia_all", "Enable unlimited ammo? (Silly)");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
