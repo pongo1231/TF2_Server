@@ -16,7 +16,9 @@ public Action MenuOpen(int client, int args) {
     SetMenuExitBackButton(menu, true);
     SetMenuExitButton(menu, false);
 
+    menu.AddItem("player_pitch", "Pitch menu");
     menu.AddItem("player_kill", "Suicide");
+    menu.AddItem("player_dmgvoice", "Toggle damage voice");
 
     menu.Display(client, MENU_TIME_FOREVER);
  
@@ -27,7 +29,11 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
             case 0:
+                FakeClientCommand(client, "menu_player_pitch");
+            case 1:
                 FakeClientCommand(client, "kill");
+            case 2:
+                FakeClientCommand(client, "menu_player_dmgvoice");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)

@@ -17,7 +17,7 @@ public Action MenuOpen(int client, int args) {
     SetMenuExitButton(menu, false);
 
     menu.AddItem("player_taunt", "Taunt menu");
-    menu.AddItem("player_pitch", "Pitch menu")
+    menu.AddItem("player_pitch", "Pitch menu");
     menu.AddItem("player_fp", "Perspective to first person");
     menu.AddItem("player_tp", "Perspective to third person");
     menu.AddItem("player_kill", "Suicide");
