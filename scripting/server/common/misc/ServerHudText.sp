@@ -9,7 +9,9 @@ public void OnPluginStart() {
 
 public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcast) {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
-	CreateTimer(0.25, Delay_ShowHudText, client);
+	if (IsClientConnected(client)) { // Weirdly enough they might not be sometimes?
+		CreateTimer(0.25, Delay_ShowHudText, client);
+	}
 }
 
 public Action Delay_ShowHudText(Handle timer, int client) {
