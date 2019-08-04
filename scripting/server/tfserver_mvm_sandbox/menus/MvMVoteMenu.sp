@@ -26,6 +26,8 @@ public Action MenuOpen(int client, int args) {
 
     menu.AddItem("mvm_killrobots", "Kill all spawned robots (use if stuck)");
 
+    menu.AddItem("mvm_killtanks", "Kill all spawned tanks");
+
     menu.Display(client, MENU_TIME_FOREVER);
  
     return Plugin_Handled;
@@ -38,6 +40,8 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
                 Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Enable infinite money? (Silly)");
             case 1:
                 Voting_CreateYesNoCommandVote(client, "sm_slay @blue", "Kill all spawned robots? (use if stuck)");
+            case 2:
+                Voting_CreateYesNoCommandVote(client, "sm_cheat tf_mvm_tank_kill; sv_cheats 0", "Kill all spawned tanks?");
         }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
