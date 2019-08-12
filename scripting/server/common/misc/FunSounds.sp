@@ -19,8 +19,8 @@ public Action PlayerToggleDmgVoice(int client, int args) {
 		return Plugin_Handled;
 	}
 
-	dmgVoiceClients[client] = !dmgVoiceClients[client];
-	if (dmgVoiceClients[client])
+	dmgVoiceClients[client - 1] = !dmgVoiceClients[client - 1];
+	if (dmgVoiceClients[client - 1])
 		Server_PrintToChat(client, "Menu", "Enabled Damage Voice.");
 	else
 		Server_PrintToChat(client, "Menu", "Disabled Damage Voice.");
