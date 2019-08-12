@@ -29,7 +29,7 @@ public Action PlayerToggleDmgVoice(int client, int args) {
 }
 
 public void OnClientDisconnect_Post(int client) {
-	dmgVoiceClients[client] = false;
+	dmgVoiceClients[client - 1] = false;
 }
 
 public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadcast) {
@@ -39,9 +39,9 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
 	int hurter = GetClientOfUserId(GetEventInt(event, "attacker"));
 
-	if (IsFakeClient(victim) || dmgVoiceClients[victim])
+	if (IsFakeClient(victim) || dmgVoiceClients[victim - 1])
 		PlayRandomVoice(victim);
-	if (hurter != 0 && (IsFakeClient(hurter) || dmgVoiceClients[hurter]))
+	if (hurter != 0 && (IsFakeClient(hurter) || dmgVoiceClients[hurter - 1]))
 		PlayRandomVoice(hurter);
 
 	return Plugin_Handled;
