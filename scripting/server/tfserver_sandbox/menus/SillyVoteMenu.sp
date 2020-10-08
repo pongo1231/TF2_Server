@@ -43,7 +43,7 @@ public Action MenuOpen(int client, int args) {
     Format(text, sizeof(text), "Enable Spells (Currently: %b)", GetConVarBool(FindConVar("sm_spells_enabled")));
     menu.AddItem("silly_spells_enabled", text);
 
-    Format(text, sizeof(text), "Unlimited Ammo (Currently: %b)", GetConVarBool(FindConVar("sm_fia_all")));
+    Format(text, sizeof(text), "Unlimited Ammo (Currently: %b)", GetConVarBool(FindConVar("sm_aia_all")));
     menu.AddItem("silly_unlimitedammo", text);
 
     Format(text, sizeof(text), "Huge Explosion Effects (Currently: %b)", GetConVarBool(FindConVar("sm_hugeexplosions_enabled")));
@@ -76,7 +76,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 8:
                 Voting_CreateYesNoCommandVote(client, "tf_spells_enabled 1;sm_spells_enabled 1", "Enable spells? (Silly)", "tf_spells_enabled 0;sm_spells_enabled 0");
             case 9:
-            	Voting_CreateYesNoConVarVote(client, "sm_fia_all", "Enable unlimited ammo? (Silly)");
+            	Voting_CreateYesNoConVarVote(client, "sm_aia_all", "Enable unlimited ammo? (Silly)");
             case 10:
                 Voting_CreateYesNoConVarVote(client, "sm_hugeexplosions_enabled", "Enable huge explosion effects? (Silly)");
         }
