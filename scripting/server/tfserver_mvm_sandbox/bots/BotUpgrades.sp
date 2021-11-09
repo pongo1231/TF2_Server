@@ -13,15 +13,16 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		if (IsClientInGame(i) && IsFakeClient(i) && TF2_GetClientTeam(i) == TFTeam_Red)  {
 			int wep = GetEntPropEnt(i, Prop_Send, "m_hActiveWeapon");
 
-			TF2Attrib_SetByName(wep, "heal on hit for rapidfire", 1.0);
+			TF2Attrib_SetByName(wep, "heal on hit for rapidfire", 2.0);
 			TF2Attrib_SetByName(wep, "damage bonus", 5.0);
 			TF2Attrib_SetByName(wep, "ammo regen", 0.1);
 			TF2Attrib_SetByName(wep, "clip size bonus", 3.0);
 			TF2Attrib_SetByName(wep, "fire rate bonus", 0.7);
 			TF2Attrib_SetByName(wep, "mod rage on hit bonus", 1000.0);
-			//TF2Attrib_SetByName(wep, "restore health on kill", 25.0);
+			TF2Attrib_SetByName(wep, "restore health on kill", 25.0);
 			TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
 			//TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
+            TF2Attrib_SetByName(wep, "dmg taken from crit reduced", 0.0);
 
 			switch (TF2_GetPlayerClass(i)) {
 				case TFClass_Pyro: {
