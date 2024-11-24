@@ -22,7 +22,12 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			TF2Attrib_SetByName(wep, "restore health on kill", 25.0);
 			TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
 			//TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
-            TF2Attrib_SetByName(wep, "dmg taken from crit reduced", 0.0);
+            TF2Attrib_SetByName(wep, "dmg taken from fire reduced", 0.8);
+            TF2Attrib_SetByName(wep, "dmg taken from crit reduced", 0.75);
+            TF2Attrib_SetByName(wep, "dmg taken from blast reduced", 0.8);
+            TF2Attrib_SetByName(wep, "dmg taken from bullets reduced", 0.8);
+            TF2Attrib_SetByName(wep, "slow enemy on hit", 1.0);
+            //TF2Attrib_SetByName(wep, "health regen", 10.0);
 
 			switch (TF2_GetPlayerClass(i)) {
 				case TFClass_Pyro: {
