@@ -28,6 +28,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
             TF2Attrib_SetByName(wep, "dmg taken from bullets reduced", 0.8);
             TF2Attrib_SetByName(wep, "slow enemy on hit", 1.0);
             //TF2Attrib_SetByName(wep, "health regen", 10.0);
+            TF2Attrib_SetByName(wep, "attack projectiles", 100.0);
 
 			switch (TF2_GetPlayerClass(i)) {
 				case TFClass_Pyro: {
