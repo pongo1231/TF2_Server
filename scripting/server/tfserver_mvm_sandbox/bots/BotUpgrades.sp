@@ -40,7 +40,8 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			}
 			case TFClass_Pyro: {
 				TF2Attrib_SetByName(wep, "airblast pushback scale", 300.0);
-				TF2Attrib_SetByName(wep, "mult airblast refire time", 0.5);
+				TF2Attrib_SetByName(wep, "mult airblast refire time", 0.1);
+				TF2Attrib_SetByName(wep, "airblast cost decreased", 0.1);
 			}
 			case TFClass_Engineer: {
 				TF2Attrib_SetByName(client, "engy sentry damage bonus", 2.5);
