@@ -27,12 +27,12 @@ public Action Timer_RTDTick(Handle timer) {
 	if (!GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	for (int i = 1; i < 33; i++) {
-		if (IsClientInGame(i) && IsFakeClient(i) && (!playing_mvm || TF2_GetClientTeam(i) != TFTeam_Blue || GetConVarBool(g_rtdsay_mvmbots))) {
-			playerData[i - 1]--;
-			if (playerData[i - 1] <= 0) {
-				FakeClientCommand(i, "sm_rtd");
-				playerData[i - 1] = GetRandomInt(GetConVarInt(g_rtdsay_min_dur), GetConVarInt(g_rtdsay_max_dur));
+	for (int client = 1; client < MaxClients; client++) {
+		if (IsClientInGame(client) && IsFakeClient(client) && IsPlayerAlive(client) && (!playing_mvm || TF2_GetClientTeam(client) != TFTeam_Blue || GetConVarBool(g_rtdsay_mvmbots))) {
+			playerData[client - 1]--;
+			if (playerData[client - 1] <= 0) {
+				FakeClientCommand(client, "sm_rtd");
+				playerData[client - 1] = GetRandomInt(GetConVarInt(g_rtdsay_min_dur), GetConVarInt(g_rtdsay_max_dur));
 			}
 		}
 	}
