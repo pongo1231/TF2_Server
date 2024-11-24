@@ -56,6 +56,9 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(wep, "generate rage on heal", 100.0);
 			}
 			case TFClass_Sniper: {
+				TF2Attrib_SetByName(wep, "damage bonus", 8.0);
+				TF2Attrib_SetByName(wep, "sniper charge per sec", 10000.0);
+				TF2Attrib_SetByName(wep, "Reload time decreased", 0.1);
 				TF2Attrib_SetByName(wep, "explosive sniper shot", 5.0);
 			}
 			case TFClass_Spy: {
