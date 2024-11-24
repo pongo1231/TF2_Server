@@ -58,6 +58,11 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			case TFClass_Sniper: {
 				TF2Attrib_SetByName(wep, "explosive sniper shot", 5.0);
 			}
+			case TFClass_Spy: {
+				TF2Attrib_SetByName(client, "move speed bonus", 1.5);
+				TF2Attrib_SetByName(client, "increased jump height", 1.6);
+				TF2Attrib_SetByName(client, "sanguisuge", 1.0);
+			}
 		}
 	}
 
