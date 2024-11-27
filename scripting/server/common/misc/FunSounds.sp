@@ -7,6 +7,11 @@
 ConVar g_enabled;
 bool dmgVoiceClients[32];
 
+int GetRandomUInt(int min, int max)
+{
+    return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
+}
+
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
 	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
@@ -207,112 +212,112 @@ char Classes[][] = {
 }
 
 void PlayRandomVoice(int client) {
-	if (GetRandomInt(0, 100) > 50) {
-		if (GetRandomInt(0, 1) == 0)
+	if (GetRandomUInt(0, 100) > 50) {
+		if (GetRandomUInt(0, 1) == 0)
 			SetVariantString("domination:dominated");
 		else
 			SetVariantString("domination:revenge");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		char contextClass[32];
-		Format(contextClass, sizeof(contextClass), "victimclass:%s", Classes[GetRandomInt(0, sizeof(Classes) - 1)]);
+		Format(contextClass, sizeof(contextClass), "victimclass:%s", Classes[GetRandomUInt(0, sizeof(Classes) - 1)]);
 		SetVariantString(contextClass);
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("beinghealed:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("damagecritical:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsDominating:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("PlayerOnWinningTeam:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("PlayerOnLosingTeam:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsMedicDoubleFace:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsMedicBirdHead:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsHeavyBirdHead:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsSoldierBirdHead:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsSniperBirdHead:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsSoldierMaggotHat:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsSoldierWizardHat:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsUnicornHead:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsMedicZombieBird:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsHauntedHat:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsRobotCostume:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsFairyHeavy:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsDemowolf:1");
 		AcceptEntityInput(client, "AddContext");
 	}
 
-	if (GetRandomInt(0, 100) > 50) {
+	if (GetRandomUInt(0, 100) > 50) {
 		SetVariantString("IsFrankenHeavy:1");
 		AcceptEntityInput(client, "AddContext");
 	}
@@ -324,7 +329,7 @@ void PlayRandomVoice(int client) {
 	SetVariantString("IsCompWinner:1");
 	AcceptEntityInput(client, "AddContext");
 
-	SetVariantString(VoiceInputs[GetRandomInt(0, sizeof(VoiceInputs) - 1)]);
+	SetVariantString(VoiceInputs[GetRandomUInt(0, sizeof(VoiceInputs) - 1)]);
 	AcceptEntityInput(client, "SpeakResponseConcept");
 
 	AcceptEntityInput(client, "ClearContext");

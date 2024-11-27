@@ -8,10 +8,15 @@ ConVar g_spells_rarechance;
 ConVar g_spells_despawntime;
 ArrayList spells;
 
+int GetRandomUInt(int min, int max)
+{
+    return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
+}
+
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_spells_enabled", "0", "Enable plugin");
-	g_spells_dropchance = CreateConVar("sm_spells_dropchance", "10.0", "Chance for players to drop spell after death", _, true, 0.0, true, 100.0);
-	g_spells_rarechance = CreateConVar("sm_spells_rarechance", "10.0", "Chance for rare spell drops", _, true, 0.0, true, 100.0);
+	g_spells_dropchance = CreateConVar("sm_spells_dropchance", "10", "Chance for players to drop spell after death", _, true, 0.0, true, 100.0);
+	g_spells_rarechance = CreateConVar("sm_spells_rarechance", "10", "Chance for rare spell drops", _, true, 0.0, true, 100.0);
 	g_spells_despawntime = CreateConVar("sm_spells_despawntime", "30", "Time until spell disappears (in seconds)", _, true, 0.0);
 	spells = CreateArray(2);
 
@@ -23,7 +28,7 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 	if (!GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	if (GetRandomFloat(0.0, 100.0) < GetConVarFloat(g_spells_dropchance)) {
+	if (GetRandomUInt(0, 100) < GetConVarInt(g_spells_dropchance)) {
 		int victim = GetClientOfUserId(GetEventInt(event, "userid"));
 		int spell = CreateEntityByName("tf_spell_pickup")
 		float playerPos[3];

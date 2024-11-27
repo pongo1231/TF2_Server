@@ -17,9 +17,14 @@ bool playing_mvm = false;
 ConVar g_enabled;
 ConVar g_taunt_chance;
 
+int GetRandomUInt(int min, int max)
+{
+    return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
+}
+
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bottaunt_enabled", "1", "Enable plugin");
-	g_taunt_chance = CreateConVar("sm_bottaunt_chance", "1.0", "Chance for bots to taunt after kill", _, true, 0.0, true, 100.0);
+	g_taunt_chance = CreateConVar("sm_bottaunt_chance", "100", "Chance for bots to taunt after kill", _, true, 0.0, true, 100.0);
 
 	HookEvent("player_death", Event_PlayerDeath);
 }
@@ -36,7 +41,7 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 	if (killer == 0 || !IsFakeClient(killer))
 		return Plugin_Continue;
 
-	if (((playing_mvm && TF2_GetClientTeam(killer) == TFTeam_Blue) || !playing_mvm) && GetRandomFloat(0.0, 100.0) < GetConVarFloat(g_taunt_chance)) {
+	if (((playing_mvm && TF2_GetClientTeam(killer) == TFTeam_Blue) || !playing_mvm) && GetRandomUInt(0, 100) < GetConVarInt(g_taunt_chance)) {
 		CTauntEnforcer enforcer = new CTauntEnforcer(LoadGameConfigFile("tf2.tauntem"));
 
 		char class_name[16];
@@ -44,7 +49,7 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 		Handle class_taunts = GetClassTaunts(class_name);
 
 		if (GetArraySize(class_taunts) > 0)
-			enforcer.ForceTaunt(killer, GetArrayCell(class_taunts, GetRandomInt(0, GetArraySize(class_taunts) - 1)));
+			enforcer.ForceTaunt(killer, GetArrayCell(class_taunts, GetRandomUInt(0, GetArraySize(class_taunts) - 1)));
 		CloseHandle(class_taunts);
 	}
 
