@@ -10,7 +10,7 @@
  * @param convar 	The ConVar to change
  * @param question 	The question to show
  */
-native void Server_PrintToChat(int client, char[] tag, char[] text);
+native void Server_PrintToChat(int client, char[] tag, char[] text, bool log_to_server = false);
 
 /**
  * Prints a Server Messages to all Clients
@@ -19,4 +19,4 @@ native void Server_PrintToChat(int client, char[] tag, char[] text);
  * @param question 	The question to show
  * @param values	The values to select from
  */
-native void Server_PrintToChatAll(char[] tag, char[] text);
+native void Server_PrintToChatAll(char[] tag, char[] text, bool log_to_server = false);
