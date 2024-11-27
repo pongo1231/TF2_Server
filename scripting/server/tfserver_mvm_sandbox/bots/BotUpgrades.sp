@@ -32,6 +32,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(wep, "slow enemy on hit", 1.0);
 		//TF2Attrib_SetByName(wep, "health regen", 10.0);
 		TF2Attrib_SetByName(wep, "attack projectiles", 100.0);
+                TF2Attrib_SetByName(wep, "melee range multiplier", 3.0);
 
 		switch (TF2_GetPlayerClass(client)) {
 			case TFClass_Scout: {
