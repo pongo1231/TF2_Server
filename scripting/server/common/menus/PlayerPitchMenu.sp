@@ -41,6 +41,10 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
         char info[4];
         GetMenuItem(menu, item, info, sizeof(info));
         players_pitch[client - 1] = StringToInt(info);
+
+        char text[32];
+        Format(text, sizeof(text), "Pitch set to %s.", info);
+        Server_PrintToChat(client, "Menu", text, true);
     }
     else if (action == MenuAction_Cancel) {
         if (item == MenuCancel_ExitBack)
