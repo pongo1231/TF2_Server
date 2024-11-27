@@ -14,14 +14,14 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			continue;
 		
 		TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.5);
-		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.1);
+		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.2);
 		TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.5);
 		TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.5);
 
 		int wep = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 
 		//TF2Attrib_SetByName(wep, "heal on hit for rapidfire", 2.0);
-		TF2Attrib_SetByName(wep, "damage bonus", 4.0);
+		TF2Attrib_SetByName(wep, "damage bonus", 3.0);
 		TF2Attrib_SetByName(wep, "ammo regen", 0.1);
 		TF2Attrib_SetByName(wep, "clip size bonus", 3.0);
 		TF2Attrib_SetByName(wep, "fire rate bonus", 0.7);
@@ -44,8 +44,8 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(wep, "airblast cost decreased", 0.1);
 			}
 			case TFClass_Engineer: {
-				TF2Attrib_SetByName(client, "engy sentry damage bonus", 2.5);
-				TF2Attrib_SetByName(client, "engy building health bonus", 3.0);
+				TF2Attrib_SetByName(client, "engy sentry damage bonus", 2.0);
+				TF2Attrib_SetByName(client, "engy building health bonus", 4.0);
 				TF2Attrib_SetByName(client, "engineer sentry build rate multiplier", 200.0);
 				TF2Attrib_SetByName(client, "engy sentry radius increased", 1000.0);
 				TF2Attrib_SetByName(client, "metal regen", 1000.0);
@@ -57,7 +57,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(wep, "generate rage on heal", 100.0);
 			}
 			case TFClass_Sniper: {
-				TF2Attrib_SetByName(wep, "damage bonus", 7.0);
+				TF2Attrib_SetByName(wep, "damage bonus", 6.0);
 				TF2Attrib_SetByName(wep, "sniper charge per sec", 10000.0);
 				TF2Attrib_SetByName(wep, "Reload time decreased", 0.1);
 				TF2Attrib_SetByName(wep, "explosive sniper shot", 10.0);
