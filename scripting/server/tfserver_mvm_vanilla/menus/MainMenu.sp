@@ -16,6 +16,7 @@ public Action MenuOpen(int client, int args) {
     SetMenuExitBackButton(menu, false);
     SetMenuExitButton(menu, true);
     menu.AddItem("main_player", "Player settings");
+    menu.AddItem("main_bots", "Bot settings");
     menu.AddItem("main_redirect", "Other servers");
     menu.AddItem("main_credits", "Credits");
     menu.Display(client, MENU_TIME_FOREVER);
@@ -29,8 +30,10 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 0:
                 FakeClientCommand(client, "menu_player");
             case 1:
-                FakeClientCommand(client, "menu_redirect");
+                FakeClientCommand(client, "menu_bots");
             case 2:
+                FakeClientCommand(client, "menu_redirect");
+            case 3:
                 FakeClientCommand(client, "menu_credits");
         }
     } else if (action == MenuAction_End)
