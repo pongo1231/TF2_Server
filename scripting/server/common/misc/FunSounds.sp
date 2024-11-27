@@ -195,8 +195,7 @@ char VoiceInputs[][] = {
 	"TLK_PLAYER_CAST_SELF_HEAL",
 	"TLK_PLAYER_CAST_MERASMUS_ZAP",
 	"HalloweenLongFall",
-	"TLK_PLAYER_SHOW_ITEM_TAUNT", // Some weird pyro sound
-	""
+	"TLK_PLAYER_SHOW_ITEM_TAUNT" // Some weird pyro sound
 }
 
 char Classes[][] = {
