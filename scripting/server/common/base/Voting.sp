@@ -52,7 +52,7 @@ public int Voting_CreateYesNoConVarVote(Handle plugin, int numParams) {
     menu.AddItem("no", "No");
     menu.ExitButton = false;
     menu.DisplayVoteToAll(countdown);
-    Server_PrintToChatAll("Vote", text);
+    Server_PrintToChatAll("Vote", text, true);
 
     EmitSoundToAll("ui/vote_started.wav");
 }
@@ -61,8 +61,8 @@ public int Handle_YesNoVoting(Menu menu, MenuAction action, int choice, int para
     if (action == MenuAction_VoteEnd) {
         int value;
         if (choice == 1) { // no = 1
-        	value = false_value;
-        	EmitSoundToAll("ui/vote_failure.wav");
+            value = false_value;
+            EmitSoundToAll("ui/vote_failure.wav");
         } else if (choice == 0) { // yes = 0
             value = true_value;
             EmitSoundToAll("ui/vote_success.wav");
@@ -107,7 +107,7 @@ public int Voting_CreateStringConVarVote(Handle plugin, int numParams) {
     }
     menu.ExitButton = false;
     menu.DisplayVoteToAll(countdown);
-    Server_PrintToChatAll("Vote", text);
+    Server_PrintToChatAll("Vote", text, true);
 
     EmitSoundToAll("ui/vote_started.wav");
 }
@@ -150,7 +150,7 @@ public int Voting_CreateYesNoCommandVote(Handle plugin, int numParams) {
     menu.AddItem("no", "No");
     menu.ExitButton = false;
     menu.DisplayVoteToAll(countdown);
-    Server_PrintToChatAll("Vote", text);
+    Server_PrintToChatAll("Vote", text, true);
 
     EmitSoundToAll("ui/vote_started.wav");
 }
@@ -171,7 +171,7 @@ public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int choice, i
                 Format(text, sizeof(text), "Vote for %s has failed.", command_name);
                 EmitSoundToAll("ui/vote_failure.wav");
             }
-        Server_PrintToChatAll("Vote", text);
+        Server_PrintToChatAll("Vote", text, true);
         vote_success = true;
     } else if (action == MenuAction_End) {
         ClearVote();
@@ -189,7 +189,7 @@ void ClearVote() {
     command2_name = "";
 
     if (!vote_success)
-        Server_PrintToChatAll("Vote", "No votes received; Vote failed.");
+        Server_PrintToChatAll("Vote", "No votes received; Vote failed.", true);
     vote_success = false;
 }
 
@@ -206,10 +206,10 @@ void SetConVar(ConVar cvar, char[] newValue) {
         Format(text, sizeof(text), "%s has been set to %s.", convar_name, newValue);
     }
 
-    Server_PrintToChatAll("Vote", text);
+    Server_PrintToChatAll("Vote", text, true);
     vote_success = true;
 }
 
 void WarnClientVoteRunning(int client) {
-    Server_PrintToChat(client, "Vote", "A vote is already in progress.");
+    Server_PrintToChat(client, "Vote", "A vote is already in progress.", true);
 }
