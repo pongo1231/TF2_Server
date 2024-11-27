@@ -3,12 +3,21 @@
 #include <tf2>
 #include <tf2_stocks>
 
+bool playing_mvm = false;
+
 public void OnPluginStart() {
 	CreateTimer(1.0, Timer_AddAttribsToActiveWep, _, TIMER_REPEAT);
 	HookEvent("player_builtobject", Event_PlayerBuiltObject);
 }
 
+public void OnMapStart() {
+	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
+}
+
 public Action Timer_AddAttribsToActiveWep(Handle timer) {
+	if (!playing_mvm)
+		return Plugin_Continue;
+
 	for (int client = 1; client < MaxClients; client++) {
 		if (!IsClientInGame(client) || !IsFakeClient(client) || TF2_GetClientTeam(client) != TFTeam_Red)
 			continue;
@@ -30,7 +39,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
 		//TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
 		TF2Attrib_SetByName(wep, "slow enemy on hit", 1.0);
-		TF2Attrib_SetByName(wep, "health regen", 2.0);
+		TF2Attrib_SetByName(wep, "health regen", 1.0);
 		TF2Attrib_SetByName(wep, "attack projectiles", 100.0);
                 TF2Attrib_SetByName(wep, "melee range multiplier", 3.0);
 
@@ -75,6 +84,9 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 }
 
 public Action Event_PlayerBuiltObject(Handle event, const char[] name, bool dontBroadcast) {
+	if (!playing_mvm)
+		return Plugin_Continue;
+
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	if (!IsFakeClient(client) || TF2_GetClientTeam(client) != TFTeam_Red)
 		return Plugin_Continue;
