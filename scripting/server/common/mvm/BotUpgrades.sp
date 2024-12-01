@@ -26,12 +26,13 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.2);
 		TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.5);
 		TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.5);
+		TF2Attrib_SetByName(client, "health regen", 1.0);
+		TF2Attrib_SetByName(client, "ammo regen", 0.1);
 
 		int wep = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 
 		//TF2Attrib_SetByName(wep, "heal on hit for rapidfire", 2.0);
 		TF2Attrib_SetByName(wep, "damage bonus", 3.0);
-		TF2Attrib_SetByName(wep, "ammo regen", 0.1);
 		TF2Attrib_SetByName(wep, "clip size bonus", 3.0);
 		TF2Attrib_SetByName(wep, "fire rate bonus", 0.7);
 		TF2Attrib_SetByName(wep, "mod rage on hit bonus", 1000.0);
@@ -39,9 +40,8 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(wep, "Reload time decreased", 0.5);
 		//TF2Attrib_SetByName(wep, "critboost on kill", 5.0);
 		TF2Attrib_SetByName(wep, "slow enemy on hit", 1.0);
-		TF2Attrib_SetByName(wep, "health regen", 1.0);
 		TF2Attrib_SetByName(wep, "attack projectiles", 100.0);
-                TF2Attrib_SetByName(wep, "melee range multiplier", 3.0);
+		TF2Attrib_SetByName(wep, "melee range multiplier", 3.0);
 
 		switch (TF2_GetPlayerClass(client)) {
 			case TFClass_Scout: {
