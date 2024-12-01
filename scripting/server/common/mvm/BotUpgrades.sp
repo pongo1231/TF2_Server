@@ -54,7 +54,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(wep, "airblast cost decreased", 0.1);
 			}
 			case TFClass_Engineer: {
-				TF2Attrib_SetByName(client, "engy sentry damage bonus", 2.5);
+				TF2Attrib_SetByName(client, "engy sentry damage bonus", 3.0);
 				TF2Attrib_SetByName(client, "engy building health bonus", 4.0);
 				TF2Attrib_SetByName(client, "engineer sentry build rate multiplier", 200.0);
 				TF2Attrib_SetByName(client, "engy sentry radius increased", 1000.0);
