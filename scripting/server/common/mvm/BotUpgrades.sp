@@ -26,7 +26,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.2);
 		TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.5);
 		TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.5);
-		TF2Attrib_SetByName(client, "health regen", 1.0);
+		TF2Attrib_SetByName(client, "health regen", 2.0);
 		TF2Attrib_SetByName(client, "ammo regen", 0.1);
 
 		int wep = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
