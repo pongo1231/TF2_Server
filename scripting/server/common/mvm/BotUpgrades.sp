@@ -23,7 +23,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 			continue;
 		
 		TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.5);
-		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.2);
+		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.1);
 		TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.5);
 		TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.5);
 		TF2Attrib_SetByName(client, "health regen", 2.0);
