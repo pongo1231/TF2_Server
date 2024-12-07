@@ -60,7 +60,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(client, "engy sentry radius increased", 1000.0);
 				TF2Attrib_SetByName(client, "metal regen", 1000.0);
 				TF2Attrib_SetByName(client, "bidirectional teleport", 1.0);
-				TF2Attrib_SetByName(client, "engy dispenser radius increased", 4.0);
+				TF2Attrib_SetByName(client, "engy dispenser radius increased", 7.0);
 			}
 			case TFClass_Medic: {
 				TF2Attrib_SetByName(wep, "ubercharge rate bonus", 500.0);
