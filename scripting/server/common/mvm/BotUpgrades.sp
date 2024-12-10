@@ -26,8 +26,10 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.1);
 		TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.5);
 		TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.5);
-		TF2Attrib_SetByName(client, "health regen", 2.0);
-		TF2Attrib_SetByName(client, "ammo regen", 0.1);
+		//TF2Attrib_SetByName(client, "health regen", 2.0);
+		//TF2Attrib_SetByName(client, "ammo regen", 0.1);
+		TF2Attrib_SetByName(client, "maxammo primary increased", 3.0);
+		TF2Attrib_SetByName(client, "maxammo secondary increased", 3.0);
 
 		int wep = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 
@@ -61,7 +63,8 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(client, "engy building health bonus", 4.0);
 				TF2Attrib_SetByName(client, "engineer sentry build rate multiplier", 200.0);
 				TF2Attrib_SetByName(client, "engy sentry radius increased", 1000.0);
-				TF2Attrib_SetByName(client, "metal regen", 1000.0);
+				//TF2Attrib_SetByName(client, "metal regen", 1000.0);
+				TF2Attrib_SetByName(client, "maxammo metal increased", 3.0);
 				TF2Attrib_SetByName(client, "bidirectional teleport", 1.0);
 				TF2Attrib_SetByName(client, "engy dispenser radius increased", 7.0);
 			}
