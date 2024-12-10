@@ -11,6 +11,41 @@ int true_value;
 int false_value;
 bool vote_success = false;
 
+bool IsVoteRunning() {
+    return g_convar || command_name[0] || command2_name[0];
+}
+
+void ClearVote() {
+    g_convar = null;
+    command_name = "";
+    command2_name = "";
+
+    if (!vote_success)
+        Server_PrintToChatAll("Vote", "No votes received; Vote failed.", true);
+    vote_success = false;
+}
+
+void SetConVar(ConVar cvar, char[] newValue) {
+    char text[128];
+    char oldValue[8];
+    GetConVarString(cvar, oldValue, sizeof(oldValue));
+    char convar_name[64];
+    GetConVarName(cvar, convar_name, sizeof(convar_name));
+    if (StrEqual(oldValue, newValue))
+        Format(text, sizeof(text), "%s has been left unchanged. (%s)", convar_name, newValue);
+    else {
+        SetConVarString(g_convar, newValue);
+        Format(text, sizeof(text), "%s has been set to %s.", convar_name, newValue);
+    }
+
+    Server_PrintToChatAll("Vote", text, true);
+    vote_success = true;
+}
+
+void WarnClientVoteRunning(int client) {
+    Server_PrintToChat(client, "Vote", "A vote is already in progress.", true);
+}
+
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max) {
    CreateNative("Voting_CreateYesNoConVarVote", Voting_CreateYesNoConVarVote);
    CreateNative("Voting_CreateStringConVarVote", Voting_CreateStringConVarVote);
@@ -155,16 +190,24 @@ public int Voting_CreateYesNoCommandVote(Handle plugin, int numParams) {
     EmitSoundToAll("ui/vote_started.wav");
 }
 
+public Action Delay_DisableCheats(Handle timer) {
+    ServerCommand("sv_cheats 0");
+
+    return Plugin_Handled;
+}
+
 public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int choice, int param2) {
     if (action == MenuAction_VoteEnd) {
         char text[128];
         if (choice == 0) {
             ServerCommand(command_name);
+            CreateTimer(0.01, Delay_DisableCheats);
             Format(text, sizeof(text), "%s has been executed.", command_name);
             EmitSoundToAll("ui/vote_success.wav");
         } else if (choice == 1)
             if (command2_name[0]) {
                 ServerCommand(command2_name);
+                CreateTimer(0.01, Delay_DisableCheats);
                 Format(text, sizeof(text), "%s has been executed.", command2_name);
                 EmitSoundToAll("ui/vote_success.wav");
             } else {
@@ -177,39 +220,4 @@ public int Handle_YesNoCommandVoting(Menu menu, MenuAction action, int choice, i
         ClearVote();
         delete menu;
     }
-}
-
-bool IsVoteRunning() {
-    return g_convar || command_name[0] || command2_name[0];
-}
-
-void ClearVote() {
-    g_convar = null;
-    command_name = "";
-    command2_name = "";
-
-    if (!vote_success)
-        Server_PrintToChatAll("Vote", "No votes received; Vote failed.", true);
-    vote_success = false;
-}
-
-void SetConVar(ConVar cvar, char[] newValue) {
-    char text[128];
-    char oldValue[8];
-    GetConVarString(cvar, oldValue, sizeof(oldValue));
-    char convar_name[64];
-    GetConVarName(cvar, convar_name, sizeof(convar_name));
-    if (StrEqual(oldValue, newValue))
-        Format(text, sizeof(text), "%s has been left unchanged. (%s)", convar_name, newValue);
-    else {
-        SetConVarString(g_convar, newValue);
-        Format(text, sizeof(text), "%s has been set to %s.", convar_name, newValue);
-    }
-
-    Server_PrintToChatAll("Vote", text, true);
-    vote_success = true;
-}
-
-void WarnClientVoteRunning(int client) {
-    Server_PrintToChat(client, "Vote", "A vote is already in progress.", true);
 }
