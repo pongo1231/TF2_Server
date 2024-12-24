@@ -10,7 +10,7 @@ public void OnPluginStart() {
 }
 
 public void OnMapStart() {
-	playing_mvm = IsGamemodeMvm();
+	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
 }
 
 public Action Timer_CheckReady(Handle timer) {
@@ -19,7 +19,7 @@ public Action Timer_CheckReady(Handle timer) {
 
 	bool players_ready = false;
 	if (GameRules_GetRoundState() == RoundState_Preround || GameRules_GetRoundState() == RoundState_BetweenRounds) {
-		for (int i = 1; i < 33; i++)
+		for (int i = 1; i < MaxClients; i++)
 			if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Red)
 				if (!IsPlayerReady(i) && !IsFakeClient(i)) {
 					players_ready = false;
@@ -33,18 +33,11 @@ public Action Timer_CheckReady(Handle timer) {
 	}
 
 	if (players_ready)
-		for (int i = 1; i < 33; i++)
+		for (int i = 1; i < MaxClients; i++)
 			if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Red)
 				MakePlayerReady(i, true);
 
 	return Plugin_Handled;
-}
-
-bool IsGamemodeMvm() {
-	if (GameRules_GetProp("m_bPlayingMannVsMachine") == -1)
-		return false;
-	else
-		return true;
 }
 
 bool IsPlayerReady(int client) {
