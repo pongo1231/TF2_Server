@@ -21,6 +21,9 @@ public Action MenuOpen(int client, int args) {
 
     char text[128];
 
+    Format(text, sizeof(text), "Endless Force Mode (Currently: %b)", GetConVarBool(FindConVar("tf_mvm_endless_force_on")));
+    menu.AddItem("mvm_endlessforcemode", text);
+
     Format(text, sizeof(text), "Infinite Money (Silly) (Currently: %b)", GetConVarBool(FindConVar("sm_mvm_infinitemoney")));
     menu.AddItem("mvm_infinitemoney", text);
 
@@ -37,10 +40,12 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
             case 0:
-                Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Enable infinite money? (Silly)");
+                Voting_CreateYesNoConVarVote(client, "tf_mvm_endless_force_on", "Enable MvM Endless Force Mode?");
             case 1:
-                Voting_CreateYesNoCommandVote(client, "sm_slay @blue", "Kill all spawned robots? (use if stuck)");
+                Voting_CreateYesNoConVarVote(client, "sm_mvm_infinitemoney", "Enable infinite money? (Silly)");
             case 2:
+                Voting_CreateYesNoCommandVote(client, "sm_slay @blue", "Kill all spawned robots? (use if stuck)");
+            case 3:
                 Voting_CreateYesNoCommandVote(client, "sv_cheats 1; sm_fakecmd 0 tf_mvm_tank_kill", "Kill all spawned tanks?");
         }
     else if (action == MenuAction_Cancel) {
