@@ -24,13 +24,13 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 }
 
 public Action Timer_UpdateNames(Handle timer) {
-	for (int i = 1; i < GetMaxClients() + 1; i++)
-		if (IsClientInGame(i) && !IsFakeClient(i)) {
+	for (int client = 1; client < MaxClients; client++)
+		if (IsClientInGame(client) && !IsFakeClient(client)) {
 			char player_name[64];
-			GetClientName(i, player_name, sizeof(player_name));
+			GetClientName(client, player_name, sizeof(player_name));
 			char player_name_safe[64];
 			SQL_EscapeString(db, player_name, player_name_safe, sizeof(player_name_safe));
-			UpdateName(GetSteamAccountID(i), player_name_safe);
+			UpdateName(GetSteamAccountID(client), player_name_safe);
 		}
 
 }

@@ -11,9 +11,9 @@ public void OnPluginStart() {
 
 public Action Timer_Spy(Handle timer) {
 	if (GetConVarBool(g_enabled))
-		for (int i = 1; i < 33; i++)
-			if (IsClientInGame(i) && IsFakeClient(i)) {
-				//FakeClientCommand(i, "voicemenu 2 0"); // HELP!
-				FakeClientCommand(i, "voicemenu 1 1"); // SPY!
+		for (int client = 1; client < MaxClients; client++)
+			if (IsClientInGame(client) && IsFakeClient(client)) {
+				//FakeClientCommand(client, "voicemenu 2 0"); // HELP!
+				FakeClientCommand(client, "voicemenu 1 1"); // SPY!
 			}
 }

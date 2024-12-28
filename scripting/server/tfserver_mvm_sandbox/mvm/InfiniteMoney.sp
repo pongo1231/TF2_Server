@@ -15,7 +15,7 @@ public void OnPluginStart() {
 }
 
 public void OnMapStart() {
-	playing_mvm = IsGamemodeMvm();
+	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
 }
 
 /*public void OnInfiniteMoneyChange(ConVar convar, char[] oldValue, char[] newValue)
@@ -36,13 +36,9 @@ public Action Timer_GiveMoney(Handle timer) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	for (int i = 1; i < 33; i++)
-		if (IsClientInGame(i) && !IsFakeClient(i))
-			SetEntProp(i, Prop_Send, "m_nCurrency", 30000);
+	for (int client = 1; client < MaxClients; client++)
+		if (IsClientInGame(client) && !IsFakeClient(client))
+			SetEntProp(client, Prop_Send, "m_nCurrency", 30000);
 
 	return Plugin_Handled;
-}
-
-bool IsGamemodeMvm() {
-	return GameRules_GetProp("m_bPlayingMannVsMachine") ? true : false;
 }

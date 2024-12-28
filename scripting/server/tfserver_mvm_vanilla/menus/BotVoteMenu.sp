@@ -7,11 +7,17 @@
 ConVar g_kickBots;
 ConVar g_rcbotQuota;
 
-public void OnPluginStart() {
-    RegConsoleCmd("menu_bots", MenuOpen);
-    g_kickBots = CreateConVar("menu_bots_rcbot_enablebots", "1", _, _, true, 0.0, true, 1.0);
-    g_rcbotQuota = FindConVar("rcbot_bot_quota_interval");
-    CreateTimer(1.0, Timer_KickBots, _, TIMER_REPEAT);
+public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
+    if (action == MenuAction_Select)
+    switch (item) {
+            case 0:
+                Voting_CreateYesNoConVarVote(client, "menu_bots_rcbot_enablebots", "Enable RCBots?");
+        }
+    else if (action == MenuAction_Cancel) {
+        if (item == MenuCancel_ExitBack)
+           FakeClientCommand(client, "menu");
+    } else if (action == MenuAction_End)
+        delete menu;
 }
 
 public Action MenuOpen(int client, int args) {
@@ -26,31 +32,24 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("bots_robots", text);
 
     menu.Display(client, MENU_TIME_FOREVER);
- 
+
     return Plugin_Handled;
 }
-
-public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
-    if (action == MenuAction_Select)
-    switch (item) {
-            case 0:
-                Voting_CreateYesNoConVarVote(client, "menu_bots_rcbot_enablebots", "Enable RCBots?");
-        }
-    else if (action == MenuAction_Cancel) {
-        if (item == MenuCancel_ExitBack)
-           FakeClientCommand(client, "menu");
-    } else if (action == MenuAction_End)
-        delete menu;
-}
-
 
 public Action Timer_KickBots(Handle timer) {
     if (GetConVarInt(g_kickBots) < 1) {
         SetConVarInt(g_rcbotQuota, 0);
-        for (int i = 1; i < MaxClients; i++)
-            if (IsClientInGame(i) && IsFakeClient(i) && TF2_GetClientTeam(i) == TFTeam_Red)
-                KickClient(i);
+        for (int client = 1; client < MaxClients; client++)
+            if (IsClientInGame(client) && IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red)
+                KickClient(client);
     }
     else
         SetConVarInt(g_rcbotQuota, 1);
+}
+
+public void OnPluginStart() {
+    RegConsoleCmd("menu_bots", MenuOpen);
+    g_kickBots = CreateConVar("menu_bots_rcbot_enablebots", "1", _, _, true, 0.0, true, 1.0);
+    g_rcbotQuota = FindConVar("rcbot_bot_quota_interval");
+    CreateTimer(1.0, Timer_KickBots, _, TIMER_REPEAT);
 }

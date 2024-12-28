@@ -16,10 +16,10 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("ranking_rank_top7", "Top 7 players");
     menu.AddItem("ranking_rank_self", "Your ranking");
     
-    for (int i = 1; i < GetMaxClients(); i++) {
-        if (IsClientInGame(i) && !IsFakeClient(i)) {
+    for (int client = 1; client < MaxClients; client++) {
+        if (IsClientInGame(client) && !IsFakeClient(client)) {
             char player_name[64];
-            GetClientName(i, player_name, sizeof(player_name));
+            GetClientName(client, player_name, sizeof(player_name));
 
             if (!StrEqual(player_name, client_name)) {
                 menu.AddItem(player_name, player_name);

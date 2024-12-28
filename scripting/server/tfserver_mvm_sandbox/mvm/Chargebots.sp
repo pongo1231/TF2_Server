@@ -18,12 +18,12 @@ public Action Timer_ActivateCharge(Handle timer, int client) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	for (int i = 1; i < GetMaxClients() + 1; i++)
-		if (IsClientInGame(i) && TF2_GetClientTeam(i) == TFTeam_Blue)
-			if (!TF2_IsPlayerInCondition(i, view_as<TFCond>(51))) // 51 = Robot Spawn Effect
-				TF2_AddCondition(i, view_as<TFCond>(17));
+	for (int client = 1; client < MaxClients; client++)
+		if (IsClientInGame(client) && TF2_GetClientTeam(client) == TFTeam_Blue)
+			if (!TF2_IsPlayerInCondition(client, view_as<TFCond>(51))) // 51 = Robot Spawn Effect
+				TF2_AddCondition(client, view_as<TFCond>(17));
 			else
-				TF2_RemoveCondition(i, view_as<TFCond>(17));
+				TF2_RemoveCondition(client, view_as<TFCond>(17));
 
 	return Plugin_Handled;
 }

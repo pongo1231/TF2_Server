@@ -10,9 +10,9 @@ ConVar force_class;
 ConVar rcbot_force_class;
 
 void KickBots() {
-    for (int i = 1; i < MaxClients; i++)
-        if (IsClientInGame(i) && IsFakeClient(i) && TF2_GetClientTeam(i) == TFTeam_Red)
-            KickClient(i);
+    for (int client = 1; client < MaxClients; client++)
+        if (IsClientInGame(client) && IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red)
+            KickClient(client);
 }
 
 public Action Timer_KickBots(Handle timer) {
@@ -22,37 +22,6 @@ public Action Timer_KickBots(Handle timer) {
     }
     else
         SetConVarInt(rcbot_quota, 1);
-}
-
-public void force_class_changed(ConVar convar, const char[] oldValue, const char[] newValue) {
-    if (StrEqual(oldValue, newValue))
-        return;
-
-    int cvar_value = 0;
-    if (StrEqual(newValue, "Scout")) cvar_value = 1;
-    else if (StrEqual(newValue, "Soldier")) cvar_value = 2;
-    else if (StrEqual(newValue, "Pyro")) cvar_value = 3;
-    else if (StrEqual(newValue, "Demoman")) cvar_value = 4;
-    else if (StrEqual(newValue, "Heavy")) cvar_value = 5;
-    else if (StrEqual(newValue, "Engineer")) cvar_value = 6;
-    else if (StrEqual(newValue, "Medic")) cvar_value = 7;
-    else if (StrEqual(newValue, "Sniper")) cvar_value = 8;
-    else if (StrEqual(newValue, "Spy")) cvar_value = 9;
-
-    SetConVarInt(rcbot_force_class, cvar_value);
-    KickBots();
-}
-
-public void OnPluginStart() {
-    RegConsoleCmd("menu_bots_rcbot", MenuOpen);
-
-    enable_bots = CreateConVar("menu_bots_rcbot_enablebots", "1", _, _, true, 0.0, true, 1.0);
-    rcbot_quota = FindConVar("rcbot_bot_quota_interval");
-    CreateTimer(1.0, Timer_KickBots, _, TIMER_REPEAT);
-
-    force_class = CreateConVar("menu_bots_rcbot_force_class", "None");
-    rcbot_force_class = FindConVar("rcbot_force_class");
-    HookConVarChange(force_class, force_class_changed);
 }
 
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
@@ -107,6 +76,37 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("rcbots_melee", text);
 
     menu.Display(client, MENU_TIME_FOREVER);
- 
+
     return Plugin_Handled;
+}
+
+public void force_class_changed(ConVar convar, const char[] oldValue, const char[] newValue) {
+    if (StrEqual(oldValue, newValue))
+        return;
+
+    int cvar_value = 0;
+    if (StrEqual(newValue, "Scout")) cvar_value = 1;
+    else if (StrEqual(newValue, "Soldier")) cvar_value = 2;
+    else if (StrEqual(newValue, "Pyro")) cvar_value = 3;
+    else if (StrEqual(newValue, "Demoman")) cvar_value = 4;
+    else if (StrEqual(newValue, "Heavy")) cvar_value = 5;
+    else if (StrEqual(newValue, "Engineer")) cvar_value = 6;
+    else if (StrEqual(newValue, "Medic")) cvar_value = 7;
+    else if (StrEqual(newValue, "Sniper")) cvar_value = 8;
+    else if (StrEqual(newValue, "Spy")) cvar_value = 9;
+
+    SetConVarInt(rcbot_force_class, cvar_value);
+    KickBots();
+}
+
+public void OnPluginStart() {
+    RegConsoleCmd("menu_bots_rcbot", MenuOpen);
+
+    enable_bots = CreateConVar("menu_bots_rcbot_enablebots", "1", _, _, true, 0.0, true, 1.0);
+    rcbot_quota = FindConVar("rcbot_bot_quota_interval");
+    CreateTimer(1.0, Timer_KickBots, _, TIMER_REPEAT);
+
+    force_class = CreateConVar("menu_bots_rcbot_force_class", "None");
+    rcbot_force_class = FindConVar("rcbot_force_class");
+    HookConVarChange(force_class, force_class_changed);
 }
