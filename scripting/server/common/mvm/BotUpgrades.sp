@@ -41,7 +41,6 @@ Action Timer_AddAttribsToActiveWep(Handle timer) {
 			case TFClass_Scout: {
 				TF2Attrib_SetByName(wep, "damage bonus", 4.0);
 				TF2Attrib_SetByName(client, "move speed bonus", 1.3);
-				TF2Attrib_SetByName(client, "increased jump height", 1.6);
 			}
 			case TFClass_Soldier: {
 				TF2Attrib_SetByName(wep, "rocket specialist", 4.0);
@@ -75,7 +74,6 @@ Action Timer_AddAttribsToActiveWep(Handle timer) {
 			case TFClass_Spy: {
 				TF2Attrib_SetByName(wep, "damage bonus", 4.0);
 				TF2Attrib_SetByName(client, "move speed bonus", 1.5);
-				TF2Attrib_SetByName(client, "increased jump height", 1.6);
 				TF2Attrib_SetByName(client, "sanguisuge", 1.0);
 			}
 		}
