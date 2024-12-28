@@ -17,6 +17,8 @@ bool playing_mvm = false;
 ConVar g_enabled;
 ConVar g_taunt_chance;
 
+Handle g_play_taunt;
+
 int GetRandomUInt(int min, int max)
 {
     return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
@@ -25,6 +27,26 @@ int GetRandomUInt(int min, int max)
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bottaunt_enabled", "1", "Enable plugin");
 	g_taunt_chance = CreateConVar("sm_bottaunt_chance", "100", "Chance for bots to taunt after kill", _, true, 0.0, true, 100.0);
+
+	Handle conf = LoadGameConfigFile("tf2.tauntem");
+	if (conf == INVALID_HANDLE)
+	{
+		SetFailState("Unable to load gamedata/tf2.tauntem.txt");
+		return;
+	}
+
+	StartPrepSDKCall(SDKCall_Player);
+	PrepSDKCall_SetFromConf(conf, SDKConf_Signature, "CTFPlayer::PlayTauntSceneFromItem");
+	PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
+	PrepSDKCall_SetReturnInfo(SDKType_Bool, SDKPass_Plain);
+	g_play_taunt = EndPrepSDKCall();
+
+	if (g_play_taunt == INVALID_HANDLE)
+	{
+		SetFailState("Unable to initialize call to CTFPlayer::PlayTauntSceneFromItem");
+		CloseHandle(conf);
+		return;
+	}
 
 	HookEvent("player_death", Event_PlayerDeath);
 }
@@ -42,14 +64,34 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 		return Plugin_Continue;
 
 	if (((playing_mvm && TF2_GetClientTeam(killer) == TFTeam_Blue) || !playing_mvm) && GetRandomUInt(0, 100) < GetConVarInt(g_taunt_chance)) {
-		CTauntEnforcer enforcer = new CTauntEnforcer(LoadGameConfigFile("tf2.tauntem"));
-
 		char class_name[16];
 		GetClassString(class_name, sizeof(class_name), TF2_GetPlayerClass(killer));
 		Handle class_taunts = GetClassTaunts(class_name);
 
-		if (GetArraySize(class_taunts) > 0)
-			enforcer.ForceTaunt(killer, GetArrayCell(class_taunts, GetRandomUInt(0, GetArraySize(class_taunts) - 1)));
+		if (GetArraySize(class_taunts) > 0) {
+			// Thanks to Pick from the bots-united.com Discord server for the logic
+
+			int taunt = CreateEntityByName("tf_wearable_vm");
+
+			if (!IsValidEntity(taunt))
+			{
+				return Plugin_Handled;
+			}
+
+			char entclass[64];
+			GetEntityNetClass(taunt, entclass, sizeof(entclass));
+			SetEntData(taunt, FindSendPropInfo(entclass, "m_iItemDefinitionIndex"), GetArrayCell(class_taunts, GetRandomUInt(0, GetArraySize(class_taunts) - 1)));
+			SetEntData(taunt, FindSendPropInfo(entclass, "m_bInitialized"), 1);
+			SetEntData(taunt, FindSendPropInfo(entclass, "m_iEntityLevel"), 1);
+			SetEntData(taunt, FindSendPropInfo(entclass, "m_iEntityQuality"), 6);
+			SetEntProp(taunt, Prop_Send, "m_bValidatedAttachedEntity", 1);
+
+			Address pEconItemView = GetEntityAddress(taunt) + view_as<Address>(FindSendPropInfo("CTFWearable", "m_Item"));
+
+			SDKCall(g_play_taunt, killer, pEconItemView) ? 1 : 0;
+			AcceptEntityInput(taunt, "Kill");
+		}
+
 		CloseHandle(class_taunts);
 	}
 
