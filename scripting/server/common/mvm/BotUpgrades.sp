@@ -5,23 +5,14 @@
 
 bool playing_mvm = false;
 
-public void OnPluginStart() {
-	CreateTimer(1.0, Timer_AddAttribsToActiveWep, _, TIMER_REPEAT);
-	HookEvent("player_builtobject", Event_PlayerBuiltObject);
-}
-
-public void OnMapStart() {
-	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
-}
-
-public Action Timer_AddAttribsToActiveWep(Handle timer) {
+Action Timer_AddAttribsToActiveWep(Handle timer) {
 	if (!playing_mvm)
 		return Plugin_Continue;
 
 	for (int client = 1; client < MaxClients; client++) {
 		if (!IsClientInGame(client) || !IsFakeClient(client) || TF2_GetClientTeam(client) != TFTeam_Red)
 			continue;
-		
+
 		TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.5);
 		TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.1);
 		TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.5);
@@ -92,7 +83,7 @@ public Action Timer_AddAttribsToActiveWep(Handle timer) {
 	return Plugin_Handled;
 }
 
-public Action Event_PlayerBuiltObject(Handle event, const char[] name, bool dontBroadcast) {
+Action Event_PlayerBuiltObject(Handle event, const char[] name, bool dontBroadcast) {
 	if (!playing_mvm)
 		return Plugin_Continue;
 
@@ -105,4 +96,13 @@ public Action Event_PlayerBuiltObject(Handle event, const char[] name, bool dont
 	SetEntProp(sentry, Prop_Send, "m_iAmmoShells", 9999999999);
 
 	return Plugin_Continue;
+}
+
+public void OnPluginStart() {
+	CreateTimer(1.0, Timer_AddAttribsToActiveWep, _, TIMER_REPEAT);
+	HookEvent("player_builtobject", Event_PlayerBuiltObject);
+}
+
+public void OnMapStart() {
+	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
 }
