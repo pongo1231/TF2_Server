@@ -10,7 +10,7 @@ public Action MenuOpen(int client, int args) {
     SetMenuExitBackButton(menu, true);
     SetMenuExitButton(menu, false);
     menu.AddItem("1", "Credits:");
-    menu.AddItem("2", "Server by pongo1231");
+    menu.AddItem("2", "Server by pongo1231 / Ducky");
     menu.AddItem("3", "");
     menu.AddItem("4", "");
     menu.AddItem("5", "");
@@ -19,7 +19,7 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("7", "Contact:");
     menu.AddItem("8", "Our steam group: steamcommunity.com/groups/duckyservers");
     menu.AddItem("9", "Or personal:");
-    menu.AddItem("11", "E-Mail: pongo1999712@gmail.com");
+    menu.AddItem("11", "E-Mail: pongo12310@gmail.com");
     menu.AddItem("12", "Steam: steamcommunity.com/id/pongo1231");
     menu.Display(client, MENU_TIME_FOREVER);
  
