@@ -41,7 +41,7 @@ Action Timer_AddAttribsToActiveWep(Handle timer) {
 
 		switch (TF2_GetPlayerClass(client)) {
 			case TFClass_Scout: {
-				TF2Attrib_SetByName(wep, "damage bonus", 4.0);
+				TF2Attrib_SetByName(wep, "damage bonus", 3.0);
 				TF2Attrib_SetByName(client, "move speed bonus", 1.3);
 			}
 			case TFClass_Soldier: {
@@ -68,13 +68,13 @@ Action Timer_AddAttribsToActiveWep(Handle timer) {
 				TF2Attrib_SetByName(wep, "generate rage on heal", 100.0);
 			}
 			case TFClass_Sniper: {
-				TF2Attrib_SetByName(wep, "damage bonus", 4.0);
+				TF2Attrib_SetByName(wep, "damage bonus", 3.0);
 				TF2Attrib_SetByName(wep, "sniper charge per sec", 10000.0);
 				TF2Attrib_SetByName(wep, "Reload time decreased", 0.1);
 				TF2Attrib_SetByName(wep, "explosive sniper shot", 10.0);
 			}
 			case TFClass_Spy: {
-				TF2Attrib_SetByName(wep, "damage bonus", 4.0);
+				TF2Attrib_SetByName(wep, "damage bonus", 3.0);
 				TF2Attrib_SetByName(client, "move speed bonus", 1.5);
 				TF2Attrib_SetByName(client, "sanguisuge", 1.0);
 			}
