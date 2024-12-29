@@ -16,7 +16,7 @@ public Action Timer_HugeExplosions(Handle timer, int client) {
 
 	recently_disabled = true;
 
-	for (int client = 1; client < MaxClients; client++)
+	for (int client = 1; client < MaxClients + 1; client++)
 		if (IsClientInGame(client))
 			TF2Attrib_SetByName(client, "use large smoke explosion", enabled ? 1.0 : 0.0);
 

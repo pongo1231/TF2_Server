@@ -32,7 +32,7 @@ public Action Timer_RTDTick(Handle timer) {
 	if (!GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	for (int client = 1; client < MaxClients; client++) {
+	for (int client = 1; client < MaxClients + 1; client++) {
 		if (IsClientInGame(client) && IsFakeClient(client) && IsPlayerAlive(client) && (!playing_mvm || TF2_GetClientTeam(client) != TFTeam_Blue || GetConVarBool(g_rtdsay_mvmbots))) {
 			playerData[client - 1]--;
 			if (playerData[client - 1] <= 0) {

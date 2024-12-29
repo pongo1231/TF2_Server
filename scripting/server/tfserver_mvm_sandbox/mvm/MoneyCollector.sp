@@ -20,7 +20,7 @@ public Action OnMoneyCreated(int entity)
 	int closestClient = -1;
 	float closestDistance = -1.0;
 	float closestOrigin[3];
-	for (int client = 1; client < MaxClients; client++)
+	for (int client = 1; client < MaxClients + 1; client++)
 	{
 		if (!IsClientInGame(client) || IsFakeClient(client) || TF2_GetClientTeam(client) != TFTeam_Red  || !IsPlayerAlive(client))
 			continue;

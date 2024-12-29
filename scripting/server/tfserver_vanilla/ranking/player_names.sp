@@ -24,7 +24,7 @@ public void T_DataBaseCreated(Database m_db, DBResultSet results, const char[] e
 }
 
 public Action Timer_UpdateNames(Handle timer) {
-	for (int client = 1; client < MaxClients; client++)
+	for (int client = 1; client < MaxClients + 1; client++)
 		if (IsClientInGame(client) && !IsFakeClient(client)) {
 			char player_name[64];
 			GetClientName(client, player_name, sizeof(player_name));

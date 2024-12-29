@@ -11,7 +11,7 @@ public void OnPluginStart() {
 
 public Action Timer_WaterCheck(Handle timer) {
 	if (GetConVarBool(g_enabled))
-		for (int client = 1; client < MaxClients; client++)
+		for (int client = 1; client < MaxClients + 1; client++)
 			if (IsClientInGame(client) && GetEntProp(client, Prop_Data, "m_nWaterLevel"))
 				FakeClientCommand(client, "kill");
 }

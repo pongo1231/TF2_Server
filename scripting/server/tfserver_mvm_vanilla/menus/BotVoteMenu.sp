@@ -39,7 +39,7 @@ public Action MenuOpen(int client, int args) {
 public Action Timer_KickBots(Handle timer) {
     if (GetConVarInt(g_kickBots) < 1) {
         SetConVarInt(g_rcbotQuota, 0);
-        for (int client = 1; client < MaxClients; client++)
+        for (int client = 1; client < MaxClients + 1; client++)
             if (IsClientInGame(client) && IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red)
                 KickClient(client);
     }

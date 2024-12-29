@@ -7,7 +7,7 @@ public void OnPluginStart() {
 }
 
 public Action Timer_JoinPlayersIntoTeam(Handle timer) {
-	for (int client = 1; client < MaxClients; client++) {
+	for (int client = 1; client < MaxClients + 1; client++) {
 		if (IsClientInGame(client) && !IsFakeClient(client) && (TF2_GetClientTeam(client) == TFTeam_Spectator || TF2_GetClientTeam(client) == TFTeam_Unassigned)
 			&& GetUserAdmin(client) == INVALID_ADMIN_ID)
 			FakeClientCommand(client, "sm_mvmred");

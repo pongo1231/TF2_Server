@@ -21,7 +21,7 @@ Action Timer_CheckReady(Handle timer) {
 		return Plugin_Continue;
 
 	bool players_ready = false;
-	for (int client = 1; client < MaxClients; client++) {
+	for (int client = 1; client < MaxClients + 1; client++) {
 		if (!IsClientInGame(client) || IsFakeClient(client) || TF2_GetClientTeam(client) != TFTeam_Red)
 			continue;
 
@@ -34,7 +34,7 @@ Action Timer_CheckReady(Handle timer) {
 	}
 
 	if (players_ready) {
-		for (int client = 1; client < MaxClients; client++) {
+		for (int client = 1; client < MaxClients + 1; client++) {
 			if (IsClientInGame(client) && TF2_GetClientTeam(client) == TFTeam_Red && !IsPlayerReady(client))
 				MakePlayerReady(client, true);
 		}

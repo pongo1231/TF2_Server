@@ -16,7 +16,7 @@ public Action MenuOpen(int client, int args) {
     menu.AddItem("ranking_rank_top7", "Top 7 players");
     menu.AddItem("ranking_rank_self", "Your ranking");
     
-    for (int client = 1; client < MaxClients; client++) {
+    for (int client = 1; client < MaxClients + 1; client++) {
         if (IsClientInGame(client) && !IsFakeClient(client)) {
             char player_name[64];
             GetClientName(client, player_name, sizeof(player_name));

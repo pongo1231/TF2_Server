@@ -36,7 +36,7 @@ public Action Timer_GiveMoney(Handle timer) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	for (int client = 1; client < MaxClients; client++)
+	for (int client = 1; client < MaxClients + 1; client++)
 		if (IsClientInGame(client) && !IsFakeClient(client))
 			SetEntProp(client, Prop_Send, "m_nCurrency", 30000);
 

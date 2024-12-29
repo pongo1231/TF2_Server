@@ -18,7 +18,7 @@ public Action Timer_ActivateCharge(Handle timer, int client) {
 	if (!playing_mvm || !GetConVarBool(g_enabled))
 		return Plugin_Continue;
 
-	for (int client = 1; client < MaxClients; client++)
+	for (int client = 1; client < MaxClients + 1; client++)
 		if (IsClientInGame(client) && TF2_GetClientTeam(client) == TFTeam_Blue)
 			if (!TF2_IsPlayerInCondition(client, view_as<TFCond>(51))) // 51 = Robot Spawn Effect
 				TF2_AddCondition(client, view_as<TFCond>(17));
