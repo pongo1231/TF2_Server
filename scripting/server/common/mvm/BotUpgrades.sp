@@ -46,6 +46,7 @@ Action Timer_AddAttribsToActiveWep(Handle timer) {
 			}
 			case TFClass_Soldier: {
 				TF2Attrib_SetByName(wep, "rocket specialist", 4.0);
+				TF2Attrib_SetByName(wep, "increase buff duration", 3.0);
 			}
 			case TFClass_Pyro: {
 				TF2Attrib_SetByName(wep, "airblast pushback scale", 300.0);
