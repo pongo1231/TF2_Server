@@ -36,6 +36,8 @@ Action Timer_AddAttribsToActiveWep(Handle timer) {
 		TF2Attrib_SetByName(wep, "attack projectiles", 100.0);
 		TF2Attrib_SetByName(wep, "melee range multiplier", 3.0);
 		TF2Attrib_SetByName(wep, "projectile penetration", 3.0);
+		TF2Attrib_SetByName(wep, "mult_item_meter_charge_rate", 0.4);
+		TF2Attrib_SetByName(wep, "applies snare effect", 0.5);
 
 		switch (TF2_GetPlayerClass(client)) {
 			case TFClass_Scout: {
