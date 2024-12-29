@@ -24,7 +24,7 @@ public void OnMapStart() {
 
 public Action Delay_ResetPitch(Handle timer, int client) {
     if (IsFakeClient(client) && (!playing_mvm || TF2_GetClientTeam(client) == TFTeam_Red) && GetRandomUInt(1, 10) > 5)
-        players_pitch[client - 1] = GetRandomUInt(10, 200);
+        players_pitch[client - 1] = GetRandomUInt(25, 200);
     else
         players_pitch[client - 1] = 100;
 
