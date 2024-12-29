@@ -4516,7 +4516,7 @@ bool CreateWeapon(int client, char[] classname, int itemindex, int quality, int 
 	SetEntProp(weapon, Prop_Send, "m_iItemDefinitionIndex", itemindex);	 
 	SetEntProp(weapon, Prop_Send, "m_bInitialized", 1);
 	SetEntData(weapon, FindSendPropInfo(entclass, "m_iEntityQuality"), quality);
-	TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
+	//TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
 
 	if (level)
 	{
@@ -4589,16 +4589,16 @@ bool CreateWeapon(int client, char[] classname, int itemindex, int quality, int 
 		TF2Attrib_SetByName(weapon, "item style override", 1.0);
 		SetEntData(weapon, FindSendPropInfo(entclass, "m_iEntityQuality"), 11);
 		
-		TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
+		//TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
 
 		if (GetRandomUInt(1,5) == 1)
 		{
-			TF2Attrib_SetByDefIndex(weapon, 2025, 2.0);
+			//TF2Attrib_SetByDefIndex(weapon, 2025, 2.0);
 			TF2Attrib_SetByDefIndex(weapon, 2014, GetRandomUInt(1,7) + 0.0);
 		}
 		else if (GetRandomUInt(1,5) == 2)
 		{
-			TF2Attrib_SetByDefIndex(weapon, 2025, 3.0);
+			//TF2Attrib_SetByDefIndex(weapon, 2025, 3.0);
 			TF2Attrib_SetByDefIndex(weapon, 2014, GetRandomUInt(1,7) + 0.0);
 			TF2Attrib_SetByDefIndex(weapon, 2013, GetRandomUInt(2002,2008) + 0.0);
 		}
@@ -4625,16 +4625,16 @@ bool CreateWeapon(int client, char[] classname, int itemindex, int quality, int 
 	{
 		SetEntData(weapon, FindSendPropInfo(entclass, "m_iEntityQuality"), 11);
 		
-		TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
+		//TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
 
 		if (GetRandomUInt(1,5) == 1)
 		{
-			TF2Attrib_SetByDefIndex(weapon, 2025, 2.0);
+			//TF2Attrib_SetByDefIndex(weapon, 2025, 2.0);
 			TF2Attrib_SetByDefIndex(weapon, 2014, GetRandomUInt(1,7) + 0.0);
 		}
 		else if (GetRandomUInt(1,5) == 2)
 		{
-			TF2Attrib_SetByDefIndex(weapon, 2025, 3.0);
+			//TF2Attrib_SetByDefIndex(weapon, 2025, 3.0);
 			TF2Attrib_SetByDefIndex(weapon, 2014, GetRandomUInt(1,7) + 0.0);
 			TF2Attrib_SetByDefIndex(weapon, 2013, GetRandomUInt(2002,2008) + 0.0);
 		}
@@ -5302,16 +5302,16 @@ bool CreateWeapon(int client, char[] classname, int itemindex, int quality, int 
 				SetEntData(weapon, FindSendPropInfo(entclass, "m_iEntityQuality"), 11);
 				if (GetRandomUInt(1,5) == 1)
 				{
-					TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
+					//TF2Attrib_SetByDefIndex(weapon, 2025, 1.0);
 				}
 				else if (GetRandomUInt(1,5) == 2)
 				{
-					TF2Attrib_SetByDefIndex(weapon, 2025, 2.0);
+					//TF2Attrib_SetByDefIndex(weapon, 2025, 2.0);
 					TF2Attrib_SetByDefIndex(weapon, 2014, GetRandomUInt(1,7) + 0.0);
 				}
 				else if (GetRandomUInt(1,5) == 3)
 				{
-					TF2Attrib_SetByDefIndex(weapon, 2025, 3.0);
+					//TF2Attrib_SetByDefIndex(weapon, 2025, 3.0);
 					TF2Attrib_SetByDefIndex(weapon, 2014, GetRandomUInt(1,7) + 0.0);
 					TF2Attrib_SetByDefIndex(weapon, 2013, GetRandomUInt(2002,2008) + 0.0);
 				}
