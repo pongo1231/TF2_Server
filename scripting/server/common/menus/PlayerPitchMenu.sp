@@ -1,16 +1,39 @@
 #include <sourcemod>
 #include <server/serverchat>
 #include <sdktools>
+#include <tf2>
+#include <tf2_stocks>
 
-int players_pitch[32];
+bool playing_mvm = false;
+
+int players_pitch[MAXPLAYERS];
+
+int GetRandomUInt(int min, int max)
+{
+    return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
+}
 
 public void OnPluginStart() {
     RegConsoleCmd("menu_player_pitch", MenuOpen);
     AddNormalSoundHook(NormalSoundHook);
 }
 
+public void OnMapStart() {
+	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
+}
+
+public Action Delay_ResetPitch(Handle timer, int client) {
+    if (IsFakeClient(client) && (!playing_mvm || TF2_GetClientTeam(client) == TFTeam_Red) && GetRandomUInt(1, 10) > 5)
+        players_pitch[client - 1] = GetRandomUInt(10, 200);
+    else
+        players_pitch[client - 1] = 100;
+
+    return Plugin_Handled;
+}
+
 public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
-    players_pitch[client - 1] = 100;
+    CreateTimer(1.0, Delay_ResetPitch, client);
+
     return true;
 }
 
@@ -54,7 +77,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
 }
 
 public Action NormalSoundHook(int clients[64], int &numClients, char sample[PLATFORM_MAX_PATH], int &entity, int &channel, float &volume, int &level, int &pitch, int &flags) {
-    if (channel == SNDCHAN_VOICE && entity > 0 && entity < 33) {
+    if (channel == SNDCHAN_VOICE && entity > 0 && entity < MaxClients + 1) {
         if (IsClientInGame(entity)) {
             if (players_pitch[entity - 1] == 0)
                 pitch = 100;
