@@ -11,18 +11,18 @@ void RemoveSpellFromClient(int client) {
             break;
     }
 
-    if (spell_book == INVALID_ENT_REFERENCE)
+    if (!IsValidEntity(spell_book))
         return;
 
-    SetEntProp(spell_book, Prop_Send, "m_iSelectedSpellIndex", 0);
+    SetEntProp(spell_book, Prop_Send, "m_iSelectedSpellIndex", -1);
     SetEntProp(spell_book, Prop_Send, "m_iSpellCharges", 0);
 }
 
-public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadcast) {
-	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
-    RemoveSpellFromClient(victim);
+public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcast) {
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    RemoveSpellFromClient(client);
 
-	return Plugin_Continue;
+    return Plugin_Continue;
 }
 
 public Action Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast) {
@@ -47,11 +47,11 @@ public Action Event_OnMvMRoundEnd(Handle event, const char[] name, bool dontBroa
 }
 
 public void OnPluginStart() {
-	HookEvent("player_death", Event_PlayerDeath);
-	HookEvent("teamplay_round_active", Event_OnRoundStart);
-	HookEvent("mvm_wave_complete", Event_OnMvMRoundEnd);
+    HookEvent("player_spawn", Event_PlayerSpawn);
+    HookEvent("teamplay_round_active", Event_OnRoundStart);
+    HookEvent("mvm_wave_complete", Event_OnMvMRoundEnd);
 }
 
 public void OnMapStart() {
-	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
+    playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") != 0;
 }
