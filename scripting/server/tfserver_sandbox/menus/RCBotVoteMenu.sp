@@ -44,7 +44,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
             case 0:
                 Voting_CreateYesNoCommandVote(client, "rcbot_bot_quota_interval 1", "Enable rcbots?", "rcbot_bot_quota_interval 0; sm_kick @bots");
             case 1:
-                Voting_CreateStringConVarVote(client, "rcbot_anglespeed", "Set rcbot skill (0.4 is default)", "0.01", "0.2", "0.4", "0.6", "0.8", "1.0");
+                Voting_CreateStringConVarVote(client, "rcbot_anglespeed", "Set rcbot skill", "0.01", "0.2", "0.4", "0.6", "0.8", "1.0");
             case 2:
                 Voting_CreateYesNoCommandVote(client, "sm_gbmw_enabled 1; sm_gbmc_enabled 1", "Should rcbots use custom items?", "sm_gbmw_enabled 0; sm_gbmc_enabled 0");
             case 3:
