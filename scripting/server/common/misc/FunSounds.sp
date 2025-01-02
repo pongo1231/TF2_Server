@@ -5,65 +5,7 @@
 #include <server/serverchat>
 
 ConVar g_enabled;
-bool dmgVoiceClients[32];
-
-int GetRandomUInt(int min, int max)
-{
-    return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
-}
-
-public void OnPluginStart() {
-	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
-	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
-	HookEvent("player_hurt", Event_PlayerHurt);
-}
-
-public Action PlayerToggleDmgVoice(int client, int args) {
-	if (!GetConVarBool(g_enabled)) {
-		Server_PrintToChat(client, "Menu", "Damage Voice has to be enabled in the Bot Settings first.", true);
-		return Plugin_Handled;
-	}
-
-	dmgVoiceClients[client - 1] = !dmgVoiceClients[client - 1];
-	if (dmgVoiceClients[client - 1])
-		Server_PrintToChat(client, "Menu", "Enabled Damage Voice.", true);
-	else
-		Server_PrintToChat(client, "Menu", "Disabled Damage Voice.", true);
-
-	return Plugin_Handled;
-}
-
-public void OnClientDisconnect_Post(int client) {
-	dmgVoiceClients[client - 1] = false;
-}
-
-public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadcast) {
-	if (!GetConVarBool(g_enabled))
-		return Plugin_Continue;
-
-	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
-	int hurter = GetClientOfUserId(GetEventInt(event, "attacker"));
-
-	if (IsFakeClient(victim) || dmgVoiceClients[victim - 1])
-		PlayRandomVoice(victim);
-	if (hurter != 0 && (IsFakeClient(hurter) || dmgVoiceClients[hurter - 1]))
-		PlayRandomVoice(hurter);
-
-	return Plugin_Handled;
-}
-
-public void OnMapStart() {
-	PrecacheSound("ui/duel_event.wav");
-}
-
-public void OnClientPutInServer(int client) {
-	EmitSoundToClient(client, "ui/duel_event.wav");
-}
-
-public void TF2_OnConditionAdded(int client, TFCond condition) {
-	if (condition == TFCond_SpawnOutline)
-		PlayRandomVoice(client);
-}
+bool dmgVoiceClients[MAXPLAYERS];
 
 char VoiceInputs[][] = {
 	"TLK_PLAYER_TAUNT",
@@ -217,6 +159,11 @@ char Classes[][] = {
 	"Spy"
 }
 
+int GetRandomUInt(int min, int max)
+{
+    return RoundToFloor(GetURandomFloat() * (max - min + 1)) + min;
+}
+
 void PlayRandomVoice(int client) {
 	if (GetRandomUInt(0, 100) > 50) {
 		if (GetRandomUInt(0, 1) == 0)
@@ -339,4 +286,59 @@ void PlayRandomVoice(int client) {
 	AcceptEntityInput(client, "SpeakResponseConcept");
 
 	AcceptEntityInput(client, "ClearContext");
+}
+
+public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
+    dmgVoiceClients[client - 1] = false;
+
+    return true;
+}
+
+public Action PlayerToggleDmgVoice(int client, int args) {
+	if (!GetConVarBool(g_enabled)) {
+		Server_PrintToChat(client, "Menu", "Damage Voice has to be enabled in the Bot Settings first.", true);
+		return Plugin_Handled;
+	}
+
+	dmgVoiceClients[client - 1] = !dmgVoiceClients[client - 1];
+	if (dmgVoiceClients[client - 1])
+		Server_PrintToChat(client, "Menu", "Enabled Damage Voice.", true);
+	else
+		Server_PrintToChat(client, "Menu", "Disabled Damage Voice.", true);
+
+	return Plugin_Handled;
+}
+
+public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadcast) {
+	if (!GetConVarBool(g_enabled))
+		return Plugin_Continue;
+
+	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
+	int hurter = GetClientOfUserId(GetEventInt(event, "attacker"));
+
+	if (IsFakeClient(victim) || dmgVoiceClients[victim - 1])
+		PlayRandomVoice(victim);
+	if (hurter != 0 && (IsFakeClient(hurter) || dmgVoiceClients[hurter - 1]))
+		PlayRandomVoice(hurter);
+
+	return Plugin_Handled;
+}
+
+public void OnMapStart() {
+	PrecacheSound("ui/duel_event.wav");
+}
+
+public void OnClientPutInServer(int client) {
+	EmitSoundToClient(client, "ui/duel_event.wav");
+}
+
+public void TF2_OnConditionAdded(int client, TFCond condition) {
+	if (condition == TFCond_SpawnOutline)
+		PlayRandomVoice(client);
+}
+
+public void OnPluginStart() {
+	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
+	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
+	HookEvent("player_hurt", Event_PlayerHurt);
 }
