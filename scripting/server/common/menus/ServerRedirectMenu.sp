@@ -14,12 +14,12 @@ public Action MenuOpen(int client, int args) {
     SetMenuExitBackButton(menu, true);
     SetMenuExitButton(menu, false);
 
-    menu.AddItem("ducky.rivinshosting.com:27016", "MvM Sandbox");
-    menu.AddItem("ducky.rivinshosting.com:27018", "MvM Vanilla");
-    menu.AddItem("ducky.rivinshosting.com:27017", "Sandbox");
-    menu.AddItem("ducky.rivinshosting.com:27015", "Vanilla");
-    menu.AddItem("ducky.rivinshosting.com:27019", "MGE [all class]");
-    menu.AddItem("ducky.rivinshosting.com:27020", "Freak Fortress 2");
+    menu.AddItem("gopong.dev:27017", "Sandbox");
+    menu.AddItem("gopong.dev:27016", "MvM Sandbox");
+    menu.AddItem("gopong.dev:27018", "MvM Vanilla");
+    //menu.AddItem("gopong.dev:27015", "Vanilla");
+    menu.AddItem("gopong.dev:27019", "MGE [all class]");
+    //menu.AddItem("gopong.dev:27020", "Freak Fortress 2");
 
     menu.Display(client, MENU_TIME_FOREVER);
  
