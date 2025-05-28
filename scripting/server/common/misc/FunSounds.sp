@@ -321,7 +321,7 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 	if (hurter != 0 && (IsFakeClient(hurter) || dmgVoiceClients[hurter - 1]))
 		PlayRandomVoice(hurter);
 
-	return Plugin_Handled;
+	return Plugin_Continue;
 }
 
 public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadcast) {
@@ -331,7 +331,7 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
 	PlayRandomVoice(victim);
 
-	return Plugin_Handled;
+	return Plugin_Continue;
 }
 
 public void OnMapStart() {
@@ -350,6 +350,6 @@ public void TF2_OnConditionAdded(int client, TFCond condition) {
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
 	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
-	HookEvent("player_hurt", Event_PlayerHurt);
-	HookEvent("player_death", Event_PlayerDeath);
+	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Pre);
+	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Pre);
 }
