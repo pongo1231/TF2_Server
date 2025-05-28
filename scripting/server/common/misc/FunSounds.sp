@@ -324,6 +324,16 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 	return Plugin_Handled;
 }
 
+public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadcast) {
+	if (!GetConVarBool(g_enabled))
+		return Plugin_Continue;
+
+	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
+	PlayRandomVoice(victim);
+
+	return Plugin_Handled;
+}
+
 public void OnMapStart() {
 	PrecacheSound("ui/duel_event.wav");
 }
@@ -341,4 +351,5 @@ public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
 	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
 	HookEvent("player_hurt", Event_PlayerHurt);
+	HookEvent("player_death", Event_PlayerDeath);
 }
