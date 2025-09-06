@@ -9,6 +9,16 @@ ConVar rcbot_quota;
 ConVar force_class;
 ConVar rcbot_force_class;
 
+public void OnClientDisconnect_Post(int client)
+{
+    for (int client = 1; client < MaxClients + 1; client++)
+        if (IsClientInGame(client) && !IsFakeClient(client))
+            return;
+
+    SetConVarInt(enable_bots, 1);
+    SetConVarString(force_class, "None");
+}
+
 void KickBots() {
     for (int client = 1; client < MaxClients + 1; client++)
         if (IsClientInGame(client) && IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red)

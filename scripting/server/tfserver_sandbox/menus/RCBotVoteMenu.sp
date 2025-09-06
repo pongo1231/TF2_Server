@@ -6,6 +6,26 @@
 
 public void OnPluginStart() {
     RegConsoleCmd("menu_bots_rcbot", MenuOpen);
+    RegAdminCmd("sm_kickbots", Command_KickBots, ADMFLAG_KICK);
+}
+
+public void OnClientDisconnect_Post(int client)
+{
+    for (int client = 1; client < MaxClients + 1; client++)
+        if (IsClientInGame(client) && !IsFakeClient(client))
+            return;
+
+    SetConVarInt(FindConVar("rcbot_bot_quota_interval"), 1);
+    SetConVarInt(FindConVar("rcbot_force_class"), 0);
+}
+
+public Action Command_KickBots(int client, int args)
+{
+    for (int client = 1; client <= MaxClients; client++)
+        if (IsClientInGame(client) && IsFakeClient(client) && !IsClientSourceTV(client))
+            KickClientEx(client, "Bot kicked");
+    
+    return Plugin_Handled;
 }
 
 public Action MenuOpen(int client, int args) {
@@ -42,7 +62,7 @@ public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
         switch (item) {
             case 0:
-                Voting_CreateYesNoCommandVote(client, "rcbot_bot_quota_interval 1", "Enable rcbots?", "rcbot_bot_quota_interval 0; sm_kick @bots");
+                Voting_CreateYesNoCommandVote(client, "rcbot_bot_quota_interval 1", "Enable rcbots?", "rcbot_bot_quota_interval 0; sm_kickbots");
             case 1:
                 Voting_CreateStringConVarVote(client, "rcbot_anglespeed", "Set rcbot skill", "0.01", "0.2", "0.4", "0.6", "0.8", "1.0");
             case 2:

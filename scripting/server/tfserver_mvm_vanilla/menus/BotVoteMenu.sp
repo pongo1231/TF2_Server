@@ -4,8 +4,17 @@
 #include <tf2>
 #include <tf2_stocks>
 
-ConVar g_kickBots;
+ConVar g_enableBots;
 ConVar g_rcbotQuota;
+
+public void OnClientDisconnect_Post(int client)
+{
+    for (int client = 1; client < MaxClients + 1; client++)
+        if (IsClientInGame(client) && !IsFakeClient(client))
+            return;
+
+    SetConVarInt(g_enableBots, 1);
+}
 
 public int Handle_Menu(Menu menu, MenuAction action, int client, int item) {
     if (action == MenuAction_Select)
@@ -37,7 +46,7 @@ public Action MenuOpen(int client, int args) {
 }
 
 public Action Timer_KickBots(Handle timer) {
-    if (GetConVarInt(g_kickBots) < 1) {
+    if (GetConVarInt(g_enableBots) < 1) {
         SetConVarInt(g_rcbotQuota, 0);
         for (int client = 1; client < MaxClients + 1; client++)
             if (IsClientInGame(client) && IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red)
@@ -49,7 +58,7 @@ public Action Timer_KickBots(Handle timer) {
 
 public void OnPluginStart() {
     RegConsoleCmd("menu_bots", MenuOpen);
-    g_kickBots = CreateConVar("menu_bots_rcbot_enablebots", "1", _, _, true, 0.0, true, 1.0);
+    g_enableBots = CreateConVar("menu_bots_rcbot_enablebots", "1", _, _, true, 0.0, true, 1.0);
     g_rcbotQuota = FindConVar("rcbot_bot_quota_interval");
     CreateTimer(1.0, Timer_KickBots, _, TIMER_REPEAT);
 }
