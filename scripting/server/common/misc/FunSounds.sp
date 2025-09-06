@@ -5,6 +5,7 @@
 #include <server/serverchat>
 
 ConVar g_enabled;
+ConVar g_playOnDeath;
 bool dmgVoiceClients[MAXPLAYERS];
 
 char VoiceInputs[][] = {
@@ -325,7 +326,7 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 }
 
 public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadcast) {
-	if (!GetConVarBool(g_enabled))
+	if (!GetConVarBool(g_enabled) || !GetConVarBool(g_playOnDeath))
 		return Plugin_Continue;
 
 	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
