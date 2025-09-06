@@ -295,17 +295,28 @@ public bool OnClientConnect(int client, char[] rejectmsg, int maxlen) {
     return true;
 }
 
-public Action PlayerToggleDmgVoice(int client, int args) {
+void ToggleDmgVoice(int client) {
 	if (!GetConVarBool(g_enabled)) {
 		Server_PrintToChat(client, "Menu", "Damage Voice has to be enabled in the Bot Settings first.", true);
-		return Plugin_Handled;
+		return;
 	}
 
 	dmgVoiceClients[client - 1] = !dmgVoiceClients[client - 1];
+}
+
+public Action PlayerToggleDmgVoice(int client, int args) {
+	ToggleDmgVoice(client);
+	
 	if (dmgVoiceClients[client - 1])
 		Server_PrintToChat(client, "Menu", "Enabled Damage Voice.", true);
 	else
 		Server_PrintToChat(client, "Menu", "Disabled Damage Voice.", true);
+
+	return Plugin_Handled;
+}
+
+public Action PlayerToggleDmgVoiceQuiet(int client, int args) {
+	ToggleDmgVoice(client);
 
 	return Plugin_Handled;
 }
@@ -350,7 +361,9 @@ public void TF2_OnConditionAdded(int client, TFCond condition) {
 
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
+	g_playOnDeath = CreateConVar("sm_bothurtvoice_play_on_death", "1", "Play voice command on death");
 	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
+	RegConsoleCmd("menu_player_dmgvoice_quiet", PlayerToggleDmgVoiceQuiet);
 	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Pre);
 	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Pre);
 }
