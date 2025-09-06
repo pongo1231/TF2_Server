@@ -16,7 +16,6 @@ public void OnClientDisconnect_Post(int client)
             return;
 
     SetConVarInt(FindConVar("rcbot_bot_quota_interval"), 1);
-    SetConVarInt(FindConVar("rcbot_force_class"), 0);
 }
 
 public Action Command_KickBots(int client, int args)

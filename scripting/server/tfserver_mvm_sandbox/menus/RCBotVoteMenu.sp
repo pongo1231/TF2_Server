@@ -16,7 +16,6 @@ public void OnClientDisconnect_Post(int client)
             return;
 
     SetConVarInt(enable_bots, 1);
-    SetConVarString(force_class, "None");
 }
 
 void KickBots() {
