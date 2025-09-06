@@ -20,7 +20,7 @@ Action Timer_CheckReady(Handle timer) {
 	if (GameRules_GetRoundState() != RoundState_Preround && GameRules_GetRoundState() != RoundState_BetweenRounds)
 		return Plugin_Continue;
 
-	bool players_ready = false;
+	bool players_ready = true;
 	for (int client = 1; client < MaxClients + 1; client++) {
 		if (!IsClientInGame(client) || IsFakeClient(client) || TF2_GetClientTeam(client) != TFTeam_Red)
 			continue;
@@ -29,8 +29,6 @@ Action Timer_CheckReady(Handle timer) {
 			players_ready = false;
 			break;
 		}
-		else
-			players_ready = true;
 	}
 
 	if (players_ready) {
