@@ -20,7 +20,7 @@ public void OnClientDisconnect_Post(int client)
 
 void KickBots() {
     for (int client = 1; client < MaxClients + 1; client++)
-        if (IsClientInGame(client) && IsFakeClient(client) && TF2_GetClientTeam(client) == TFTeam_Red)
+        if (IsClientInGame(client) && IsFakeClient(client) && !IsClientSourceTV(client) && TF2_GetClientTeam(client) == TFTeam_Red)
             KickClient(client);
 }
 
