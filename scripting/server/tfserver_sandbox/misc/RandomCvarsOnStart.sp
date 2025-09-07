@@ -31,6 +31,8 @@ public void OnConfigsExecuted()
     TrySetWithSMSpecial("sm_deadlywater_enabled", "1", true);
     TrySetWithSMSpecial("sm_spyspyspyspy_enabled", "1", true);
     TrySetWithSMSpecial("sm_helphelphelphelp_enabled", "1", true);
+
+    TrySetRCBotClassSpecial();
 }
 
 void TrySetDirect(const char[] cvarName, const char[] value)
@@ -58,6 +60,20 @@ void TrySetGravitySpecial()
     static const int gravities[] = {1, 400, 800, 1600};
     int pick = gravities[GetRandomInt(0, sizeof(gravities) - 1)];
     ServerCommand("sm_gravity %d", pick);
+}
+
+void TrySetRCBotClassSpecial()
+{
+    if (!RollChance() || !RollLowerChance()) return;
+
+    static const char classes[][] =
+    {
+        "None", "Scout", "Soldier", "Pyro", "Demoman",
+        "Heavy", "Engineer", "Medic", "Sniper", "Spy"
+    };
+
+    int index = GetRandomInt(0, sizeof(classes) - 1);
+    ServerCommand("sm_cvar menu_bots_rcbot_force_class %s", classes[index]);
 }
 
 bool RollChance()
