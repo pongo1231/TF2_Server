@@ -6,6 +6,7 @@
 
 ConVar g_enabled;
 ConVar g_playOnDeath;
+ConVar g_playOnSpawn;
 bool dmgVoiceClients[MAXPLAYERS];
 
 char VoiceInputs[][] = {
@@ -337,7 +338,7 @@ public Action Event_PlayerHurt(Handle event, const char[] name, bool dontBroadca
 }
 
 public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadcast) {
-	if (!GetConVarBool(g_enabled) || !GetConVarBool(g_playOnDeath))
+	if (!GetConVarBool(g_playOnDeath))
 		return Plugin_Continue;
 
 	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -355,13 +356,14 @@ public void OnClientPutInServer(int client) {
 }
 
 public void TF2_OnConditionAdded(int client, TFCond condition) {
-	if (condition == TFCond_SpawnOutline)
+	if (GetConVarBool(g_playOnSpawn) && condition == TFCond_SpawnOutline)
 		PlayRandomVoice(client);
 }
 
 public void OnPluginStart() {
 	g_enabled = CreateConVar("sm_bothurtvoice_enabled", "1", "Enable plugin");
 	g_playOnDeath = CreateConVar("sm_bothurtvoice_play_on_death", "1", "Play voice command on death");
+	g_playOnSpawn = CreateConVar("sm_bothurtvoice_play_on_spawn", "1", "Play voice command on spawn");
 	RegConsoleCmd("menu_player_dmgvoice", PlayerToggleDmgVoice);
 	RegConsoleCmd("menu_player_dmgvoice_quiet", PlayerToggleDmgVoiceQuiet);
 	HookEvent("player_hurt", Event_PlayerHurt, EventHookMode_Pre);
