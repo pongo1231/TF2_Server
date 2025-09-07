@@ -9,7 +9,7 @@ public void OnMapStart()
     GetCurrentMap(map, sizeof(map));
 
     ArrayList popfiles = new ArrayList(PLATFORM_MAX_PATH);
-    CollectPopfilesForMap("scripts/population", map, popfiles);
+    CollectPopfilesForMap("custom/default_missions/scripts/population", map, popfiles);
     CollectPopfilesForMap("custom/custom_missions/scripts/population", map, popfiles);
 
     if (popfiles.Length > 0)
