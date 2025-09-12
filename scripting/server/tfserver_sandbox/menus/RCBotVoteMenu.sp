@@ -27,7 +27,7 @@ public void OnClientDisconnect_Post(int client)
         if (IsClientInGame(client) && !IsFakeClient(client))
             return;
 
-    SetConVarInt(FindConVar("rcbot_bot_quota_interval"), 1);
+    SetConVarInt(enable_bots, 1);
 }
 
 void KickBots() {
