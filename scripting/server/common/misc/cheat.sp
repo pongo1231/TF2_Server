@@ -17,7 +17,12 @@ public Action Handle_Cheat(int client, int args) {
 		SetConVarFlags(sv_cheats, FCVAR_NONE);
 		SetConVarBool(sv_cheats, true);
 	}
-	FakeClientCommand(client, cmd);
+	
+	if (client == 0)
+		ServerCommand(cmd);
+	else
+		FakeClientCommand(client, cmd);
+	
 	if (!enabled) {
 		SetConVarBool(sv_cheats, false);
 		SetConVarFlags(sv_cheats, flags);
