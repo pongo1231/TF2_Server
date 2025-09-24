@@ -19,6 +19,7 @@ public Action MenuOpen(int client, int args) {
     //menu.AddItem("tf.gopong.dev:27018", "MvM Vanilla");
     //menu.AddItem("tf.gopong.dev:27015", "Vanilla");
     menu.AddItem("tf.gopong.dev:27019", "MGE [all class]");
+    menu.AddItem("tf.gopong.dev:27018", "MGE [NO ANTICHEAT / VAC]");
     //menu.AddItem("tf.gopong.dev:27020", "Freak Fortress 2");
 
     menu.Display(client, MENU_TIME_FOREVER);
