@@ -16,7 +16,7 @@ public Action MenuOpen(int client, int args) {
 
     menu.AddItem("tf.gopong.dev:27017", "Sandbox");
     menu.AddItem("tf.gopong.dev:27016", "MvM Sandbox");
-    //menu.AddItem("tf.gopong.dev:27018", "MvM Vanilla");
+    menu.AddItem("tf.gopong.dev:27015", "MvM Vanilla");
     //menu.AddItem("tf.gopong.dev:27015", "Vanilla");
     menu.AddItem("tf.gopong.dev:27019", "MGE [all class]");
     menu.AddItem("tf.gopong.dev:27018", "MGE [NO ANTICHEAT / VAC]");
