@@ -1,7 +1,7 @@
 #include <sourcemod>
 #include <server/serverchat>
 
-char ads[64][256];
+char ads[64][512];
 int size = 0;
 int pointer = 0;
 
@@ -33,7 +33,7 @@ public Action Timer_DisplayAd(Handle timer) {
 
 void UpdateAds() {
     char path[PLATFORM_MAX_PATH];
-    char line[128];
+    char line[256];
     BuildPath(Path_SM, path, PLATFORM_MAX_PATH, "configs/advertisements.txt");
 
     Handle fileHandle = OpenFile(path, "r");
