@@ -10,7 +10,7 @@ public void OnPluginStart() {
 	enabled = CreateConVar("sm_refundonjoin_enabled", "0", "Enable plugin");
 	refund_on_change_class = CreateConVar("sm_refundonjoin_changeclass", "0", "Refund on class change too");
 
-	HookEvent("player_changeclass", EventPlayerChangeClass_Pre, EventHookMode_Pre);
+	HookEvent("player_changeclass", EventPlayerChangeClass_Post, EventHookMode_Post);
 }
 
 public void OnMapStart() {
@@ -18,6 +18,9 @@ public void OnMapStart() {
 }
 
 void RefundUpgradesForClient(int client) {
+	if (IsFakeClient(client))
+		return;
+
 	KeyValues respec = new KeyValues("MVM_Respec");
 
 	bool inUpgradeZone = GetEntProp(client, Prop_Send, "m_bInUpgradeZone") != 0;
@@ -39,7 +42,7 @@ public void OnClientPutInServer(int client) {
 	RefundUpgradesForClient(client);
 }
 
-public Action EventPlayerChangeClass_Pre(Handle event, const char[] name, bool dontBroadcast) {
+public Action EventPlayerChangeClass_Post(Handle event, const char[] name, bool dontBroadcast) {
 	if (!playing_mvm || !GetConVarBool(enabled) || !GetConVarBool(refund_on_change_class))
 		return Plugin_Continue;
 
